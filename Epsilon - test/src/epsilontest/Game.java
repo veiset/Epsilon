@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
+ * The game class, coordinates the flow of information
+ * between the different threads.
  *
  * @author Marius
  */
@@ -40,6 +42,11 @@ public class Game extends Canvas {
     //The map that the game uses
     private Map map;
 
+    /**
+     * Constructor, intialises all the graphics elements,
+     * and starts the game running. Also creates the threads
+     * used by the game
+     */
     public Game() {
 
         // create a frame to contain our game
@@ -59,11 +66,14 @@ public class Game extends Canvas {
         setIgnoreRepaint(true);
 
         this.addKeyListener(Input.get());
-        
-        //panel.addKeyListener(Input.get());
+        // this.addMouseListener(Input.get());
 
     }
 
+    /**
+     * Startup method, makes all the graphics setup,
+     * and starts the rendering and gameupdating
+     */
     public void start() {
 
         // setup our canvas size and put it into the content of the frame
@@ -95,21 +105,32 @@ public class Game extends Canvas {
         
     }
 
+    /**
+     * Method used to update the game, mainly used by the updater task
+     */
     public void updateGame() {
         //System.out.println(System.currentTimeMillis() - lastUpdateTime);
         lastUpdateTime = System.currentTimeMillis();
         map.update();
     }
 
+    /**
+     * Renders the screen. Uses the time since the last rendering to
+     * aproximate how far a character has moved, even when the
+     * game hasn't been updated
+     *
+     * @param delta time in milliseconds since last update
+     */
     void renderGraphics(long delta) {
 
         // Get hold of a graphics context for the accelerated
 	// surface and blank it out
-
 	Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(Color.WHITE);
 	g.fillRect(0,0,800,600);
+
+        // tell the map to draw all entities currently on screen onto the graphics surface
         map.render(g, (int)delta);
 
 	// finally, we've completed drawing so clear up the graphics

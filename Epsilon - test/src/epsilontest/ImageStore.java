@@ -13,8 +13,8 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 /**
- * Storing class for sprites. Implemented as a singleton.
- * Makes sure that sprites are only loaded into memory once.
+ * Storing class for images. Implemented as a singleton.
+ * Makes sure that images are only loaded into memory once.
  *
  * @author Marius
  */
@@ -22,6 +22,8 @@ public class ImageStore {
 
     /** The single instance of this class */
     private static ImageStore single = new ImageStore();
+
+    /** Hashmaps saving the images */
     private HashMap<String,Image> images;
     private HashMap<String,Image> flippedImages;
 
@@ -45,92 +47,94 @@ public class ImageStore {
      * Creates a new image, and adds it to the image store.
      * Also Caches it and loads it into video memory.
      *
+     * @param ref relative reference to the image to be used
+     *
      */
     public Image get(String ref) {
 
+        /** check if the image is already cached */
 	if (images.get(ref) != null) {
             return images.get(ref);
         }
                 
-            BufferedImage sourceImage = null;
+        BufferedImage sourceImage = null;
 
-            try {
-                    // The ClassLoader.getResource() ensures we get the sprite
-                    // from the appropriate place, this helps with deploying the game
-                    // with things like webstart. You could equally do a file look
-                    // up here.
+        try {
+                // gets the url of the file
+                URL url = this.getClass().getResource(ref);
 
-                    URL url = this.getClass().getResource(ref);
+                if (url == null) {
+                        fail("Can't find ref: "+ref);
+                }
 
-                    //URL url = new URL(ref);
+                // use ImageIO to read the image in
+                sourceImage = ImageIO.read(url);
+                
+        } catch (IOException e) {
+                fail("Failed to load: "+ref);
+        }
 
-                    if (url == null) {
-                            fail("Can't find ref: "+ref);
-                    }
+        // create an accelerated image of the right size to store our sprite in
+        GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+        Image image = gc.createCompatibleImage(sourceImage.getWidth(),sourceImage.getHeight(),Transparency.BITMASK);
 
-                    // use ImageIO to read the image in
+        // draw our source image into the accelerated image
+        image.getGraphics().drawImage(sourceImage,0,0,null);
 
-                    sourceImage = ImageIO.read(url);
-            } catch (IOException e) {
-                    fail("Failed to load: "+ref);
-            }
-
-            // create an accelerated image of the right size to store our sprite in
-
-            GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
-            Image image = gc.createCompatibleImage(sourceImage.getWidth(),sourceImage.getHeight(),Transparency.BITMASK);
-
-            // draw our source image into the accelerated image
-
-            image.getGraphics().drawImage(sourceImage,0,0,null);
+        // save the accelerated image in the cache
+        images.put(ref, image);
 
         return image;
         
     }
 
+    /**
+     *
+     * Creates a new image, and adds it to the image store.
+     * Also Caches it and loads it into video memory.
+     * Flips the image
+     *
+     * @param ref relative reference to the image to be used
+     *
+     */
     public Image getFlipped(String ref) {
-	if (images.get(ref) != null) {
-            return images.get(ref);
+	if (flippedImages.get(ref) != null) {
+            return flippedImages.get(ref);
         }
 
-            BufferedImage sourceImage = null;
+        BufferedImage sourceImage = null;
 
-            try {
-                    // The ClassLoader.getResource() ensures we get the sprite
-                    // from the appropriate place, this helps with deploying the game
-                    // with things like webstart. You could equally do a file look
-                    // up here.
 
-                    URL url = this.getClass().getResource(ref);
+        try {
+                // gets the url of the file
+                URL url = this.getClass().getResource(ref);
 
-                    //URL url = new URL(ref);
+                if (url == null) {
+                        fail("Can't find ref: "+ref);
+                }
 
-                    if (url == null) {
-                            fail("Can't find ref: "+ref);
-                    }
+                // use ImageIO to read the image in
+                sourceImage = ImageIO.read(url);
 
-                    // use ImageIO to read the image in
+        } catch (IOException e) {
+                fail("Failed to load: "+ref);
+        }
 
-                    sourceImage = ImageIO.read(url);
-            } catch (IOException e) {
-                    fail("Failed to load: "+ref);
-            }
+        //flip the Image
+        AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+        tx.translate(-sourceImage.getWidth(),0);
+        AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        sourceImage = op.filter(sourceImage, null);
 
-            //flip the Image
+        // create an accelerated image of the right size to store our sprite in
+        GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+        Image image = gc.createCompatibleImage(sourceImage.getWidth(),sourceImage.getHeight(),Transparency.BITMASK);
 
-            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-            tx.translate(-sourceImage.getWidth(),0);
-            AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-            sourceImage = op.filter(sourceImage, null);
+        // draw our source image into the accelerated image
+        image.getGraphics().drawImage(sourceImage,0,0,null);
 
-            // create an accelerated image of the right size to store our sprite in
-
-            GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
-            Image image = gc.createCompatibleImage(sourceImage.getWidth(),sourceImage.getHeight(),Transparency.BITMASK);
-
-            // draw our source image into the accelerated image
-
-            image.getGraphics().drawImage(sourceImage,0,0,null);
+        // save the accelerated image in the cache
+        flippedImages.put(ref, image);
 
         return image;
     }

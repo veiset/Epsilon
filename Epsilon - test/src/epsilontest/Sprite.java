@@ -2,7 +2,6 @@ package epsilontest;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 
 /**
  * Class used to store images and manage animation.
@@ -110,18 +109,4 @@ public class Sprite {
         public void resetImage() {
             pos = 0;
         }
-
-        /**
-         * Flips all the images in the sprite from pointing right to pointing left
-         */
-        public void flip() {
-            BufferedImage bufferedImage;
-            Image[] output = new Image[image.length];
-            for (int i=0;i<image.length;i++) {
-                bufferedImage = new BufferedImage(image[i].getWidth(null), image[i].getHeight(null), BufferedImage.TYPE_INT_RGB);
-            }
-        }
-
-
-
 }

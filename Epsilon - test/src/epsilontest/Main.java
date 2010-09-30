@@ -2,6 +2,7 @@
 package epsilontest;
 
 /**
+ * Starting class for the Epsilon game, sets any environment variables
  *
  * @author Marius
  */

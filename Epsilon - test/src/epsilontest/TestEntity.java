@@ -85,7 +85,16 @@ public class TestEntity extends Entity {
      * @param g The graphic object the entity is to be drawn on
      */
     public void render(Graphics g, int delta) {
-        currentSprite.draw(g, posX, posY);
+        float coeff = (float)delta/16;
+
+        /**
+         * Debugging my smoothing out movement method.
+         */
+        /*
+        System.out.println("Delta: "+delta+" Coefficient: "+coeff);
+        System.out.println("X: "+posX+" Y: "+posY+" Real X: "+Math.round(posX+(posX-pposX)*coeff)+" Real Y: "+Math.round(posY+(posY-pposY)*coeff)+" Non-rounded X&Y"+(posX+(posX-pposX)*coeff)+" "+(posY+(posY-pposY)*coeff));
+         */
+        currentSprite.draw(g, Math.round(posX+(posX-pposX)*coeff), Math.round(posY+(posY-pposY)*coeff));
     }
 
 }

@@ -13,8 +13,10 @@ import java.awt.event.MouseListener;
  */
 public class Input implements MouseListener, KeyListener {
 
+    // the only intialised input object
     private static Input input = new Input();
 
+    // saved names of the resources
     private int jumpButton;
     private int duckButton;
     private int leftButton;
@@ -22,6 +24,7 @@ public class Input implements MouseListener, KeyListener {
     private int attackButton;
     private int menuButton;
 
+    // true if a button is pushed
     private boolean jump;
     private boolean duck;
     private boolean left;
@@ -95,7 +98,7 @@ public class Input implements MouseListener, KeyListener {
             menu = true;
         }
     }
-
+    
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == attackButton) {
             attack = false;
