@@ -9,10 +9,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,9 +23,12 @@ import javax.swing.JMenuItem;
 public class TestWindow extends JFrame {
 
     private TestPanel tp;
+    private TestWindow tw = this;
+    private Network net;
 
 
     public TestWindow()  {
+        net = new Network();
         initComponents();
     }
 
@@ -50,18 +55,24 @@ public class TestWindow extends JFrame {
         JMenuItem item1 = new JMenuItem("Connect");
         item1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                try {
+                String input = (String) JOptionPane.showInputDialog(
+                    tw, "Host:", "Connect to Cinema server", JOptionPane.QUESTION_MESSAGE,
+                    null, null, "localhost");
+                if (input == null || input.trim().length() == 0) { return; }
+                final String host = input.trim();
 
+                try {
+                    net.connect(host);
                 }
-                catch (Exception e2) {
-                    System.out.println(e2.getMessage());
+                catch (IOException ioe) {
+                    JOptionPane.showMessageDialog(tw, "Could not connect to server.");
                 }
             }
         });
         fileMenu.add(item1);
 
         JMenuItem item2 = new JMenuItem("Exit");
-        item1.addActionListener(new ActionListener(){
+        item2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 try {
                     System.exit(0);
@@ -71,11 +82,9 @@ public class TestWindow extends JFrame {
                 }
             }
         });
-        fileMenu.add(item1);
-    }
+        fileMenu.add(item2);
 
-    public void exit() {
-
+        menubar.add(fileMenu);
     }
 
 
