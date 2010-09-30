@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
+ * Class based on the singleton design pattern
+ * used for handling key and mouse input.
  *
  * @author Marius
  */
@@ -45,6 +47,11 @@ public class Input implements MouseListener, KeyListener {
 
     }
 
+    /**
+     * Get method for the Input singleton
+     *
+     * @return the only Input object
+     */
     public static Input get() {
         return input;
     }
