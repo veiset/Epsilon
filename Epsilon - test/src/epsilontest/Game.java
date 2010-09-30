@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.net.URL;
 import java.util.Random;
@@ -106,6 +107,7 @@ public class Game extends Canvas {
 
         //Random temp = new Random();
 	Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(Color.WHITE);
 	g.fillRect(0,0,800,600);
         map.render(g, (int)delta);
