@@ -88,7 +88,7 @@ public class Game extends Canvas {
         t = new Timer();
         t.schedule(u, 0, 16);
 
-        // Start the renderer thread
+        // Start the renderer thread, needs to be last in the start method
         renderer = new RenderThread(this);
         renderer.setPriority(RenderThread.NORM_PRIORITY);
         renderer.start();
