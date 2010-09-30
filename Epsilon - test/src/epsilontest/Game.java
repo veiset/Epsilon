@@ -1,5 +1,6 @@
 package epsilontest;
 
+import java.awt.AlphaComposite;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -41,6 +42,9 @@ public class Game extends Canvas {
 
     //The map that the game uses
     private Map map;
+
+    // true if the game is in the menu
+    private boolean menu;
 
     /**
      * Constructor, intialises all the graphics elements,
@@ -110,8 +114,19 @@ public class Game extends Canvas {
      */
     public void updateGame() {
         //System.out.println(System.currentTimeMillis() - lastUpdateTime);
-        lastUpdateTime = System.currentTimeMillis();
-        map.update();
+        if (Input.get().menu() && !Input.get().getMenuHandeled()) {
+            if (!menu) {
+                menu = true;
+                Input.get().handleMenu();
+            } else {
+                menu = false;
+                Input.get().handleMenu();
+            }
+        }
+        if (!menu) {
+            lastUpdateTime = System.currentTimeMillis();
+            map.update();
+        }
     }
 
     /**
@@ -132,6 +147,12 @@ public class Game extends Canvas {
 
         // tell the map to draw all entities currently on screen onto the graphics surface
         map.render(g, (int)delta);
+
+        if (menu) {
+            g.setColor(Color.BLACK);
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,(float)0.3));
+            g.fillRect(0, 0, 800, 600);
+        }
 
 	// finally, we've completed drawing so clear up the graphics
 	// and flip the buffer over

@@ -32,6 +32,9 @@ public class Input implements MouseListener, KeyListener {
     private boolean attack;
     private boolean menu;
 
+    // special menu handling
+    private boolean menuHandeled;
+
     private Input() {
 
         jumpButton = KeyEvent.VK_UP;
@@ -47,6 +50,8 @@ public class Input implements MouseListener, KeyListener {
         right = false;
         attack = false;
         menu = false;
+
+        menuHandeled = true;
 
     }
 
@@ -96,6 +101,7 @@ public class Input implements MouseListener, KeyListener {
             duck = true;
         } else if (e.getKeyCode() == menuButton) {
             menu = true;
+            menuHandeled = false;
         }
     }
     
@@ -211,6 +217,31 @@ public class Input implements MouseListener, KeyListener {
      */
     public void setAttackButton(int newKeyCode) {
         attackButton = newKeyCode;
+    }
+
+    /**
+     * Setting a new menu button
+     *
+     * @param newKeyCode The Keycode of the new key to be set
+     */
+    public void setMenuButton(int newKeyCode) {
+        attackButton = newKeyCode;
+    }
+
+    /**
+     * Checks wether the menu button press has already been handeled
+     *
+     * @return boolean True if the menu butten press is already handeled
+     */
+    public boolean getMenuHandeled() {
+        return menuHandeled;
+    }
+
+    /**
+     * Indicates that the menu keypress has been handeled
+     */
+    public void handleMenu() {
+        menuHandeled = true;
     }
 
 }
