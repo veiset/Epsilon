@@ -16,7 +16,7 @@ public class RenderThread extends Thread {
 
     private long totalTime;
 
-    private boolean calcFPS = false;
+    private boolean calcFPS = true;
 
 
     public RenderThread(Game g) {

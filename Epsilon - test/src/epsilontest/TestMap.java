@@ -20,7 +20,7 @@ public class TestMap implements Map {
         moveableEntities = new ArrayList<Entity>();
         entities = new ArrayList<Entity>();
 
-        TestEntity test = new TestEntity(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"}, 100, 100);
+        TestEntity test = new TestEntity(100, 100);
 
         renderableEntities.add(test);
         moveableEntities.add(test);

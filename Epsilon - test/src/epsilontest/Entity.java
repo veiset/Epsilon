@@ -10,7 +10,6 @@ import java.awt.Graphics;
  */
 public abstract class Entity {
 
-    private Sprite sprite;
     protected int posX;
     protected int posY;
     protected int pposX;
@@ -23,21 +22,11 @@ public abstract class Entity {
      * @param posX The initial x position of the entity
      * @param posY The initial y position of the entity
      */
-    public Entity (String[] urls, int posX,int posY) {
-        sprite = new Sprite(urls);
+    public Entity (int posX,int posY) {
         this.posX = posX;
         this.posY = posY;
         this.pposX = posX;
         this.pposY = posY;
-    }
-
-    /*
-     * Rendering the object
-     *
-     * @param g The graphic object the entity is to be drawn on
-     */
-    public void render(Graphics g, int delta) {
-        sprite.draw(g, posX, posY);
     }
 
     /*
@@ -58,11 +47,12 @@ public abstract class Entity {
      */
     public abstract void move();
 
-    /**
-     * Move the sprite to the next image
+    /*
+     * Rendering the object
+     *
+     * @param g The graphic object the entity is to be drawn on
+     * @param delta an int specifying the number of milliseconds since last gameupdate
      */
-    public void nextImage() {
-        sprite.nextImage();
-    }
+    abstract public void render(Graphics g, int delta);
 
 }
