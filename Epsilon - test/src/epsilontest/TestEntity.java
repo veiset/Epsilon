@@ -6,9 +6,14 @@
 package epsilontest;
 
 /**
+ * Test class that extends entity
  *
  * @author Marius
  */
-public class TestEntity {
+public class TestEntity extends Entity {
+
+    public TestEntity(String[] urls,int posX,int posY) {
+        super(urls, posX, posY);
+    }
 
 }

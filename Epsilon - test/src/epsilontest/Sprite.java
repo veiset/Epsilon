@@ -4,21 +4,35 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 /**
+ * Class used to store images and manage animation.
  *
  * @author Marius
  */
 public class Sprite {
 
-	/** The image to be drawn for this sprite */
-	private Image image;
+	/** The images to be drawn for this sprite */
+	private Image[] image;
+
+        /** Current position in the animation */
+        private int pos;
 
 	/**
-	 * Create a new sprite based on an image
+	 * Create a new sprite based on an list of urls.
+         * Loads the images contained in the urls.
 	 *
-	 * @param image The image that is this sprite
+	 * @param urls Array of strings containing urls to the images
 	 */
-	public Sprite(Image image) {
-		this.image = image;
+	public Sprite(String[] urls) {
+
+                ImageStore s = ImageStore.get();
+
+                Image[] images = new Image[urls.length];
+                
+                for (int i=0;i<urls.length;i++) {
+                    images[i] = s.get(urls[i]);
+                }
+
+		this.image = images;
 	}
 
 	/**
@@ -27,7 +41,7 @@ public class Sprite {
 	 * @return The width in pixels of this sprite
 	 */
 	public int getWidth() {
-		return image.getWidth(null);
+		return image[0].getWidth(null);
 	}
 
 	/**
@@ -36,7 +50,7 @@ public class Sprite {
 	 * @return The height in pixels of this sprite
 	 */
 	public int getHeight() {
-		return image.getHeight(null);
+		return image[0].getHeight(null);
 	}
 
 	/**
@@ -47,8 +61,27 @@ public class Sprite {
 	 * @param y The y location at which to draw the sprite
 	 */
 	public void draw(Graphics g,int x,int y) {
-		g.drawImage(image,x,y,null);
+		g.drawImage(image[pos],x,y,null);
 	}
+
+        /**
+         * Go to the next image of the sprite for rendering
+         */
+        public void nextImage() {
+            if (pos < image.length) {
+                pos++;
+            } else {
+                pos = 0;
+            }
+        }
+
+        /**
+         *  Reset the sprite to the first image
+         */
+        public void resetImage() {
+            pos = 0;
+        }
+
 
 
 }
