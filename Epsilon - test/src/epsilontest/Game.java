@@ -4,11 +4,8 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
-import java.net.URL;
-import java.util.Random;
 import java.util.Timer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -61,6 +58,10 @@ public class Game extends Canvas {
         // going to do that our self in accelerated mode
         setIgnoreRepaint(true);
 
+        this.addKeyListener(Input.get());
+        
+        //panel.addKeyListener(Input.get());
+
     }
 
     public void start() {
@@ -105,7 +106,6 @@ public class Game extends Canvas {
         // Get hold of a graphics context for the accelerated
 	// surface and blank it out
 
-        //Random temp = new Random();
 	Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(Color.WHITE);

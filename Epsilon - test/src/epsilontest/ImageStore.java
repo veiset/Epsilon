@@ -23,7 +23,7 @@ public class ImageStore {
     private HashMap<String,Image> images;
 
     /** Constructor */
-    public ImageStore () {
+    private ImageStore () {
         images = new HashMap<String,Image>();
     }
 
