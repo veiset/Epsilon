@@ -56,7 +56,15 @@ public class ImageStore {
                     // with things like webstart. You could equally do a file look
                     // up here.
 
-                    URL url = this.getClass().getClassLoader().getResource(ref);
+                    //URL url2 = new URL("/pics");
+
+                    //System.out.println("URL: " + url2.toString());
+
+                    //System.out.println(url2.toString());
+
+                    URL url = this.getClass().getResource(ref);
+
+                    //URL url = new URL(ref);
 
                     if (url == null) {
                             fail("Can't find ref: "+ref);

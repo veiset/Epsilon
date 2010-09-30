@@ -26,6 +26,8 @@ public class Sprite {
 
                 ImageStore s = ImageStore.get();
 
+                pos = 0;
+
                 Image[] images = new Image[urls.length];
                 
                 for (int i=0;i<urls.length;i++) {
@@ -60,15 +62,15 @@ public class Sprite {
 	 * @param x The x location at which to draw the sprite
 	 * @param y The y location at which to draw the sprite
 	 */
-	public void draw(Graphics g,int x,int y) {
+	public synchronized void draw(Graphics g,int x,int y) {
 		g.drawImage(image[pos],x,y,null);
 	}
 
         /**
          * Go to the next image of the sprite for rendering
          */
-        public void nextImage() {
-            if (pos < image.length) {
+        public synchronized void nextImage() {
+            if (pos < image.length-1) {
                 pos++;
             } else {
                 pos = 0;

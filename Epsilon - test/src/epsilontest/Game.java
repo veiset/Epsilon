@@ -4,7 +4,9 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferStrategy;
+import java.net.URL;
 import java.util.Random;
 import java.util.Timer;
 import javax.swing.JFrame;
@@ -36,6 +38,9 @@ public class Game extends Canvas {
 
     //renderer Thread
     private RenderThread renderer;
+
+    //The map that the game uses
+    private Map map;
 
     public Game() {
 
@@ -73,6 +78,9 @@ public class Game extends Canvas {
         createBufferStrategy(2);
         strategy = getBufferStrategy();
 
+        // initialising the map
+        map = new TestMap();
+
         // Schedule the GameUpdater Task
         u = new GameUpdater(this);
         t = new Timer();
@@ -88,6 +96,7 @@ public class Game extends Canvas {
     public void updateGame() {
         //System.out.println(System.currentTimeMillis() - lastUpdateTime);
         lastUpdateTime = System.currentTimeMillis();
+        map.update();
     }
 
     void renderGraphics(long delta) {
@@ -95,21 +104,11 @@ public class Game extends Canvas {
         // Get hold of a graphics context for the accelerated
 	// surface and blank it out
 
-        Random temp = new Random();
+        //Random temp = new Random();
 	Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
-        switch (temp.nextInt(5)) {
-            case 0:
-                g.setColor(Color.CYAN); break;
-            case 1:
-                g.setColor(Color.BLACK); break;
-            case 2:
-                g.setColor(Color.RED); break;
-            case 3:
-                g.setColor(Color.BLUE); break;
-            case 4:
-                g.setColor(Color.DARK_GRAY); break;
-        }
+        g.setColor(Color.WHITE);
 	g.fillRect(0,0,800,600);
+        map.render(g, (int)delta);
 
 	// finally, we've completed drawing so clear up the graphics
 	// and flip the buffer over

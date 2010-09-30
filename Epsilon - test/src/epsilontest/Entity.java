@@ -11,10 +11,10 @@ import java.awt.Graphics;
 public abstract class Entity {
 
     private Sprite sprite;
-    private int posX;
-    private int posY;
-    private int pposX;
-    private int pposY;
+    protected int posX;
+    protected int posY;
+    protected int pposX;
+    protected int pposY;
 
     /*
      * Constructur for the Entity class
@@ -46,11 +46,23 @@ public abstract class Entity {
      * @param posX the new x position of the entity
      * @param posY the new y position of the entity
      */
-    public void move(int posX,int posY) {
+    protected void move(int posX,int posY) {
         this.pposX = this.posX;
         this.pposY = this.posY;
         this.posX = posX;
         this.posY = posY;
+    }
+
+    /**
+     * Abstract method to move the entity
+     */
+    public abstract void move();
+
+    /**
+     * Move the sprite to the next image
+     */
+    public void nextImage() {
+        sprite.nextImage();
     }
 
 }

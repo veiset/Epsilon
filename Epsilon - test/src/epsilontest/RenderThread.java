@@ -16,6 +16,8 @@ public class RenderThread extends Thread {
 
     private long totalTime;
 
+    private boolean calcFPS = false;
+
 
     public RenderThread(Game g) {
 
@@ -34,7 +36,7 @@ public class RenderThread extends Thread {
             long delta = System.currentTimeMillis() - lastLoopTime;
             lastLoopTime = System.currentTimeMillis();
             game.renderGraphics(delta);
-            //calcFPS(delta);
+            if(calcFPS){calcFPS(delta);}
             try { Thread.sleep(5); } catch (Exception e) {}
         }
     }
