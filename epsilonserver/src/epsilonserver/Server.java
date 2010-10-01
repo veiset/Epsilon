@@ -11,4 +11,15 @@ package epsilonserver;
  */
 public class Server {
 
+    private int port = 6001;
+    private ServerHandler sh;
+
+
+    public Server() {
+        sh = new ServerHandler();
+        new Thread(sh).start();
+
+    }
+
+
 }

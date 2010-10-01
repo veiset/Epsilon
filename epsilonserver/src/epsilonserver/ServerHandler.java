@@ -5,10 +5,23 @@
 
 package epsilonserver;
 
+import java.net.Socket;
+
 /**
  *
  * @author mm
  */
-public class ServerHandler {
+public class ServerHandler implements Runnable {
+
+    private Socket udpsocket;
+
+
+    public ServerHandler() {
+
+    }
+
+    public void run() {
+        // stuff
+    }
 
 }
