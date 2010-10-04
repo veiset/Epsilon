@@ -46,6 +46,9 @@ public class Game extends Canvas {
     // true if the game is in the menu
     private boolean menu;
 
+    // environment variables
+    public static double GRAVITY = 9.8;
+
     /**
      * Constructor, intialises all the graphics elements,
      * and starts the game running. Also creates the threads
@@ -54,7 +57,8 @@ public class Game extends Canvas {
     public Game() {
 
         // create a frame to contain our game
-        container = new JFrame("Test");
+        container = new JFrame("Epsilon");
+        container.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // initialise LoopTimer
         lastUpdateTime = System.currentTimeMillis();
@@ -161,4 +165,7 @@ public class Game extends Canvas {
 
     }
 
+    public static int calculateGravity(int posY, int pposY) {
+        return 0;
+    }
 }

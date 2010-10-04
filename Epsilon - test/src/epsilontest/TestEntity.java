@@ -36,6 +36,9 @@ public class TestEntity extends Entity {
     @Override
     public void move() {
         // handle input, and chose the right sprite for the job
+        int newPosX = posX;
+        int newPosY = posY;
+
         if (Input.get().right() && Input.get().left()) {
             if (currentSprite != standSprite) {
                 currentSprite.resetImage();
@@ -43,7 +46,6 @@ public class TestEntity extends Entity {
                 standSprite.resetImage();
                 ticker = 0;
             }
-            super.move(posX, posY);
         } else if(Input.get().right()) {
             if (currentSprite != rightSprite) {
                 currentSprite.resetImage();
@@ -51,7 +53,7 @@ public class TestEntity extends Entity {
                 rightSprite.resetImage();
                 ticker = 0;
             }
-            super.move(posX+4, posY);
+            newPosX = posX+4;
         } else if (Input.get().left()) {
             if (currentSprite != leftSprite) {
                 currentSprite.resetImage();
@@ -59,7 +61,7 @@ public class TestEntity extends Entity {
                 leftSprite.resetImage();
                 ticker = 0;
             }
-            super.move(posX -4, posY);
+            newPosX = posX -4;
         } else {
             if (currentSprite != standSprite) {
                 currentSprite.resetImage();
@@ -67,8 +69,13 @@ public class TestEntity extends Entity {
                 standSprite.resetImage();
                 ticker = 0;
             }
-            super.move(posX, posY);
         }
+
+        if (posY-currentSprite.getHeight()<50) {
+            newPosY = posY + 5;
+        }
+
+        super.move(newPosX, newPosY);
 
         // go to the next picture in the sprite if it is time
         if (ticker < 5) {

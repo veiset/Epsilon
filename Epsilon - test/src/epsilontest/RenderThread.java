@@ -72,5 +72,4 @@ public class RenderThread extends Thread {
             currentIt = 1;
         }
     }
-
 }
