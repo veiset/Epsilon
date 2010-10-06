@@ -26,7 +26,7 @@ public class TestMap implements Map {
         moveableEntities = new ArrayList<Entity>();
         entities = new ArrayList<Entity>();
 
-        bg = new Background("/pics/paisaje_artico.png", 1.25);
+        bg = new Background("/pics/bg1.png", 1.25);
 
         TestEntity test = new TestEntity(100, 100);
         playerEntity = test;

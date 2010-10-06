@@ -123,7 +123,7 @@ public class ImageStore {
             tx = AffineTransform.getScaleInstance(scale, scale);
             tx.translate(0,0);
         }
-        AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_BILINEAR);
         sourceImage = op.filter(sourceImage, null);
 
         // create an accelerated image of the right size to store our sprite in
