@@ -14,9 +14,11 @@ public class TestEntity extends Entity {
 
     // keeps track of when to change pictures in the sprite
     private int ticker;
+    private double reminder;
+    private double dPosY;
+    private double dPposY;
 
     // the different sprites this entity uses
-    private Sprite currentSprite;
     private Sprite rightSprite;
     private Sprite standSprite;
     private Sprite leftSprite;
@@ -30,6 +32,7 @@ public class TestEntity extends Entity {
     public TestEntity(int posX,int posY) {
         super(posX, posY);
         ticker = 0;
+        reminder = 0;
         rightSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"});
         leftSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"},true);
         standSprite = new Sprite(new String[]{"/pics/guy01.png"});
@@ -75,8 +78,13 @@ public class TestEntity extends Entity {
         }
 
         if (posY-currentSprite.getHeight()<50) {
-            //newPosY = posY + 5;
-            newPosY = posY - Physics.calculateGravity(posY, pposY, 16);
+            double temp = Physics.calculateGravity(posY, pposY, 16);
+            reminder += temp;
+            System.out.println("Reminder: "+reminder);
+            if (reminder <= -1) {
+                newPosY = posY - (int) reminder;
+                reminder = 0;
+            }
         }
 
         super.move(newPosX, newPosY);
@@ -95,17 +103,4 @@ public class TestEntity extends Entity {
      *
      * @param g The graphic object the entity is to be drawn on
      */
-    public void render(Graphics g, int delta) {
-        float coeff = (float)delta/16;
-
-        /**
-         * Debugging my smoothing out movement method.
-         */
-        /*
-        System.out.println("Delta: "+delta+" Coefficient: "+coeff);
-        System.out.println("X: "+posX+" Y: "+posY+" Real X: "+Math.round(posX+(posX-pposX)*coeff)+" Real Y: "+Math.round(posY+(posY-pposY)*coeff)+" Non-rounded X&Y"+(posX+(posX-pposX)*coeff)+" "+(posY+(posY-pposY)*coeff));
-         */
-        currentSprite.draw(g, Math.round(posX+(posX-pposX)*coeff), Math.round(posY+(posY-pposY)*coeff));
-    }
-
 }

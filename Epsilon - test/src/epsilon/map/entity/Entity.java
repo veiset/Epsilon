@@ -1,5 +1,6 @@
 package epsilon.map.entity;
 
+import epsilon.game.Sprite;
 import java.awt.Graphics;
 
 /**
@@ -14,6 +15,8 @@ public abstract class Entity {
     protected int posY;
     protected int pposX;
     protected int pposY;
+
+    protected Sprite currentSprite;
 
     /*
      * Constructur for the Entity class
@@ -53,6 +56,13 @@ public abstract class Entity {
      * @param g The graphic object the entity is to be drawn on
      * @param delta an int specifying the number of milliseconds since last gameupdate
      */
-    abstract public void render(Graphics g, int delta);
+    public void render(Graphics g, int delta) {
+        float coeff = (float)delta/16;
+
+        /**
+         * Smoothing out frame drawings
+         */
+        currentSprite.draw(g, Math.round(posX+(posX-pposX)*coeff), Math.round(posY+(posY-pposY)*coeff));
+    }
 
 }
