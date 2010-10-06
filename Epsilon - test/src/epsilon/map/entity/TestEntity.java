@@ -36,6 +36,7 @@ public class TestEntity extends Entity {
 
     @Override
     public void move() {
+
         // handle input, and chose the right sprite for the job
         double newPosX = posX;
         double newPosY = posY;
@@ -72,14 +73,14 @@ public class TestEntity extends Entity {
             }
         }
 
-        if (posY<407) {
+        // Handle falling
+        if (posY<102) {
             double temp = Physics.calculateGravity(posY, pposY, 16);
-            System.out.println("pposY: "+ pposY + " dPosY: " + posY);
             newPosY = posY-temp;
         } else if (Input.get().jump()) {
-            newPosY -= 6;
+            // if it touches the ground, jump!
+            newPosY -= 5;
         }
-
 
         super.move(newPosX, newPosY);
 
@@ -92,4 +93,23 @@ public class TestEntity extends Entity {
         }
     }
 
+    @Override
+    public double getXRenderPosition () {
+        return posX - 400 + currentSprite.getWidth()/2;
+    }
+
+    @Override
+    public double getYRenderPosition () {
+        return posY - 300 + currentSprite.getHeight()/2;
+    }
+
+    @Override
+    public double getXPosition() {
+        return posX - currentSprite.getWidth();
+    }
+
+    @Override
+    public double getYPosition() {
+        return posY - currentSprite.getHeight();
+    }
 }

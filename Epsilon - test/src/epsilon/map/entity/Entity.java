@@ -56,13 +56,54 @@ public abstract class Entity {
      * @param g The graphic object the entity is to be drawn on
      * @param delta an int specifying the number of milliseconds since last gameupdate
      */
-    public void render(Graphics g, int delta) {
+    public void render(Graphics g, int delta, double x, double y) {
         double coeff = (double)delta/16;
+
+        double posX = this.posX - x;
+        double posY = this.posY - y;
+        double pposX = this.pposX - x;
+        double pposY = this.pposY - y;
 
         /**
          * Smoothing out frame drawings
          */
         currentSprite.draw(g, (int)Math.round(posX+(posX-pposX)*coeff), (int)Math.round(posY+(posY-pposY)*coeff));
+    }
+
+    /**
+     * Returns the X position of the entity
+     *
+     * @return X position of the entity
+     */
+    public double getXRenderPosition() {
+        return getXPosition();
+    }
+
+    /**
+     * Returns the Y position of the entity
+     *
+     * @return Y position of the entity
+     */
+    public double getYRenderPosition() {
+        return getYPosition();
+    }
+
+    /**
+     * Returns the X position of the entity
+     *
+     * @return X position of the entity
+     */
+    public double getXPosition() {
+        return posX;
+    }
+
+    /**
+     * Returns the Y position of the entity
+     *
+     * @return Y position of the entity
+     */
+    public double getYPosition() {
+        return posY;
     }
 
 }
