@@ -23,6 +23,12 @@ public class TestMap implements Map {
 
         TestEntity test = new TestEntity(100, 100);
 
+        renderableEntities.add(new Floor(0, 171));
+        renderableEntities.add(new Floor(123, 501));
+        renderableEntities.add(new Floor(246, 501));
+        renderableEntities.add(new Floor(369, 501));
+        renderableEntities.add(new Floor(677, 501));
+
         renderableEntities.add(test);
         moveableEntities.add(test);
         entities.add(test);
@@ -33,7 +39,7 @@ public class TestMap implements Map {
         Entity[] temp = new Entity[renderableEntities.size()];
         renderableEntities.toArray(temp);
 
-        for(int i=0;i<temp.length;i++){
+        for (int i = 0; i < temp.length; i++) {
             temp[i].render(g, delta);
         }
 
@@ -43,9 +49,8 @@ public class TestMap implements Map {
         Entity[] temp = new Entity[moveableEntities.size()];
         moveableEntities.toArray(temp);
 
-        for(int i=0;i<temp.length;i++){
+        for (int i = 0; i < temp.length; i++) {
             temp[i].move();
         }
     }
-
 }
