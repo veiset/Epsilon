@@ -13,17 +13,19 @@ import java.awt.Image;
 public class Background {
 
     private Image bgImage;
-    private Image bgImageFlipped;
-    private int repeat = 0;
-    private int repeatPos = 0;
-    private int imageSize = 2000;
-    private double speed = 0.5;
+    private int repeat;
+    private int repeatPos;
+    private int imageSize;;
+    private double speed;
 
     public Background(String ref, double scale) {
         ImageStore s = ImageStore.get();
 
+        repeat = 0;
+        repeatPos = 0;
+        speed = 0.5;
+
         bgImage = s.getImage(ref, false, scale);
-        bgImageFlipped = s.getImage(ref, true, scale);
         imageSize = bgImage.getWidth(null);
     }
 
