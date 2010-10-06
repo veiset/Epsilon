@@ -17,7 +17,7 @@ public class Background {
     private int repeat = 0;
     private int repeatPos = 0;
     private int imageSize = 2000;
-    private double speed = 0.2;
+    private double speed = 0.5;
 
     public Background(String ref, double scale) {
         ImageStore s = ImageStore.get();
@@ -34,10 +34,10 @@ public class Background {
         repeatPos = repeat*imageSize;
 
         if ((x*speed) < imageSize+repeatPos || (x*speed) == imageSize+repeatPos) {
-            g.drawImage(bgImage, 0 - (int) (x * speed)+repeatPos, 0 - (int) (y * speed), null);
+            g.drawImage(bgImage, 0 - (int) (x * speed)+repeatPos, 0 - (int) (y * speed)-100, null);
         }
         if ((x*speed+800) > imageSize+repeatPos) {
-            g.drawImage(bgImage, 0 - (int) (x * speed)+(repeatPos)+imageSize, 0 - (int) (y * speed), null);
+            g.drawImage(bgImage, 0 - (int) (x * speed)+(repeatPos)+imageSize, 0 - (int) (y * speed)-100, null);
         }
 
     }

@@ -145,7 +145,7 @@ public class Game extends Canvas {
 	// surface and blank it out
 	Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
         RenderingHints renderHints = new RenderingHints(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON); 
-       // g.setRenderingHints(renderHints);
+        //g.setRenderingHints(renderHints);
         g.setColor(Color.WHITE);
 	g.fillRect(0,0,800,600);
 
