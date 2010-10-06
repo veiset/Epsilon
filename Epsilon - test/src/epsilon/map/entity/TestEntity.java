@@ -1,6 +1,5 @@
 package epsilon.map.entity;
 
-import epsilon.game.Input;
 import epsilon.game.Physics;
 import epsilon.game.Sprite;
 import epsilon.game.Input;
@@ -78,7 +77,7 @@ public class TestEntity extends Entity {
             System.out.println("pposY: "+ pposY + " dPosY: " + posY);
             newPosY = posY-temp;
         } else if (Input.get().jump()) {
-            newPosY -= 5;
+            newPosY -= 6;
         }
 
 
