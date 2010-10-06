@@ -11,10 +11,10 @@ import java.awt.Graphics;
  */
 public abstract class Entity {
 
-    protected int posX;
-    protected int posY;
-    protected int pposX;
-    protected int pposY;
+    protected double posX;
+    protected double posY;
+    protected double pposX;
+    protected double pposY;
 
     protected Sprite currentSprite;
 
@@ -25,7 +25,7 @@ public abstract class Entity {
      * @param posX The initial x position of the entity
      * @param posY The initial y position of the entity
      */
-    public Entity (int posX,int posY) {
+    public Entity (double posX,double posY) {
         this.posX = posX;
         this.posY = posY;
         this.pposX = posX;
@@ -38,7 +38,7 @@ public abstract class Entity {
      * @param posX the new x position of the entity
      * @param posY the new y position of the entity
      */
-    protected void move(int posX,int posY) {
+    protected void move(double posX,double posY) {
         this.pposX = this.posX;
         this.pposY = this.posY;
         this.posX = posX;
@@ -57,12 +57,12 @@ public abstract class Entity {
      * @param delta an int specifying the number of milliseconds since last gameupdate
      */
     public void render(Graphics g, int delta) {
-        float coeff = (float)delta/16;
+        double coeff = (double)delta/16;
 
         /**
          * Smoothing out frame drawings
          */
-        currentSprite.draw(g, Math.round(posX+(posX-pposX)*coeff), Math.round(posY+(posY-pposY)*coeff));
+        currentSprite.draw(g, (int)Math.round(posX+(posX-pposX)*coeff), (int)Math.round(posY+(posY-pposY)*coeff));
     }
 
 }

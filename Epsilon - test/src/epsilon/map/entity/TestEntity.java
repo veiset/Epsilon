@@ -14,9 +14,6 @@ public class TestEntity extends Entity {
 
     // keeps track of when to change pictures in the sprite
     private int ticker;
-    private double reminder;
-    private double dPosY;
-    private double dPposY;
 
     // the different sprites this entity uses
     private Sprite rightSprite;
@@ -31,10 +28,7 @@ public class TestEntity extends Entity {
      */
     public TestEntity(int posX,int posY) {
         super(posX, posY);
-        dPosY = posY;
-        dPposY = posY;
         ticker = 0;
-        reminder = 0;
         rightSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"});
         leftSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"},true);
         standSprite = new Sprite(new String[]{"/pics/guy01.png"});
@@ -44,8 +38,8 @@ public class TestEntity extends Entity {
     @Override
     public void move() {
         // handle input, and chose the right sprite for the job
-        int newPosX = posX;
-        int newPosY = posY;
+        double newPosX = posX;
+        double newPosY = posY;
 
         if (Input.get().right() && Input.get().left()) {
             if (currentSprite != standSprite) {
@@ -80,14 +74,10 @@ public class TestEntity extends Entity {
         }
 
         if (posY<407) {
-            double temp = Physics.calculateGravity(dPosY, dPposY, 16);
-            dPposY = dPosY;
-            dPosY -= temp;
-            System.out.println("pposY: "+ dPposY + " dPosY: " + dPosY);
-            newPosY = (int)dPosY;
+            double temp = Physics.calculateGravity(posY, pposY, 16);
+            System.out.println("pposY: "+ pposY + " dPosY: " + posY);
+            newPosY = posY-temp;
         } else if (Input.get().jump()) {
-            dPposY = dPosY;
-            dPosY -=  5;
             newPosY -= 5;
         }
 
