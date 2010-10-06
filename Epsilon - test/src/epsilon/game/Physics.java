@@ -18,7 +18,6 @@ public class Physics {
         double dt = delta * 0.001;
         double velocity = (posY-pposY)/(dt);
         double dif = -velocity * dt + GRAVITY * dt * dt;
-        System.out.println("Velocity: " + velocity + " PosY: " + posY + " PPosY: " + pposY + " Dif: "+dif);
         return dif;
     }
 

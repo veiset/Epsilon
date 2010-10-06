@@ -21,7 +21,7 @@ public class RenderThread extends Thread {
     private long totalTime;
 
     // turns on and off FPS calculation
-    private boolean calcFPS = false;
+    private boolean calcFPS = true;
 
 
     /**
@@ -51,7 +51,7 @@ public class RenderThread extends Thread {
             lastLoopTime = System.currentTimeMillis();
             game.renderGraphics(delta);
             if(calcFPS){calcFPS(delta);}
-            try { Thread.sleep(5); } catch (Exception e) {}
+            //try { Thread.sleep(5); } catch (Exception e) {}
         }
     }
 

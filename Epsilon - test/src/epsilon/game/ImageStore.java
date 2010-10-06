@@ -52,40 +52,8 @@ public class ImageStore {
      */
     public Image get(String ref) {
 
-        /** check if the image is already cached */
-	if (images.get(ref) != null) {
-            return images.get(ref);
-        }
-                
-        BufferedImage sourceImage = null;
+        return getImage(ref, false, 1.0);
 
-        try {
-                // gets the url of the file
-                URL url = this.getClass().getResource(ref);
-
-                if (url == null) {
-                        fail("Can't find ref: "+ref);
-                }
-
-                // use ImageIO to read the image in
-                sourceImage = ImageIO.read(url);
-                
-        } catch (IOException e) {
-                fail("Failed to load: "+ref);
-        }
-
-        // create an accelerated image of the right size to store our sprite in
-        GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
-        Image image = gc.createCompatibleImage(sourceImage.getWidth(),sourceImage.getHeight(),Transparency.TRANSLUCENT);
-
-        // draw our source image into the accelerated image
-        image.getGraphics().drawImage(sourceImage,0,0,null);
-        
-        // save the accelerated image in the cache
-        images.put(ref, image);
-
-        return image;
-        
     }
 
     /**
@@ -98,45 +66,7 @@ public class ImageStore {
      *
      */
     public Image getFlipped(String ref) {
-	if (flippedImages.get(ref) != null) {
-            return flippedImages.get(ref);
-        }
-
-        BufferedImage sourceImage = null;
-
-
-        try {
-                // gets the url of the file
-                URL url = this.getClass().getResource(ref);
-
-                if (url == null) {
-                        fail("Can't find ref: "+ref);
-                }
-
-                // use ImageIO to read the image in
-                sourceImage = ImageIO.read(url);
-
-        } catch (IOException e) {
-                fail("Failed to load: "+ref);
-        }
-
-        //flip the Image
-        AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-        tx.translate(-sourceImage.getWidth(),0);
-        AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-        sourceImage = op.filter(sourceImage, null);
-
-        // create an accelerated image of the right size to store our sprite in
-        GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
-        Image image = gc.createCompatibleImage(sourceImage.getWidth(),sourceImage.getHeight(),Transparency.TRANSLUCENT);
-
-        // draw our source image into the accelerated image
-        image.getGraphics().drawImage(sourceImage,0,0,null);
-
-        // save the accelerated image in the cache
-        flippedImages.put(ref, image);
-
-        return image;
+        return getImage(ref, true, 1.0);
     }
 
     /**
@@ -150,6 +80,67 @@ public class ImageStore {
 
             System.err.println(message);
             System.exit(0);
+    }
+
+    public Image getImage(String ref, boolean flip, double scale) {
+        /** check if the image is already cached */
+        if (flip) {
+            if (flippedImages.get(ref) != null) {
+                return flippedImages.get(ref);
+            }
+        } else {
+            if (images.get(ref) != null) {
+                return images.get(ref);
+            }
+        }
+
+        BufferedImage sourceImage = null;
+
+
+        try {
+                // gets the url of the file
+                URL url = this.getClass().getResource(ref);
+
+                if (url == null) {
+                        fail("Can't find ref: "+ref);
+                }
+
+                // use ImageIO to read the image in
+                sourceImage = ImageIO.read(url);
+
+        } catch (IOException e) {
+                fail("Failed to load: "+ref);
+        }
+
+        //flip and scale the image the Image
+
+        AffineTransform tx = null;
+
+        if (flip) {
+            tx = AffineTransform.getScaleInstance(-scale, scale);
+            tx.translate(-sourceImage.getWidth(),0);
+        } else {
+            tx = AffineTransform.getScaleInstance(scale, scale);
+            tx.translate(0,0);
+        }
+        AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        sourceImage = op.filter(sourceImage, null);
+
+        // create an accelerated image of the right size to store our sprite in
+        GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+        Image image = gc.createCompatibleImage(sourceImage.getWidth(),sourceImage.getHeight(),Transparency.TRANSLUCENT);
+
+        // draw our source image into the accelerated image
+        image.getGraphics().drawImage(sourceImage,0,0,null);
+
+        // save the accelerated image in the cache
+        if (flip) {
+            flippedImages.put(ref, image);
+        } else {
+            images.put(ref, image);
+        }
+
+        return image;
     }
 
 

@@ -117,7 +117,6 @@ public class Game extends Canvas {
      * Method used to update the game, mainly used by the updater task
      */
     public void updateGame() {
-        //System.out.println(System.currentTimeMillis() - lastUpdateTime);
         if (Input.get().menu() && !Input.get().getMenuHandeled()) {
             if (!menu) {
                 menu = true;
