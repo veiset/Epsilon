@@ -3,6 +3,7 @@ package epsilon.map.entity;
 import epsilon.game.Input;
 import epsilon.game.Physics;
 import epsilon.game.Sprite;
+import epsilon.game.Input;
 
 /**
  * Test class that extends entity
@@ -78,13 +79,18 @@ public class TestEntity extends Entity {
             }
         }
 
-        if (posY-currentSprite.getHeight()<50) {
+        if (posY<407) {
             double temp = Physics.calculateGravity(dPosY, dPposY, 16);
             dPposY = dPosY;
             dPosY -= temp;
             System.out.println("pposY: "+ dPposY + " dPosY: " + dPosY);
             newPosY = (int)dPosY;
+        } else if (Input.get().jump()) {
+            dPposY = dPosY;
+            dPosY -=  5;
+            newPosY -= 5;
         }
+
 
         super.move(newPosX, newPosY);
 

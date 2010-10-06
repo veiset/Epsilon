@@ -39,7 +39,7 @@ public class ImageStore {
      * @return The single instance of this class
      */
     public static ImageStore get() {
-            return single;
+        return single;
     }
 
     /**
