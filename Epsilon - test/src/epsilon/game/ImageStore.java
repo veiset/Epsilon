@@ -80,7 +80,7 @@ public class ImageStore {
 
         // draw our source image into the accelerated image
         image.getGraphics().drawImage(sourceImage,0,0,null);
-
+        
         // save the accelerated image in the cache
         images.put(ref, image);
 

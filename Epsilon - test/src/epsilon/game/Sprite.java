@@ -89,7 +89,7 @@ public class Sprite {
 	 * @param y The y location at which to draw the sprite
 	 */
 	public synchronized void draw(Graphics g,int x,int y) {
-		g.drawImage(image[pos],x,y,null);
+            g.drawImage(image[pos],x,y,null);
 	}
 
         /**

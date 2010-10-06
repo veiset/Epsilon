@@ -3,7 +3,6 @@ package epsilon.map.entity;
 import epsilon.game.Input;
 import epsilon.game.Physics;
 import epsilon.game.Sprite;
-import java.awt.Graphics;
 
 /**
  * Test class that extends entity
@@ -31,6 +30,8 @@ public class TestEntity extends Entity {
      */
     public TestEntity(int posX,int posY) {
         super(posX, posY);
+        dPosY = posY;
+        dPposY = posY;
         ticker = 0;
         reminder = 0;
         rightSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"});
@@ -78,13 +79,11 @@ public class TestEntity extends Entity {
         }
 
         if (posY-currentSprite.getHeight()<50) {
-            double temp = Physics.calculateGravity(posY, pposY, 16);
-            reminder += temp;
-            System.out.println("Reminder: "+reminder);
-            if (reminder <= -1) {
-                newPosY = posY - (int) reminder;
-                reminder = 0;
-            }
+            double temp = Physics.calculateGravity(dPosY, dPposY, 16);
+            dPposY = dPosY;
+            dPosY -= temp;
+            System.out.println("pposY: "+ dPposY + " dPosY: " + dPosY);
+            newPosY = (int)dPosY;
         }
 
         super.move(newPosX, newPosY);
@@ -98,9 +97,4 @@ public class TestEntity extends Entity {
         }
     }
 
-    /*
-     * Rendering the object
-     *
-     * @param g The graphic object the entity is to be drawn on
-     */
 }
