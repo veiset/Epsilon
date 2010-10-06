@@ -46,9 +46,6 @@ public class Game extends Canvas {
     // true if the game is in the menu
     private boolean menu;
 
-    // environment variables
-    public static double GRAVITY = 9.8;
-
     /**
      * Constructor, intialises all the graphics elements,
      * and starts the game running. Also creates the threads
@@ -164,8 +161,5 @@ public class Game extends Canvas {
 	strategy.show();
 
     }
-
-    public static int calculateGravity(int posY, int pposY) {
-        return 0;
-    }
 }
+

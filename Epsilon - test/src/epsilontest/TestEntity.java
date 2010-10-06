@@ -72,7 +72,8 @@ public class TestEntity extends Entity {
         }
 
         if (posY-currentSprite.getHeight()<50) {
-            newPosY = posY + 5;
+            //newPosY = posY + 5;
+            newPosY = posY - Physics.calculateGravity(posY, pposY, 16);
         }
 
         super.move(newPosX, newPosY);
