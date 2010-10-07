@@ -106,4 +106,13 @@ public abstract class Entity {
         return posY;
     }
 
+    /**
+     * Checking if an entity is within the hitbox of the entity.
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    public abstract boolean hitbox(Entity entity);
+
 }

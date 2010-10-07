@@ -79,7 +79,7 @@ public class TestEntity extends Entity {
             newPosY = posY-temp;
         } else if (Input.get().jump()) {
             // if it touches the ground, jump!
-            newPosY -= 5;
+            newPosY -= 6;
         }
 
         super.move(newPosX, newPosY);
@@ -111,5 +111,10 @@ public class TestEntity extends Entity {
     @Override
     public double getYPosition() {
         return posY - currentSprite.getHeight();
+    }
+
+    @Override
+    public boolean hitbox(Entity entity) {
+        return false; // yet to be implemented
     }
 }

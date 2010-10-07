@@ -13,28 +13,37 @@ public class Floor extends World {
         currentSprite = new Sprite(new String[]{"/pics/crate.png"});
     }
 
-    // Method for hitbox for this object (concept):
-    //   ______
-    //  |      |
-    //  |______|
-    // 
-    public boolean hitBox(int x, int y) {
-        // public boolean hitbox(Entity toCheckAgainst) {
+    /**
+     * Very basic collision detection test
+     * NOTE: Currently not good enough to be implimented!
+     *
+     * @param toCheckAgainst
+     * @return
+     */
+    public boolean hitbox(Entity toCheckAgainst) {
         boolean hit = true;
+
+        int x = (int) toCheckAgainst.getXPosition();
+        int y = (int) toCheckAgainst.getYPosition();
 
         double left1, left2;
         double right1, right2;
         double top1, top2;
         double bottom1, bottom2;
 
+        // variables ending with 1 is for this object,
+        // and variables ending with 2 is for the object toCheckAgainst
+        // all offsets should come from the incomming object, and not
+        // some magical numbers I made up.
+        
         left1 = this.posX;
-        left2 = x;
-        right1 = this.posX; // (+image.width)
-        right2 = x;
-        top1 = this.posY;
-        top2 = y; // (+ offset?)
+        left2 = x+100;
+        right1 = this.posX+50; // (+image.width)
+        right2 = x+200;
+        top1 = this.posY+150;
+        top2 = y+50; // (+ offset?)
         bottom1 = this.posY; // (+image.height)
-        bottom2 = y; // (+ offset?)
+        bottom2 = y+350; // (+ offset?)
 
         if (bottom1 < top2) {
             hit = false;
