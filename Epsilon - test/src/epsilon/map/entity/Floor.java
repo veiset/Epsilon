@@ -35,15 +35,21 @@ public class Floor extends World {
         // and variables ending with 2 is for the object toCheckAgainst
         // all offsets should come from the incomming object, and not
         // some magical numbers I made up.
-        
+
         left1 = this.posX;
-        left2 = x+100;
-        right1 = this.posX+50; // (+image.width)
-        right2 = x+200;
-        top1 = this.posY+150;
-        top2 = y+50; // (+ offset?)
+        left2 = x + 100;
+        right1 = this.posX + 50; // (+image.width)
+        right2 = x + 200;
+        top1 = this.posY + 150;
+        top2 = y + 50; // (+ offset?)
         bottom1 = this.posY; // (+image.height)
-        bottom2 = y+350; // (+ offset?)
+        bottom2 = y + 350; // (+ offset?)
+
+//        System.out.println(bottom1 + " < " + top2);
+//        System.out.println(top1 + " > " + bottom2);
+//        System.out.println(right1 + " < " + left2);
+//        System.out.println(left1 + " > " + right2);
+//        System.out.println("------------------");
 
         if (bottom1 < top2) {
             hit = false;

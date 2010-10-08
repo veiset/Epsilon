@@ -74,7 +74,7 @@ public class TestEntity extends Entity {
         }
 
         // Handle falling
-        if (posY<102) {
+        if (posY<600) {
             double temp = Physics.calculateGravity(posY, pposY, 16);
             newPosY = posY-temp;
         } else if (Input.get().jump()) {
@@ -100,7 +100,8 @@ public class TestEntity extends Entity {
 
     @Override
     public double getYRenderPosition () {
-        return posY - 300 + currentSprite.getHeight()/2;
+        //return posY - 300 + currentSprite.getHeight()/2;
+        return 0;
     }
 
     @Override
