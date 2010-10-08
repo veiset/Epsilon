@@ -38,7 +38,7 @@ public class TestMap implements Map {
         renderableEntities.add(new Floor(200, 495));
         renderableEntities.add(new Floor(250, 495));
         renderableEntities.add(new Floor(400, 495));
-          renderableEntities.add(new Floor(100, 415));
+        renderableEntities.add(new Floor(100, 415));
         renderableEntities.add(new Floor(100, 455));
 
         renderableEntities.add(new Floor(250, 415));
@@ -70,9 +70,9 @@ public class TestMap implements Map {
 
     public void update() {
 
-        // temp hitbox, simple test
+        // temp collision, simple test
         for (Entity ent : renderableEntities) {
-            if(ent.hitbox(playerEntity)) {
+            if(ent.collision(playerEntity)) {
                 System.out.println("block!");
             }
         }

@@ -20,7 +20,7 @@ public class Floor extends World {
      * @param toCheckAgainst
      * @return
      */
-    public boolean hitbox(Entity toCheckAgainst) {
+    public boolean collision(Entity toCheckAgainst) {
         boolean hit = true;
 
         int x = (int) toCheckAgainst.getXPosition();

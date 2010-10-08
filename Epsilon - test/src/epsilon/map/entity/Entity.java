@@ -113,6 +113,6 @@ public abstract class Entity {
      * @param y
      * @return
      */
-    public abstract boolean hitbox(Entity entity);
+    public abstract boolean collision(Entity entity);
 
 }

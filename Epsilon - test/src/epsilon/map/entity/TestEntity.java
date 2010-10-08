@@ -115,7 +115,7 @@ public class TestEntity extends Entity {
     }
 
     @Override
-    public boolean hitbox(Entity entity) {
+    public boolean collision(Entity entity) {
         return false; // yet to be implemented
     }
 }
