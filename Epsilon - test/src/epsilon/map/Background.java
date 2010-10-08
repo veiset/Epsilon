@@ -8,12 +8,11 @@ import java.awt.Image;
  *
  * Class used for drawing the background of a map
  *
- * @author Marius
+ * @author Marius, vz
  */
 public class Background {
 
     private Image bgImage;
-    private Image bgImageFlipped;
     private int repeat = 0;
     private int repeatPos = 0;
     private int imageSize = 2000;
@@ -35,12 +34,12 @@ public class Background {
 
         // background scrolling fix if you go to the left. 
         // repeat = 0 is an issue when going left.
-        if (repeat < 1) { repeat -= 1; }
+        if (x*relativeDistance < 0) { repeat += -1; }
         // relative position
         repeatPos = repeat*imageSize;
 
         // render picture while the imageSize is larger than
-        System.out.println(((x*relativeDistance)+repeatPos));
+        System.out.println(((x*relativeDistance)));
         if ((x*relativeDistance) < imageSize+repeatPos || (x*relativeDistance) == imageSize+repeatPos) {
             // 0 - (pixels the picture should been draw at, relative to xPos to the player)
             g.drawImage(bgImage, 0 - (int) (x * relativeDistance)+repeatPos, -80 - (int) (y * relativeDistance/10)-100, null);
