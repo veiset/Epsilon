@@ -63,7 +63,7 @@ public class TestEntity extends Entity {
                 leftSprite.resetImage();
                 ticker = 0;
             }
-            newPosX = posX -4;
+            newPosX = posX-4;
         } else {
             if (currentSprite != standSprite) {
                 currentSprite.resetImage();

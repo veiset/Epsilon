@@ -33,22 +33,22 @@ public class TestMap implements Map {
 
         // TODO: Discuss; should floors have x,y parameter = x*50, y*40 as default?
         // => new Floor(3,4), instead of new Floor(150,160)?
-//        renderableEntities.add(new Floor(100, 195));
-//        renderableEntities.add(new Floor(150, 195));
-//        renderableEntities.add(new Floor(200, 195));
-//        renderableEntities.add(new Floor(250, 195));
-//        renderableEntities.add(new Floor(400, 195));
+        renderableEntities.add(new Floor(100, 195));
+        renderableEntities.add(new Floor(150, 195));
+        renderableEntities.add(new Floor(200, 195));
+        renderableEntities.add(new Floor(250, 195));
+        renderableEntities.add(new Floor(400, 195));
           renderableEntities.add(new Floor(100, 155));
-//        renderableEntities.add(new Floor(100, 75));
-//
-//        renderableEntities.add(new Floor(250, 115));
+        renderableEntities.add(new Floor(100, 75));
+
+        renderableEntities.add(new Floor(250, 115));
         renderableEntities.add(new Floor(300, 115));
 
-//        renderableEntities.add(new Floor(450, 195));
-//        renderableEntities.add(new Floor(500, 195));
-//
-//        renderableEntities.add(new Floor(400, -15));
-//        renderableEntities.add(new Floor(450, -15));
+        renderableEntities.add(new Floor(450, 195));
+        renderableEntities.add(new Floor(500, 195));
+
+        renderableEntities.add(new Floor(400, -15));
+        renderableEntities.add(new Floor(450, -15));
 
         renderableEntities.add(test);
         moveableEntities.add(test);
@@ -74,8 +74,6 @@ public class TestMap implements Map {
         for (Entity ent : renderableEntities) {
             if(ent.hitbox(playerEntity)) {
                 System.out.println("block!");
-            }else {
-                System.out.println("ok");
             }
         }
 

@@ -35,8 +35,9 @@ public class Background {
         // relative position
         repeatPos = repeat*imageSize;
 
-        // render picture until
+        // render picture while the imageSize is larger than
         if ((x*relativeDistance) < imageSize+repeatPos || (x*relativeDistance) == imageSize+repeatPos) {
+            // 0 - (pixels the picture should been draw at, relative to xPos to the player)
             g.drawImage(bgImage, 0 - (int) (x * relativeDistance)+repeatPos, 0 - (int) (y * relativeDistance)-100, null);
         }
         // fade a second picture over to get a repeated background
