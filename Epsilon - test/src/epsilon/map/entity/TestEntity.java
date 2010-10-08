@@ -74,7 +74,7 @@ public class TestEntity extends Entity {
         }
 
         // Handle falling
-        if (posY<600) {
+        if (posY<500) {
             double temp = Physics.calculateGravity(posY, pposY, 16);
             newPosY = posY-temp;
         } else if (Input.get().jump()) {
