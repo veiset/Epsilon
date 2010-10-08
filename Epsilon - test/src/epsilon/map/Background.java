@@ -32,10 +32,15 @@ public class Background {
 
         // times the background has been repeated, as x isn't relative to the screen positions
         repeat = ((int) ((x * relativeDistance)) / imageSize);
+
+        // background scrolling fix if you go to the left. 
+        // repeat = 0 is an issue when going left.
+        if (repeat < 1) { repeat -= 1; }
         // relative position
         repeatPos = repeat*imageSize;
 
         // render picture while the imageSize is larger than
+        System.out.println(((x*relativeDistance)+repeatPos));
         if ((x*relativeDistance) < imageSize+repeatPos || (x*relativeDistance) == imageSize+repeatPos) {
             // 0 - (pixels the picture should been draw at, relative to xPos to the player)
             g.drawImage(bgImage, 0 - (int) (x * relativeDistance)+repeatPos, -80 - (int) (y * relativeDistance/10)-100, null);
