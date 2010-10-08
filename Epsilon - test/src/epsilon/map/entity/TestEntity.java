@@ -16,8 +16,9 @@ public class TestEntity extends Entity {
 
     // the different sprites this entity uses
     private Sprite rightSprite;
-    private Sprite standSprite;
+    private Sprite standSpriteRight;
     private Sprite leftSprite;
+    private Sprite standSpriteLeft;
 
     /**
      * Constructor for the entity that initialises sprites
@@ -30,8 +31,10 @@ public class TestEntity extends Entity {
         ticker = 0;
         rightSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"});
         leftSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"},true);
-        standSprite = new Sprite(new String[]{"/pics/guy01.png"});
-        currentSprite = standSprite;
+        standSpriteRight = new Sprite(new String[]{"/pics/guy01.png"});
+        standSpriteLeft = new Sprite(new String[]{"/pics/guy01.png"},true);
+
+        currentSprite = standSpriteRight;
     }
 
     @Override
@@ -42,10 +45,16 @@ public class TestEntity extends Entity {
         double newPosY = posY;
 
         if (Input.get().right() && Input.get().left()) {
-            if (currentSprite != standSprite) {
+            if (currentSprite != standSpriteRight && currentSprite != standSpriteLeft) {
                 currentSprite.resetImage();
-                currentSprite = standSprite;
-                standSprite.resetImage();
+                // if the guy was moving right, he should be face right when stopped
+                if (pposX < posX) {
+                    currentSprite = standSpriteRight;
+                    standSpriteRight.resetImage();
+                } else { // last moved left, animation should be inverted
+                    currentSprite = standSpriteLeft;
+                    standSpriteLeft.resetImage();
+                }
                 ticker = 0;
             }
         } else if(Input.get().right()) {
@@ -65,10 +74,16 @@ public class TestEntity extends Entity {
             }
             newPosX = posX-4;
         } else {
-            if (currentSprite != standSprite) {
+            if (currentSprite != standSpriteRight && currentSprite != standSpriteLeft) {
                 currentSprite.resetImage();
-                currentSprite = standSprite;
-                standSprite.resetImage();
+                // if the guy was moving right, he should be face right when stopped
+                if (pposX < posX) {
+                    currentSprite = standSpriteRight;
+                    standSpriteRight.resetImage();
+                } else { // last moved left, animation should be inverted
+                    currentSprite = standSpriteLeft;
+                    standSpriteLeft.resetImage();
+                }
                 ticker = 0;
             }
         }
