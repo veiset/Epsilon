@@ -44,20 +44,7 @@ public class TestEntity extends Entity {
         double newPosX = posX;
         double newPosY = posY;
 
-        if (Input.get().right() && Input.get().left()) {
-            if (currentSprite != standSpriteRight && currentSprite != standSpriteLeft) {
-                currentSprite.resetImage();
-                // if the guy was moving right, he should be face right when stopped
-                if (pposX < posX) {
-                    currentSprite = standSpriteRight;
-                    standSpriteRight.resetImage();
-                } else { // last moved left, animation should be inverted
-                    currentSprite = standSpriteLeft;
-                    standSpriteLeft.resetImage();
-                }
-                ticker = 0;
-            }
-        } else if(Input.get().right()) {
+        if(Input.get().right() && !Input.get().left()) {
             if (currentSprite != rightSprite) {
                 currentSprite.resetImage();
                 currentSprite = rightSprite;
@@ -65,7 +52,7 @@ public class TestEntity extends Entity {
                 ticker = 0;
             }
             newPosX = posX+4;
-        } else if (Input.get().left()) {
+        } else if (Input.get().left() && !Input.get().right()) {
             if (currentSprite != leftSprite) {
                 currentSprite.resetImage();
                 currentSprite = leftSprite;
