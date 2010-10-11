@@ -58,12 +58,13 @@ public class TestMap implements Map {
 
     public void render(Graphics g, int delta) {
 
-        bg.render(g, playerEntity.getXPosition(), playerEntity.getYPosition());
+        bg.render(g, playerEntity.getXPosition()-playerEntity.getXPosition(), playerEntity.getYPosition()-playerEntity.getHeight());
         Entity[] temp = new Entity[renderableEntities.size()];
         renderableEntities.toArray(temp);
 
         for (int i = 0; i < temp.length; i++) {
             temp[i].render(g, delta, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
+            temp[i].renderHitBox(g, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
         }
 
     }

@@ -90,6 +90,7 @@ public class Sprite {
 	 */
 	public synchronized void draw(Graphics g,int x,int y) {
             g.drawImage(image[pos],x,y,null);
+            //g.drawRect(x, y, getWidth(), getHeight());
 	}
 
         /**

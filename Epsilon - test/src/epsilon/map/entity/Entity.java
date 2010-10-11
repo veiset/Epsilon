@@ -71,6 +71,15 @@ public abstract class Entity {
     }
 
     /**
+     * Renders the hitbox of the entity, for debugging purposes
+     *
+     * @param g the graphics object to be drawn on
+     * @param x x position of the hitbox
+     * @param y y position of the hitbox
+     */
+    public abstract void renderHitBox(Graphics g, double x, double y);
+
+    /**
      * Returns the X position of the entity
      *
      * @return X position of the entity
@@ -115,4 +124,21 @@ public abstract class Entity {
      */
     public abstract boolean collision(Entity entity);
 
+    /**
+     * Returns the width of the Sprite
+     *
+     * @return width in pixels
+     */
+     public int getWidth() {
+         return currentSprite.getWidth();
+     }
+
+     /**
+      * Returns the height of the Sprite
+      *
+      * @return height in pixels
+      */
+     public int getHeight() {
+         return currentSprite.getHeight();
+     }
 }

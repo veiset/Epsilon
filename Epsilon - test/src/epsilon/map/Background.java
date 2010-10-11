@@ -39,7 +39,7 @@ public class Background {
         repeatPos = repeat*imageSize;
 
         // render picture while the imageSize is larger than
-        System.out.println(((x*relativeDistance)));
+        //System.out.println(((x*relativeDistance)));
         if ((x*relativeDistance) < imageSize+repeatPos || (x*relativeDistance) == imageSize+repeatPos) {
             // 0 - (pixels the picture should been draw at, relative to xPos to the player)
             g.drawImage(bgImage, 0 - (int) (x * relativeDistance)+repeatPos, -80 - (int) (y * relativeDistance/10)-100, null);

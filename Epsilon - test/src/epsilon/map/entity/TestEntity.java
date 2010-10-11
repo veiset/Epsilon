@@ -3,6 +3,7 @@ package epsilon.map.entity;
 import epsilon.game.Physics;
 import epsilon.game.Sprite;
 import epsilon.game.Input;
+import java.awt.Graphics;
 
 /**
  * Test class that extends entity
@@ -107,17 +108,16 @@ public class TestEntity extends Entity {
     }
 
     @Override
-    public double getXPosition() {
-        return posX - currentSprite.getWidth();
-    }
-
-    @Override
-    public double getYPosition() {
-        return posY - currentSprite.getHeight();
-    }
-
-    @Override
     public boolean collision(Entity entity) {
         return false; // yet to be implemented
+    }
+
+    @Override
+    public void renderHitBox(Graphics g, double x, double y) {
+
+        double posX = this.posX - x;
+        double posY = this.posY - y;
+
+        g.drawRect((int)posX, (int)posY, this.getWidth(), this.getHeight());
     }
 }
