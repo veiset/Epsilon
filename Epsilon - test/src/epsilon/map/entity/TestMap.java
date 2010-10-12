@@ -13,17 +13,17 @@ import java.util.ArrayList;
 public class TestMap implements Map {
 
     ArrayList<Entity> renderableEntities;
-    ArrayList<Entity> moveableEntities;
+    ArrayList<MoveableEntity> moveableEntities;
     ArrayList<Entity> entities;
 
-    Entity playerEntity;
+    MoveableEntity playerEntity;
 
     Background bg;
 
     public TestMap() {
 
         renderableEntities = new ArrayList<Entity>();
-        moveableEntities = new ArrayList<Entity>();
+        moveableEntities = new ArrayList<MoveableEntity>();
         entities = new ArrayList<Entity>();
 
         bg = new Background("/pics/bg3.png", 1.25);
@@ -50,7 +50,7 @@ public class TestMap implements Map {
 
         */
 
-        //renderableEntities.add(new Floor_1(450, 495));
+        renderableEntities.add(new Floor_1(350, 495));
         renderableEntities.add(new Floor_1(500, 495));
 
         renderableEntities.add(test);
@@ -61,7 +61,7 @@ public class TestMap implements Map {
 
     public void render(Graphics g, int delta) {
 
-        bg.render(g, playerEntity.getXPosition()-playerEntity.getXPosition(), playerEntity.getYPosition()-playerEntity.getHeight());
+        bg.render(g, playerEntity.getXPosition(), playerEntity.getYPosition());
         Entity[] temp = new Entity[renderableEntities.size()];
         renderableEntities.toArray(temp);
 
@@ -74,21 +74,23 @@ public class TestMap implements Map {
 
     public void update() {
 
-        Entity[] temp = new Entity[moveableEntities.size()];
+        MoveableEntity[] temp = new MoveableEntity[moveableEntities.size()];
         moveableEntities.toArray(temp);
 
         for (int i = 0; i < temp.length; i++) {
-            temp[i].move();
+            temp[i].calculateMovement();
         }
 
         // temp collision, simple test
         for (Entity ent : renderableEntities) {
             boolean[] hit = ent.collision(playerEntity);
             if(hit[0]) {
-                System.out.println("block!");
                 playerEntity.collided(hit, ent);
             }
-            //if(ent)
+        }
+
+        for (int i=0;i<temp.length;i++) {
+            temp[i].move();
         }
     }
 }

@@ -10,10 +10,13 @@ import java.awt.Graphics;
  *
  * @author Marius
  */
-public class TestEntity extends Entity {
+public class TestEntity extends MoveableEntity {
 
     // keeps track of when to change pictures in the sprite
     private int ticker;
+
+    // used for checking if the entity can jump
+    private boolean touchesGround;
 
     // the different sprites this entity uses
     private Sprite rightSprite;
@@ -30,6 +33,8 @@ public class TestEntity extends Entity {
     public TestEntity(int posX,int posY) {
         super(posX, posY);
         ticker = 0;
+        touchesGround = false;
+
         rightSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"});
         leftSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"},true);
         standSpriteRight = new Sprite(new String[]{"/pics/guy01.png"});
@@ -39,11 +44,11 @@ public class TestEntity extends Entity {
     }
 
     @Override
-    public void move() {
+    public void calculateMovement() {
 
         // handle input, and chose the right sprite for the job
-        double newPosX = posX;
-        double newPosY = posY;
+        newPosX = posX;
+        newPosY = posY;
 
         if(Input.get().right() && !Input.get().left()) {
             if (currentSprite != rightSprite) {
@@ -77,15 +82,13 @@ public class TestEntity extends Entity {
         }
 
         // Handle falling
-        if (posY<500) {
+        if (posY<500 && !touchesGround) {
             double temp = Physics.calculateGravity(posY, pposY, 16);
             newPosY = posY-temp;
         } else if (Input.get().jump()) {
             // if it touches the ground, jump!
             newPosY -= 6;
         }
-
-        super.move(newPosX, newPosY);
 
         // go to the next picture in the sprite if it is time
         if (ticker < 5) {
@@ -94,6 +97,8 @@ public class TestEntity extends Entity {
             ticker = 0;
             currentSprite.nextImage();
         }
+
+        touchesGround = false;
     }
 
     @Override
@@ -124,26 +129,35 @@ public class TestEntity extends Entity {
     @Override
     public void collided(boolean[] hitbox, Entity collidedWith) {
 
-        double newPosX = posX;
-        double newPosY = posY;
-
         if (collidedWith instanceof World) {
-            if (hitbox[1] || hitbox[2]) {
-                newPosX = pposX;
+
+            // movement if this entity collides on the left side of something
+            if (hitbox[1] && pposX < posX) {
+                newPosX = collidedWith.getXPosition() - getWidth();
+                pposX = newPosX;
             }
 
+            // movement if this entity collides on the right side of something
+            if (hitbox[2] && pposX > posX) {
+                newPosX = collidedWith.getXPosition() + collidedWith.getWidth();
+                pposX = newPosX;
+            }
+
+            // movement if it collides on the bottom of this entity
             if (hitbox[3] && posY > pposY) {
-             //   pposY = collidedWith.posY - 1;
-                newPosY = pposY;
+                posY = collidedWith.getYPosition() - getHeight() + 1;
+                newPosY = posY;
+                pposY = posY;
+                touchesGround = true;
             }
 
+            // movement if it collides on the top of this entity
             if (hitbox[4] && posY < pposY) {
+                System.out.println("bottom");
                // pposY = collidedWith.posY + collidedWith.getHeight() + 1;
                 newPosY = pposY;
             }
 
         }
-
-        super.move(newPosX, newPosY);
     }
 }

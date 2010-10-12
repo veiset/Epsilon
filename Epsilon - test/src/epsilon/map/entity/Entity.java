@@ -13,6 +13,8 @@ public abstract class Entity {
 
     protected double posX;
     protected double posY;
+
+    // previous position of the entity. Used for movement and smoothing out rendering
     protected double pposX;
     protected double pposY;
 
@@ -21,7 +23,6 @@ public abstract class Entity {
     /*
      * Constructur for the Entity class
      *
-     * @param urls List of images that are going to be used in rendering the entity
      * @param posX The initial x position of the entity
      * @param posY The initial y position of the entity
      */
@@ -31,24 +32,6 @@ public abstract class Entity {
         this.pposX = posX;
         this.pposY = posY;
     }
-
-    /*
-     * Moving an entity on the screen
-     *
-     * @param posX the new x position of the entity
-     * @param posY the new y position of the entity
-     */
-    protected void move(double posX,double posY) {
-        this.pposX = this.posX;
-        this.pposY = this.posY;
-        this.posX = posX;
-        this.posY = posY;
-    }
-
-    /**
-     * Abstract method to move the entity
-     */
-    public abstract void move();
 
     /*
      * Rendering the object
@@ -123,14 +106,6 @@ public abstract class Entity {
      * @return
      */
     public abstract boolean[] collision(Entity entity);
-
-    /**
-     * 
-     * @param hitbox
-     * @param collidedWith
-     */
-
-    public abstract void collided(boolean[] hitbox, Entity collidedWith);
 
     /**
      * Returns the width of the Sprite
