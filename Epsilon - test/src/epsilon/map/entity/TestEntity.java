@@ -159,9 +159,9 @@ public class TestEntity extends MoveableEntity {
 
             // movement if it collides on the top of this entity
             if (hitbox[4] && posY < pposY && (drx > 8 && dlx > 8)) {
-                System.out.println("bottom");
-               // pposY = collidedWith.posY + collidedWith.getHeight() + 1;
+                pposY = collidedWith.posY + collidedWith.getHeight() - 1;
                 newPosY = pposY;
+                pposY = posY;
             }
 
         }
