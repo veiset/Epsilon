@@ -4,6 +4,7 @@ import epsilon.game.Physics;
 import epsilon.game.Sprite;
 import epsilon.game.Input;
 import java.awt.Graphics;
+import java.util.Arrays;
 
 /**
  * Test class that extends entity
@@ -35,10 +36,17 @@ public class TestEntity extends MoveableEntity {
         ticker = 0;
         touchesGround = false;
 
-        rightSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"});
-        leftSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"},true);
-        standSpriteRight = new Sprite(new String[]{"/pics/guy01.png"});
-        standSpriteLeft = new Sprite(new String[]{"/pics/guy01.png"},true);
+        // Create the different sprites used in this entity, and assign them hitboxes
+        HitBox[] hitbox = new HitBox[3];
+
+        hitbox[0] = new HitBox(37, 75, 17, 16);
+        hitbox[1] = new HitBox(45,46,5,29);
+        hitbox[2] = new HitBox(36,28,19,18);
+
+        rightSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"}, false, hitbox);
+        standSpriteRight = new Sprite(new String[]{"/pics/guy01.png"}, false, hitbox);
+        leftSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"},true, hitbox);
+        standSpriteLeft = new Sprite(new String[]{"/pics/guy01.png"},true, hitbox);
 
         currentSprite = standSpriteRight;
     }
@@ -124,6 +132,12 @@ public class TestEntity extends MoveableEntity {
         double posY = this.posY - y;
 
         g.drawRect((int)posX, (int)posY, this.getWidth(), this.getHeight());
+
+        HitBox[] hitbox = currentSprite.getHitBox();
+
+        for (int i=0;i<hitbox.length;i++) {
+            hitbox[i].draw(g, posX, posY);
+        }
     }
 
     @Override

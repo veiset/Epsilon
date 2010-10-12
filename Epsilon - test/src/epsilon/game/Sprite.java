@@ -1,5 +1,6 @@
 package epsilon.game;
 
+import epsilon.map.entity.HitBox;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -15,6 +16,9 @@ public class Sprite {
 
         /** Current position in the animation */
         private int pos;
+
+        /** the hitbox of the animation */
+        private HitBox[] hitbox;
 
 	/**
 	 * Create a new sprite based on an list of urls.
@@ -35,6 +39,7 @@ public class Sprite {
                 }
 
 		this.image = images;
+                
 	}
 
 	/**
@@ -44,23 +49,29 @@ public class Sprite {
 	 * @param urls Array of strings containing urls to the images
          * @param flip Set this as true if you want the images flipped over tye y axis
 	 */
-	public Sprite(String[] urls, boolean flip) {
+	public Sprite(String[] urls, boolean flip, HitBox[] h) {
 
-                ImageStore s = ImageStore.get();
+            ImageStore s = ImageStore.get();
 
-                pos = 0;
+            pos = 0;
 
-                Image[] images = new Image[urls.length];
+            Image[] images = new Image[urls.length];
 
-                for (int i=0;i<urls.length;i++) {
-                    if (flip) {
-                        images[i] = s.getFlipped(urls[i]);
-                    } else {
-                        images[i] = s.get(urls[i]);
-                    }
+            for (int i=0;i<urls.length;i++) {
+                if (flip) {
+                    images[i] = s.getFlipped(urls[i]);
+                } else {
+                    images[i] = s.get(urls[i]);
                 }
+            }
 
-		this.image = images;
+            this.image = images;
+
+            if (flip) {
+                hitbox = flipHitBox(h);
+            } else {
+                hitbox = h;
+            }
 	}
 
 	/**
@@ -109,5 +120,20 @@ public class Sprite {
          */
         public void resetImage() {
             pos = 0;
+        }
+
+        /**
+         * Gets the hitbox this sprite uses
+         */
+        public HitBox[] getHitBox() {
+            return hitbox;
+        }
+
+        private HitBox[] flipHitBox(HitBox[] hitbox) {
+            HitBox[] result = new HitBox[hitbox.length];
+            for (int i=0;i<hitbox.length;i++) {
+                result[i] = new HitBox(getWidth() - hitbox[i].getOffsetX() - hitbox[i].getWidth(), hitbox[i].getOffsetY(), hitbox[i].getWidth(), hitbox[i].getHeight());
+            }
+            return result;
         }
 }
