@@ -122,7 +122,15 @@ public abstract class Entity {
      * @param y
      * @return
      */
-    public abstract boolean collision(Entity entity);
+    public abstract boolean[] collision(Entity entity);
+
+    /**
+     * 
+     * @param hitbox
+     * @param collidedWith
+     */
+
+    public abstract void collided(boolean[] hitbox, Entity collidedWith);
 
     /**
      * Returns the width of the Sprite

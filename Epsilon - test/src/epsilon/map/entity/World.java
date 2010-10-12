@@ -17,5 +17,9 @@ public abstract class World extends Entity {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public void collided(boolean[] hitBox, Entity collidedWith) {
+    }
+
 
 }

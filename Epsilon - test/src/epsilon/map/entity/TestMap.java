@@ -33,6 +33,7 @@ public class TestMap implements Map {
 
         // TODO: Discuss; should floors have x,y parameter = x*50, y*40 as default?
         // => new Floor(3,4), instead of new Floor(150,160)?
+        /*
         renderableEntities.add(new Floor(100, 495));
         renderableEntities.add(new Floor(150, 495));
         renderableEntities.add(new Floor(200, 495));
@@ -44,11 +45,13 @@ public class TestMap implements Map {
         renderableEntities.add(new Floor(250, 415));
         renderableEntities.add(new Floor(300, 415));
 
-        renderableEntities.add(new Floor(450, 495));
-        renderableEntities.add(new Floor(500, 495));
-
         renderableEntities.add(new Floor(400, 285));
         renderableEntities.add(new Floor(450, 285));
+
+        */
+
+        //renderableEntities.add(new Floor_1(450, 495));
+        renderableEntities.add(new Floor_1(500, 495));
 
         renderableEntities.add(test);
         moveableEntities.add(test);
@@ -71,18 +74,21 @@ public class TestMap implements Map {
 
     public void update() {
 
-        // temp collision, simple test
-        for (Entity ent : renderableEntities) {
-            if(ent.collision(playerEntity)) {
-                System.out.println("block!");
-            }
-        }
-
         Entity[] temp = new Entity[moveableEntities.size()];
         moveableEntities.toArray(temp);
 
         for (int i = 0; i < temp.length; i++) {
             temp[i].move();
+        }
+
+        // temp collision, simple test
+        for (Entity ent : renderableEntities) {
+            boolean[] hit = ent.collision(playerEntity);
+            if(hit[0]) {
+                System.out.println("block!");
+                playerEntity.collided(hit, ent);
+            }
+            //if(ent)
         }
     }
 }

@@ -21,8 +21,8 @@ public class Floor extends World {
      * @param toCheckAgainst
      * @return
      */
-    public boolean collision(Entity toCheckAgainst) {
-        boolean hit = true;
+    public boolean[] collision(Entity toCheckAgainst) {
+        boolean[] hit = new boolean[]{false, false, false, false, false} ;
 
         int x = (int) toCheckAgainst.getXPosition();
         int y = (int) toCheckAgainst.getYPosition();
@@ -53,17 +53,17 @@ public class Floor extends World {
 //        System.out.println("------------------");
 
         if (bottom1 < top2) {
-            hit = false;
+            return hit;
         }
         if (top1 > bottom2) {
-            hit = false;
+            return hit;
         }
 
         if (right1 < left2) {
-            hit = false;
+            return hit;
         }
         if (left1 > right2) {
-            hit = false;
+            return hit;
         }
 
         return hit;

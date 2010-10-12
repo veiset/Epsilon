@@ -108,8 +108,8 @@ public class TestEntity extends Entity {
     }
 
     @Override
-    public boolean collision(Entity entity) {
-        return false; // yet to be implemented
+    public boolean[] collision(Entity entity) {
+        return new boolean[]{false,false,false,false,false}; // yet to be implemented
     }
 
     @Override
@@ -119,5 +119,31 @@ public class TestEntity extends Entity {
         double posY = this.posY - y;
 
         g.drawRect((int)posX, (int)posY, this.getWidth(), this.getHeight());
+    }
+
+    @Override
+    public void collided(boolean[] hitbox, Entity collidedWith) {
+
+        double newPosX = posX;
+        double newPosY = posY;
+
+        if (collidedWith instanceof World) {
+            if (hitbox[1] || hitbox[2]) {
+                newPosX = pposX;
+            }
+
+            if (hitbox[3] && posY > pposY) {
+             //   pposY = collidedWith.posY - 1;
+                newPosY = pposY;
+            }
+
+            if (hitbox[4] && posY < pposY) {
+               // pposY = collidedWith.posY + collidedWith.getHeight() + 1;
+                newPosY = pposY;
+            }
+
+        }
+
+        super.move(newPosX, newPosY);
     }
 }
