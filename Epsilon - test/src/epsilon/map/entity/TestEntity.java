@@ -131,20 +131,26 @@ public class TestEntity extends MoveableEntity {
 
         if (collidedWith instanceof World) {
 
+            // overlap between the two entities in pixels
+            double dlx = collidedWith.getXPosition() + collidedWith.getWidth() - newPosX;
+            double drx = newPosX + getWidth() - collidedWith.getXPosition();
+            double dty = newPosY + getHeight() - collidedWith.getYPosition();
+            double dby = (collidedWith.getYPosition() + collidedWith.getHeight()) - newPosY ;
+
             // movement if this entity collides on the left side of something
-            if (hitbox[1] && pposX < posX) {
+            if (hitbox[1] && pposX < posX && dty > 2 && dby > 6) {
                 newPosX = collidedWith.getXPosition() - getWidth();
                 pposX = newPosX;
             }
 
             // movement if this entity collides on the right side of something
-            if (hitbox[2] && pposX > posX) {
+            if (hitbox[2] && pposX > posX && dty> 2 && dby > 6) {
                 newPosX = collidedWith.getXPosition() + collidedWith.getWidth();
                 pposX = newPosX;
             }
 
             // movement if it collides on the bottom of this entity
-            if (hitbox[3] && posY > pposY) {
+            if (hitbox[3] && posY > pposY && (drx > 8 && dlx > 8) ) {
                 posY = collidedWith.getYPosition() - getHeight() + 1;
                 newPosY = posY;
                 pposY = posY;
@@ -152,7 +158,7 @@ public class TestEntity extends MoveableEntity {
             }
 
             // movement if it collides on the top of this entity
-            if (hitbox[4] && posY < pposY) {
+            if (hitbox[4] && posY < pposY && (drx > 8 && dlx > 8)) {
                 System.out.println("bottom");
                // pposY = collidedWith.posY + collidedWith.getHeight() + 1;
                 newPosY = pposY;
