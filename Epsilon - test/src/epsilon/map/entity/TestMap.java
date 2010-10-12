@@ -50,7 +50,7 @@ public class TestMap implements Map {
 
         */
 
-        renderableEntities.add(new Floor_1(350, 495));
+        renderableEntities.add(new Floor_1(350, 455));
         renderableEntities.add(new Floor_1(500, 495));
 
         renderableEntities.add(test);
