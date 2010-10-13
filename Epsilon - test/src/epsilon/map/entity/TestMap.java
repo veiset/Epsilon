@@ -21,6 +21,8 @@ public class TestMap implements Map {
 
     Background bg;
 
+    private int shotCooldown = 0;
+
     public TestMap() {
 
         renderableEntities = new ArrayList<Entity>();
@@ -75,10 +77,15 @@ public class TestMap implements Map {
 
     public void update() {
 
-        if (Input.get().attack()) {
-                Shot shot = new Shot(playerEntity.getXPosition(),playerEntity.getYPosition(),playerEntity.facingRight());
-                moveableEntities.add(shot);
-                renderableEntities.add(shot);
+        // temp implemention of shot cooldown
+        if (shotCooldown>0) {
+            shotCooldown -= 1;
+        }
+        if (Input.get().attack() && shotCooldown == 0) {
+            Shot shot = new Shot(playerEntity.getXPosition(),playerEntity.getYPosition(),playerEntity.facingRight());
+            moveableEntities.add(shot);
+            renderableEntities.add(shot);
+            shotCooldown += 30;
         }
 
         MoveableEntity[] temp = new MoveableEntity[moveableEntities.size()];
