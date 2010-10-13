@@ -16,7 +16,6 @@ public class Floor_1 extends World {
 
     /**
      * Very basic collision detection test
-     * NOTE: Currently not good enough to be implimented!
      *
      * @param toCheckAgainst
      * @return
@@ -146,9 +145,9 @@ public class Floor_1 extends World {
 
     @Override
     public void renderHitBox(Graphics g, double x, double y) {
-        double posX = this.posX - x;
-        double posY = this.posY - y;
+        double renderPosX = this.posX - x;
+        double renderPosY = this.posY - y;
 
-        g.drawRect((int)posX, (int)posY, this.getWidth(), this.getHeight());
+        g.drawRect((int)renderPosX, (int)renderPosY, this.getWidth(), this.getHeight());
     }
 }

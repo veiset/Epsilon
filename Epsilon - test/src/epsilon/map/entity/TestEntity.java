@@ -24,6 +24,7 @@ public class TestEntity extends MoveableEntity {
     private Sprite standSpriteRight;
     private Sprite leftSprite;
     private Sprite standSpriteLeft;
+    private boolean facingRight = true;
 
     /**
      * Constructor for the entity that initialises sprites
@@ -64,6 +65,7 @@ public class TestEntity extends MoveableEntity {
                 currentSprite = rightSprite;
                 rightSprite.resetImage();
                 ticker = 0;
+                facingRight = true;
             }
             newPosX = posX+4;
         } else if (Input.get().left() && !Input.get().right()) {
@@ -72,6 +74,7 @@ public class TestEntity extends MoveableEntity {
                 currentSprite = leftSprite;
                 leftSprite.resetImage();
                 ticker = 0;
+                facingRight = false;
             }
             newPosX = posX-4;
         } else {
@@ -81,9 +84,11 @@ public class TestEntity extends MoveableEntity {
                 if (pposX < posX) {
                     currentSprite = standSpriteRight;
                     standSpriteRight.resetImage();
+                    facingRight = true;
                 } else { // last moved left, animation should be inverted
                     currentSprite = standSpriteLeft;
                     standSpriteLeft.resetImage();
+                    facingRight = false;
                 }
                 ticker = 0;
             }
@@ -107,6 +112,10 @@ public class TestEntity extends MoveableEntity {
         }
 
         touchesGround = false;
+    }
+
+    public boolean facingRight() {
+        return facingRight;
     }
 
     @Override

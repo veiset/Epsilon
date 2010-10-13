@@ -1,5 +1,6 @@
 package epsilon.map.entity;
 
+import epsilon.game.Input;
 import epsilon.map.Background;
 import epsilon.map.Map;
 import java.awt.Graphics;
@@ -73,6 +74,12 @@ public class TestMap implements Map {
     }
 
     public void update() {
+
+        if (Input.get().attack()) {
+                Shot shot = new Shot(playerEntity.getXPosition(),playerEntity.getYPosition(),playerEntity.facingRight());
+                moveableEntities.add(shot);
+                renderableEntities.add(shot);
+        }
 
         MoveableEntity[] temp = new MoveableEntity[moveableEntities.size()];
         moveableEntities.toArray(temp);
