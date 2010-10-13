@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package epsilonclient;
 
@@ -10,13 +6,20 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
+ *
+ * Client test GUI
+ *
+ * Window to contain the painting panel and menu with connection option
  *
  * @author mm
  */
@@ -27,15 +30,22 @@ public class TestWindow extends JFrame {
     private Network net;
 
 
+    /*
+     * Constructor
+     *
+     */
     public TestWindow()  {
-        net = new Network();
         initComponents();
     }
 
 
+    /*
+     * Initialize components contained in window
+     *
+     */
     private void initComponents() {
-        tp = new TestPanel();
-        this.getContentPane().add(tp, BorderLayout.CENTER);
+        tp = new TestPanel(tw);
+        tw.getContentPane().add(tp, BorderLayout.CENTER);
         setVisible(true);
         setBackground(Color.WHITE);
         setTitle("Network test client");
@@ -46,6 +56,10 @@ public class TestWindow extends JFrame {
     }
 
 
+    /*
+     * Menu with options to connecto to a server and to exit the program
+     * 
+     */
     public void makeMenu() {
         JMenuBar menubar = new JMenuBar();
         setJMenuBar(menubar);
@@ -54,7 +68,7 @@ public class TestWindow extends JFrame {
 
         JMenuItem item1 = new JMenuItem("Connect");
         item1.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {              
                 String input = (String) JOptionPane.showInputDialog(
                     tw, "Host:", "Connect to Cinema server", JOptionPane.QUESTION_MESSAGE,
                     null, null, "localhost");
@@ -62,10 +76,14 @@ public class TestWindow extends JFrame {
                 final String host = input.trim();
 
                 try {
-                    net.connect(host);
+                    net = new Network(tw, host);
+                    new Thread(net).start();
                 }
-                catch (IOException ioe) {
-                    JOptionPane.showMessageDialog(tw, "Could not connect to server.");
+                catch (SocketException se) {
+                    JOptionPane.showMessageDialog(tw, "Could not connect to server");
+                }
+                catch (UnknownHostException ue) {
+                    JOptionPane.showMessageDialog(tw, "Something wrong with the hostname.");
                 }
             }
         });
@@ -87,5 +105,43 @@ public class TestWindow extends JFrame {
         menubar.add(fileMenu);
     }
 
+
+    /*
+     * Send coordinates to painting panel
+     *
+     */
+    public void coordinatesToPaint(int xpos, int ypos) {
+        tp.setCoordinates(xpos, ypos);
+    }
+
+
+    /*
+     * Send coordinates to the server
+     *
+     */
+    public void coordinatesToServer(int xpos, int ypos) {
+        try {
+            if (net != null) {
+                net.sendCoordinates(xpos, ypos);
+            }
+            else { System.out.println("Network not initialized"); }
+        }
+        catch (IOException ex) {
+            System.out.println("Could not send packet to server");
+        }
+    }
+
+
+    /*
+     * Programs main method
+     * 
+     */
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new TestWindow();
+            }
+        });
+    }
 
 }
