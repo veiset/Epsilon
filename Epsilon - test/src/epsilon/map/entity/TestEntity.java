@@ -24,6 +24,7 @@ public class TestEntity extends MoveableEntity {
     private Sprite standSpriteRight;
     private Sprite leftSprite;
     private Sprite standSpriteLeft;
+    private boolean isDead = false;
     private boolean facingRight = true;
 
     /**
@@ -59,59 +60,69 @@ public class TestEntity extends MoveableEntity {
         newPosX = posX;
         newPosY = posY;
 
-        if(Input.get().right() && !Input.get().left()) {
-            if (currentSprite != rightSprite) {
-                currentSprite.resetImage();
-                currentSprite = rightSprite;
-                rightSprite.resetImage();
-                ticker = 0;
-                facingRight = true;
-            }
-            newPosX = posX+4;
-        } else if (Input.get().left() && !Input.get().right()) {
-            if (currentSprite != leftSprite) {
-                currentSprite.resetImage();
-                currentSprite = leftSprite;
-                leftSprite.resetImage();
-                ticker = 0;
-                facingRight = false;
-            }
-            newPosX = posX-4;
-        } else {
-            if (currentSprite != standSpriteRight && currentSprite != standSpriteLeft) {
-                currentSprite.resetImage();
-                // if the guy was moving right, he should be face right when stopped
-                if (pposX < posX) {
-                    currentSprite = standSpriteRight;
-                    standSpriteRight.resetImage();
+        // checking if the player is dead
+        if (!isDead) {
+            if(Input.get().right() && !Input.get().left()) {
+                if (currentSprite != rightSprite) {
+                    currentSprite.resetImage();
+                    currentSprite = rightSprite;
+                    rightSprite.resetImage();
+                    ticker = 0;
                     facingRight = true;
-                } else { // last moved left, animation should be inverted
-                    currentSprite = standSpriteLeft;
-                    standSpriteLeft.resetImage();
+                }
+                newPosX = posX+4;
+            } else if (Input.get().left() && !Input.get().right()) {
+                if (currentSprite != leftSprite) {
+                    currentSprite.resetImage();
+                    currentSprite = leftSprite;
+                    leftSprite.resetImage();
+                    ticker = 0;
                     facingRight = false;
                 }
-                ticker = 0;
+                newPosX = posX-4;
+            } else {
+                if (currentSprite != standSpriteRight && currentSprite != standSpriteLeft) {
+                    currentSprite.resetImage();
+                    // if the guy was moving right, he should be face right when stopped
+                    if (pposX < posX) {
+                        currentSprite = standSpriteRight;
+                        standSpriteRight.resetImage();
+                        facingRight = true;
+                    } else { // last moved left, animation should be inverted
+                        currentSprite = standSpriteLeft;
+                        standSpriteLeft.resetImage();
+                        facingRight = false;
+                    }
+                    ticker = 0;
+                }
             }
-        }
 
-        // Handle falling
-        if (posY<500 && !touchesGround) {
-            double temp = Physics.calculateGravity(posY, pposY, 16);
-            newPosY = posY-temp;
-        } else if (Input.get().jump()) {
-            // if it touches the ground, jump!
-            newPosY -= 6;
-        }
 
-        // go to the next picture in the sprite if it is time
-        if (ticker < 5) {
-            ticker++;
-        } else {
-            ticker = 0;
-            currentSprite.nextImage();
-        }
+            // checking if the player has falled down below the floor threshold.
+            // If player posY is larger or equal to 598, the player dies.
+            if (posY>=598) {
+                System.out.print("You are dead!");
+                isDead = true;
+            }
+            // Handle falling
+            else if (posY<600 && !touchesGround) {
+                double temp = Physics.calculateGravity(posY, pposY, 16);
+                newPosY = posY-temp;
+            } else if (Input.get().jump()) {
+                // if it touches the ground, jump!
+                newPosY -= 6;
+            }
 
-        touchesGround = false;
+            // go to the next picture in the sprite if it is time
+            if (ticker < 5) {
+                ticker++;
+            } else {
+                ticker = 0;
+                currentSprite.nextImage();
+            }
+
+            touchesGround = false;
+        }
     }
 
     public boolean facingRight() {
