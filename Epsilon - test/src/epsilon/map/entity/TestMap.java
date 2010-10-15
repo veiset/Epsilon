@@ -39,13 +39,31 @@ public class TestMap implements Map {
         // TODO: Discuss; should floors have x,y parameter = x*50, y*40 as default?
         // => new Floor(3,4), instead of new Floor(150,160)?
 
+
+        renderableEntities.add(new Floor_1(-500, 565));
+        renderableEntities.add(new Floor_1(-450, 565));
+        renderableEntities.add(new Floor_1(-400, 565));
+        renderableEntities.add(new Floor_1(-350, 565));
+        renderableEntities.add(new Floor_1(-300, 565));
+        renderableEntities.add(new Floor_1(-250, 565));
+        renderableEntities.add(new Floor_1(-200, 565));
+        renderableEntities.add(new Floor_1(-150, 565));
+        renderableEntities.add(new Floor_1(-100, 565));
+        renderableEntities.add(new Floor_1(-50, 565));
+
+        renderableEntities.add(new Floor_1(1000, 565));
+        renderableEntities.add(new Floor_1(1050, 565));
+        renderableEntities.add(new Floor_1(1100, 565));
+        renderableEntities.add(new Floor_1(1150, 565));
+        renderableEntities.add(new Floor_1(1200, 565));
+        renderableEntities.add(new Floor_1(1250, 565));
+        renderableEntities.add(new Floor_1(1300, 565));
+        renderableEntities.add(new Floor_1(1350, 565));
+        renderableEntities.add(new Floor_1(1400, 565));
+        renderableEntities.add(new Floor_1(1450, 565));
+
         
-        renderableEntities.add(new Floor_1(100, 565));
-        renderableEntities.add(new Floor_1(150, 565));
-        renderableEntities.add(new Floor_1(200, 565));
-        renderableEntities.add(new Floor_1(250, 565));
-        renderableEntities.add(new Floor_1(400, 565));
-        renderableEntities.add(new Floor_1(100, 565));
+
         renderableEntities.add(new Floor_1(80, 505));
 
         renderableEntities.add(new Floor_1(250, 415));
