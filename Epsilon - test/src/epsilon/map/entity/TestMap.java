@@ -16,6 +16,7 @@ public class TestMap implements Map {
     ArrayList<Entity> renderableEntities;
     ArrayList<MoveableEntity> moveableEntities;
     ArrayList<Entity> entities;
+    ArrayList<Shot> shots;
 
     MoveableEntity playerEntity;
 
@@ -28,6 +29,7 @@ public class TestMap implements Map {
         renderableEntities = new ArrayList<Entity>();
         moveableEntities = new ArrayList<MoveableEntity>();
         entities = new ArrayList<Entity>();
+        shots = new ArrayList<Shot>();
 
         bg = new Background("/pics/bg3.png", 1.25);
 
@@ -36,22 +38,22 @@ public class TestMap implements Map {
 
         // TODO: Discuss; should floors have x,y parameter = x*50, y*40 as default?
         // => new Floor(3,4), instead of new Floor(150,160)?
-        /*
-        renderableEntities.add(new Floor(100, 495));
-        renderableEntities.add(new Floor(150, 495));
-        renderableEntities.add(new Floor(200, 495));
-        renderableEntities.add(new Floor(250, 495));
-        renderableEntities.add(new Floor(400, 495));
-        renderableEntities.add(new Floor(100, 415));
-        renderableEntities.add(new Floor(100, 455));
 
-        renderableEntities.add(new Floor(250, 415));
-        renderableEntities.add(new Floor(300, 415));
+        
+        renderableEntities.add(new Floor_1(100, 565));
+        renderableEntities.add(new Floor_1(150, 565));
+        renderableEntities.add(new Floor_1(200, 565));
+        renderableEntities.add(new Floor_1(250, 565));
+        renderableEntities.add(new Floor_1(400, 565));
+        renderableEntities.add(new Floor_1(100, 565));
+        renderableEntities.add(new Floor_1(80, 505));
 
-        renderableEntities.add(new Floor(400, 285));
-        renderableEntities.add(new Floor(450, 285));
+        renderableEntities.add(new Floor_1(250, 415));
+        renderableEntities.add(new Floor_1(300, 415));
 
-        */
+        renderableEntities.add(new Floor_1(500, 385));
+        renderableEntities.add(new Floor_1(550, 385));
+
 
         renderableEntities.add(new Floor_1(350, 455));
         renderableEntities.add(new Floor_1(500, 495));
@@ -85,7 +87,23 @@ public class TestMap implements Map {
             Shot shot = new Shot(playerEntity.getXPosition(),playerEntity.getYPosition(),playerEntity.facingRight());
             moveableEntities.add(shot);
             renderableEntities.add(shot);
+            shots.add(shot);
             shotCooldown += 30;
+        }
+
+        // creating temp array to avoid unexpected behaviour when removing elements
+        Shot[] tempshot = new Shot[shots.size()];
+        shots.toArray(tempshot);
+
+        // checking each shot if it has traveled its distance
+        for (int i = 0; i < tempshot.length; i++) {
+            Shot shot = tempshot[i];
+            if (shot.distanceDone()) {
+                // removing the shot from the lists
+                shots.remove(shot);
+                renderableEntities.remove(shot);
+                moveableEntities.remove(shot);
+            }
         }
 
         MoveableEntity[] temp = new MoveableEntity[moveableEntities.size()];
