@@ -84,8 +84,8 @@ public class TestMap implements Map {
 
         // Test MP3 playing
         String filename = "/sound/zabutom.lets.shooting.mp3";
-        sound = new SoundPlayer();
-        sound.play(filename);
+        sound = new SoundPlayer(filename);
+        sound.play();
 
 
     }
@@ -110,6 +110,7 @@ public class TestMap implements Map {
             shotCooldown -= 1;
         }
         if (Input.get().attack() && shotCooldown == 0) {
+            sound.close();
             Shot shot = new Shot(playerEntity.getXPosition(),playerEntity.getYPosition(),playerEntity.facingRight());
             moveableEntities.add(shot);
             renderableEntities.add(shot);

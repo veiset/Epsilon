@@ -11,7 +11,9 @@ public class SoundPlayer {
     private Player player;
     private URL url;
 
-    public SoundPlayer() {
+    public SoundPlayer(String filename) {
+        url = this.getClass().getResource(filename);
+
     }
 
     public void close() {
@@ -21,13 +23,12 @@ public class SoundPlayer {
     }
 
     // play the MP3 file to the sound card
-    public void play(String filename) {
-        url = this.getClass().getResource(filename);
+    public void play() {
         try {
             BufferedInputStream bis = (BufferedInputStream) url.getContent();
             player = new Player(bis);
         } catch (Exception e) {
-            System.out.println("Problem playing file " + filename);
+            System.out.println("Problem playing file ");
             System.out.println(e);
         }
 
@@ -45,6 +46,11 @@ public class SoundPlayer {
                 }
             }
         }.start();
+    }
+    public void repeat() {
+        if (player.isComplete()) {
+            play();
+        }
     }
 }
 
