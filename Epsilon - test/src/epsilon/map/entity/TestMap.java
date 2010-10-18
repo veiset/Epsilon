@@ -1,6 +1,7 @@
 package epsilon.map.entity;
 
 import epsilon.game.Input;
+import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
 import epsilon.map.Map;
 import java.awt.Graphics;
@@ -17,6 +18,7 @@ public class TestMap implements Map {
     ArrayList<MoveableEntity> moveableEntities;
     ArrayList<Entity> entities;
     ArrayList<Shot> shots;
+    SoundPlayer sound;
 
     MoveableEntity playerEntity;
 
@@ -79,6 +81,12 @@ public class TestMap implements Map {
         renderableEntities.add(test);
         moveableEntities.add(test);
         entities.add(test);
+
+        // Test MP3 playing
+        String filename = "/sound/zabutom.lets.shooting.mp3";
+        sound = new SoundPlayer();
+        sound.play(filename);
+
 
     }
 

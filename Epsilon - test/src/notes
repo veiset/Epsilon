@@ -1,2 +1,4 @@
 Linux hardware acceleration:
  VM-options: -Dsun.java2d.opengl=true
+
+ java -jar -Dsun.java2d.opengl=true /path/to/Epsilon.jar
