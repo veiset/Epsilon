@@ -19,7 +19,6 @@ public class TestMap implements Map {
     ArrayList<Entity> entities;
     ArrayList<Shot> shots;
     SoundPlayer sound;
-    SoundPlayer soundGunShot;
 
     MoveableEntity playerEntity;
 
@@ -88,8 +87,6 @@ public class TestMap implements Map {
         sound = new SoundPlayer(filename);
         sound.play();
 
-        // gunfire
-        soundGunShot = new SoundPlayer("/sound/gunshot.mp3");
 
 
     }
@@ -115,7 +112,6 @@ public class TestMap implements Map {
         }
         if (Input.get().attack() && shotCooldown == 0) {
             //sound.close();
-            soundGunShot.play();
             Shot shot = new Shot(playerEntity.getXPosition(),playerEntity.getYPosition(),playerEntity.facingRight());
             moveableEntities.add(shot);
             renderableEntities.add(shot);

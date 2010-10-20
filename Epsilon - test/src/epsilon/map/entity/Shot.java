@@ -1,5 +1,6 @@
 package epsilon.map.entity;
 
+import epsilon.game.SoundPlayer;
 import epsilon.game.Sprite;
 import java.awt.Graphics;
 
@@ -30,6 +31,10 @@ public class Shot extends MoveableEntity {
         }
         newPosY += 45;
         this.headingRight = headingRight;
+
+
+        // gunfire
+        new SoundPlayer("/sound/gunshot.mp3").play();
 
     }
 
