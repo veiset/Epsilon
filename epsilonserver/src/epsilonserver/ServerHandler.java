@@ -6,9 +6,11 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
 /**
- *
  * Server handler that handles received object state data from clients
  * 
  * Right now it will only echo back data received from a client
@@ -17,60 +19,55 @@ import java.net.SocketException;
  */
 public class ServerHandler implements Runnable {
 
+    private static int BUFFER_SIZE = 256;
 
     private DatagramSocket socket = null;
-    private boolean running = true;
-//    private ArrayList<InetAddress> clientList = new ArrayList<InetAddress>();
+    private boolean isRunning = true;
+    private GameState gameState;
 
 
     /**
-     *
      * Constructor
      * Open a UDP socket with a specified port 
      *
      * @param port
      * @throws SocketException
      */
-    public ServerHandler(int port) throws SocketException {
-        socket = new DatagramSocket(port);
-
+    public ServerHandler(int port, GameState gameState) {
+        this.gameState = gameState;
+        try {
+            socket = new DatagramSocket(port, InetAddress.getLocalHost());
+        }
+        catch (SocketException se) {
+            System.out.println("Could not create socket");
+        }
+        catch (UnknownHostException ue) {
+            System.out.println("Host address not found");
+        }
     }
 
 
     /**
-     *
      * Start a thread that listens for incoming UDP traffic. When data is
-     * received it is sendt back to the sender.
+     * received then start a thread to parse and handle the data.
      *
      */
     public void run() {
+        
+        // buffers
+        byte[] buf = new byte[BUFFER_SIZE];
+        DatagramPacket incomingPacket;
 
-        while (running) {
-
-            byte[] buf = new byte[256];
+        while (isRunning) {
 
             try {
-                DatagramPacket incoming = new DatagramPacket(buf, buf.length);
-                socket.receive(incoming);
-                System.out.println("reveived packet");
+                incomingPacket = new DatagramPacket(buf, buf.length);
+                socket.receive(incomingPacket);
 
-                InetAddress clientaddress = incoming.getAddress();
-                int clientport = incoming.getPort();
-
-//              if (!clientList.contains(address)) {
-//                  clientList.add(address);
-//              }
-//
-//              for (int i=0; i<clientList.size(); i++) {
-//                    InetAddress a = clientList.get(i);
-//                    DatagramPacket outgoing = new DatagramPacket(buf, buf.length, a, 6001);
-//                    socket.send(outgoing);
-//                    System.out.println("packet sendt");
-//              }
-
-                DatagramPacket outgoing = new DatagramPacket(buf, buf.length, clientaddress, clientport);
-                socket.send(outgoing);
-                System.out.println("packet sendt");
+                // do stuff with the packet
+                ByteBuffer bb = ByteBuffer.wrap(buf);
+                PacketParser pp = new PacketParser(gameState, bb);
+                new Thread(pp).start();
             }
             catch (IOException e) {
                 System.out.println(e.getMessage());
@@ -82,12 +79,38 @@ public class ServerHandler implements Runnable {
 
 
     /**
+     * Send gamestate data to all registered players
      *
+     * @param playerList
+     */
+    public void sendGameState() {
+        byte[] buf = new byte[BUFFER_SIZE];
+        DatagramPacket outgoingPacket;
+
+        // insert data into packet
+        buf = gameState.toString().getBytes();
+
+        ArrayList<Player> pl = gameState.getPlayerList();
+        for (Player p : pl) {
+            outgoingPacket = new DatagramPacket(buf, buf.length, p.getAddress(), p.getPort());
+
+            try {
+                socket.send(outgoingPacket);
+            }
+            catch (IOException e) {
+                System.out.println("Could not send packet to client: " + p.getAddress()
+                        + " at port: "+ p.getPort());
+            }
+        }
+    }
+
+
+    /**
      * Stop listening for incoming UDP traffic
      * 
      */
     public void stopServer() {
-        running = false;
+        isRunning = false;
     }
 
 
