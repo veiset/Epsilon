@@ -18,7 +18,7 @@ public class TestMap implements Map {
     ArrayList<MoveableEntity> moveableEntities;
     ArrayList<Entity> entities;
     ArrayList<Shot> shots;
-    SoundPlayer sound;
+    SoundPlayer soundtrack;
 
     MoveableEntity playerEntity;
 
@@ -84,8 +84,8 @@ public class TestMap implements Map {
 
         // Test MP3 playing
         String filename = "/sound/zabutom.lets.shooting.mp3";
-        sound = new SoundPlayer(filename);
-        sound.play();
+        soundtrack = new SoundPlayer(filename);
+        soundtrack.play();
 
 
 

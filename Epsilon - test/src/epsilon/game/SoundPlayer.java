@@ -33,7 +33,7 @@ public class SoundPlayer {
         }
 
         // run in new thread to play in background
-        // thread should maybe be handled different
+        // TODO: thread should maybe be handled different
         new Thread() {
 
             @Override
