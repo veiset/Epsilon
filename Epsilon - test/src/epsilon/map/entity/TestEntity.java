@@ -1,10 +1,10 @@
 package epsilon.map.entity;
 
+import epsilon.game.Collision;
 import epsilon.game.Physics;
 import epsilon.game.Sprite;
 import epsilon.game.Input;
 import java.awt.Graphics;
-import java.util.Arrays;
 
 /**
  * Test class that extends entity
@@ -141,8 +141,8 @@ public class TestEntity extends MoveableEntity {
     }
 
     @Override
-    public boolean[] collision(Entity entity) {
-        return new boolean[]{false,false,false,false,false}; // yet to be implemented
+    public Collision collision(Entity entity) {
+        return new Collision(); // yet to be implemented
     }
 
     @Override
@@ -161,39 +161,45 @@ public class TestEntity extends MoveableEntity {
     }
 
     @Override
-    public void collided(boolean[] hitbox, Entity collidedWith) {
+    public void collided(Collision c) {
 
-        if (collidedWith instanceof World) {
+        if (c.collidedWith instanceof World) {
 
             // overlap between the two entities in pixels
-            double dlx = collidedWith.getXPosition() + collidedWith.getWidth() - newPosX;
-            double drx = newPosX + getWidth() - collidedWith.getXPosition();
-            double dty = newPosY + getHeight() - collidedWith.getYPosition();
-            double dby = (collidedWith.getYPosition() + collidedWith.getHeight()) - newPosY ;
+            double dlx = c.deltaLeft;
+            double drx = c.deltaRight;
+            double dty = c.deltaTop;
+            double dby = c.deltaBottom;
+
+            System.out.println("Top: " + dty);
+            System.out.println("Bottom: " + dby);
+            System.out.println("Left: " + dlx);
+            System.out.println("Right: " + drx);
+            System.out.println("--------------------");
 
             // movement if this entity collides on the left side of something
-            if (hitbox[1] && pposX < posX && dty > 2 && dby > 6) {
-                newPosX = collidedWith.getXPosition() - getWidth();
+            if (c.crossedLeft && pposX < posX && dty > 2 && dby > 6) {
+                newPosX = c.collidedWith.getXPosition() - getWidth();
                 pposX = newPosX;
             }
 
             // movement if this entity collides on the right side of something
-            if (hitbox[2] && pposX > posX && dty> 2 && dby > 6) {
-                newPosX = collidedWith.getXPosition() + collidedWith.getWidth();
+            if (c.crossedRight && pposX > posX && dty> 2 && dby > 6) {
+                newPosX = c.collidedWith.getXPosition() + c.collidedWith.getWidth();
                 pposX = newPosX;
             }
 
             // movement if it collides on the bottom of this entity
-            if (hitbox[3] && posY > pposY && (drx > 8 && dlx > 8) ) {
-                posY = collidedWith.getYPosition() - getHeight() + 1;
+            if (c.crossedTop && posY > pposY && (drx > 8 && dlx > 8) ) {
+                posY = c.collidedWith.getYPosition() - getHeight() + 1;
                 newPosY = posY;
                 pposY = posY;
                 touchesGround = true;
             }
 
             // movement if it collides on the top of this entity
-            if (hitbox[4] && posY < pposY && (drx > 8 && dlx > 8)) {
-                pposY = collidedWith.posY + collidedWith.getHeight() - 1;
+            if (c.crossedBottom && posY < pposY && (drx > 8 && dlx > 8)) {
+                pposY = c.collidedWith.posY + c.collidedWith.getHeight() - 1;
                 newPosY = pposY;
                 pposY = posY;
             }

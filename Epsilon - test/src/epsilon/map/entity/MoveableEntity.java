@@ -1,5 +1,7 @@
 package epsilon.map.entity;
 
+import epsilon.game.Collision;
+
 /**
  *
  * @author Marius
@@ -28,7 +30,7 @@ public abstract class MoveableEntity extends Entity {
      * @param hitbox
      * @param collidedWith
      */
-    public abstract void collided(boolean[] hitbox, Entity collidedWith);
+    public abstract void collided(Collision c);
 
     /**
      * Abstract method to move the entity

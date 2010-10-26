@@ -21,7 +21,7 @@ public class Floor extends World {
      * @param toCheckAgainst
      * @return
      */
-    public boolean[] collision(Entity toCheckAgainst) {
+    public boolean[] collision2(Entity toCheckAgainst) {
         boolean[] hit = new boolean[]{false, false, false, false, false} ;
 
         int x = (int) toCheckAgainst.getXPosition();

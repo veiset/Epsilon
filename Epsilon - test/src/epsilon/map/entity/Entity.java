@@ -1,5 +1,6 @@
 package epsilon.map.entity;
 
+import epsilon.game.Collision;
 import epsilon.game.Sprite;
 import java.awt.Graphics;
 
@@ -105,7 +106,7 @@ public abstract class Entity {
      * @param y
      * @return
      */
-    public abstract boolean[] collision(Entity entity);
+    public abstract Collision collision(Entity entity);
 
     /**
      * Returns the width of the Sprite

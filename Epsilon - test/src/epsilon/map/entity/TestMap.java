@@ -1,5 +1,6 @@
 package epsilon.map.entity;
 
+import epsilon.game.Collision;
 import epsilon.game.Input;
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
@@ -143,9 +144,9 @@ public class TestMap implements Map {
 
         // temp collision, simple test
         for (Entity ent : renderableEntities) {
-            boolean[] hit = ent.collision(playerEntity);
-            if(hit[0]) {
-                playerEntity.collided(hit, ent);
+            Collision c = ent.collision(playerEntity);
+            if(c.collided) {
+                playerEntity.collided(c);
             }
         }
 

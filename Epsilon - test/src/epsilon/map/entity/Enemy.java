@@ -1,5 +1,6 @@
 package epsilon.map.entity;
 
+import epsilon.game.Collision;
 import java.awt.Graphics;
 
 /**
@@ -18,7 +19,7 @@ public abstract class Enemy extends MoveableEntity {
     }
 
     @Override
-    public boolean[] collision(Entity entity) {
+    public Collision collision(Entity entity) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

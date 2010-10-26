@@ -1,5 +1,7 @@
 package epsilon.map.entity;
 
+import epsilon.game.Collision;
+
 /**
  *
  * @author vz
@@ -11,7 +13,7 @@ public class EnemyPatrol extends Enemy {
     }
 
     @Override
-    public void collided(boolean[] hitbox, Entity collidedWith) {
+    public void collided(Collision c) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

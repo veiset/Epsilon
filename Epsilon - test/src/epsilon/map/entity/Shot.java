@@ -1,5 +1,6 @@
 package epsilon.map.entity;
 
+import epsilon.game.Collision;
 import epsilon.game.SoundPlayer;
 import epsilon.game.Sprite;
 import java.awt.Graphics;
@@ -47,12 +48,12 @@ public class Shot extends MoveableEntity {
     }
 
     @Override
-    public boolean[] collision(Entity entity) {
-        return new boolean[]{false, false, false, false, false};
+    public Collision collision(Entity entity) {
+        return new Collision();
     }
 
     @Override
-    public void collided(boolean[] hitbox, Entity collidedWith) {
+    public void collided(Collision c) {
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
