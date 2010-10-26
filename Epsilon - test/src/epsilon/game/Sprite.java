@@ -39,6 +39,8 @@ public class Sprite {
                 }
 
 		this.image = images;
+
+                hitbox = new HitBox[]{new HitBox(0, 0, image[0].getWidth(null), image[0].getHeight(null))};
                 
 	}
 

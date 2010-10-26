@@ -171,35 +171,25 @@ public class TestEntity extends MoveableEntity {
             double dty = c.deltaTop;
             double dby = c.deltaBottom;
 
-            System.out.println("Top: " + dty);
-            System.out.println("Bottom: " + dby);
-            System.out.println("Left: " + dlx);
-            System.out.println("Right: " + drx);
-            System.out.println("--------------------");
-
             // movement if this entity collides on the left side of something
-            if (c.crossedLeft && pposX < posX && dty > 2 && dby > 6) {
-                newPosX = c.collidedWith.getXPosition() - getWidth();
-                pposX = newPosX;
+            if (c.crossedLeft && pposX < posX && dty > 6 && dby > 6) {
+                newPosX -= dlx;
             }
 
             // movement if this entity collides on the right side of something
-            if (c.crossedRight && pposX > posX && dty> 2 && dby > 6) {
-                newPosX = c.collidedWith.getXPosition() + c.collidedWith.getWidth();
-                pposX = newPosX;
+            if (c.crossedRight && pposX > posX && dty> 6 && dby > 6) {
+                newPosX += drx;
             }
 
             // movement if it collides on the bottom of this entity
             if (c.crossedTop && posY > pposY && (drx > 8 && dlx > 8) ) {
-                posY = c.collidedWith.getYPosition() - getHeight() + 1;
-                newPosY = posY;
-                pposY = posY;
+                newPosY -= (dty-1);
                 touchesGround = true;
             }
 
             // movement if it collides on the top of this entity
             if (c.crossedBottom && posY < pposY && (drx > 8 && dlx > 8)) {
-                pposY = c.collidedWith.posY + c.collidedWith.getHeight() - 1;
+                pposY += dby - 1;
                 newPosY = pposY;
                 pposY = posY;
             }

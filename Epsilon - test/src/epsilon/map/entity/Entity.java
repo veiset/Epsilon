@@ -51,7 +51,7 @@ public abstract class Entity {
         /**
          * Smoothing out frame drawings
          */
-        currentSprite.draw(g, (int)Math.round(posX+(posX-pposX)*coeff), (int)Math.round(posY+(posY-pposY)*coeff));
+        currentSprite.draw(g, (int)Math.ceil(posX+(posX-pposX)*coeff), (int)Math.ceil(posY+(posY-pposY)*coeff));
     }
 
     /**
@@ -124,5 +124,9 @@ public abstract class Entity {
       */
      public int getHeight() {
          return currentSprite.getHeight();
+     }
+
+     public HitBox[] getHitbox() {
+         return currentSprite.getHitBox();
      }
 }

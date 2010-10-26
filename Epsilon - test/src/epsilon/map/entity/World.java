@@ -20,8 +20,8 @@ public abstract class World extends Entity {
      * @param toCheckAgainst
      * @return
      */
+    @Override
     public Collision collision(Entity toCheckAgainst) {
-        boolean[] hit = new boolean[]{false, false, false, false, false};
         Collision c = new Collision();
 
         int x = (int) toCheckAgainst.getXPosition();
@@ -60,32 +60,27 @@ public abstract class World extends Entity {
             return c;
         }
 
-        hit[0] = true;
         c.collided = true;
         c.collidedWith = this;
         c.collidingEntity = toCheckAgainst;
 
         // check if the other entity crosses the left side of this entity
         if (right2 > left1 && right2 < right1) {
-            hit[1] = true;
             c.crossedLeft = true;
         }
 
         // check if the other entity crosses the right side of this entity
         if (left2 < right1 && left2 > left1) {
-            hit[2] = true;
             c.crossedRight = true;
         }
 
         // check if the other entity crosses the top of this entity
         if (bottom2 > top1 && bottom2 < bottom1) {
-            hit[3] = true;
             c.crossedTop = true;
         }
 
         // check if the other entity crosses the bottom of this entity
         if (top2 < bottom1 && top2 > top1) {
-            hit[4] = true;
             c.crossedBottom = true;
         }
 
@@ -93,8 +88,6 @@ public abstract class World extends Entity {
         c.deltaBottom = bottom1 - top2;
         c.deltaTop = bottom2 - top1;
         c.deltaLeft = right2 - left1;
-
-        System.out.print(c);
 
         return c;
     }
