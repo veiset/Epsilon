@@ -4,6 +4,7 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class Menu {
 
     private Menu() {
         
-        URL url = this.getClass().getResource("/fonts/THECF.TTF");
+        URL url = this.getClass().getResource("/fonts/punkass.ttf");
 
         File f;
         try {
@@ -40,6 +41,8 @@ public class Menu {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+         currentPage = new optionPage();
         
     }
 
@@ -51,7 +54,8 @@ public class Menu {
         g.setColor(Color.GREEN);
         g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
         g.setFont(font);
-        g.drawString("Test test test test :)", 100, 100);
+
+        currentPage.drawPage(g, font);
     }
 
     public void reset() {
@@ -59,6 +63,15 @@ public class Menu {
     }
 
     public void update() {
+        if (!Input.get().getMenuArrowHandeled()) {
+            if (Input.get().jump()) {
+                Input.get().handleMenuArrow();
+                currentPage.selectPrevious();
+            } else if (Input.get().duck()) {
+                Input.get().handleMenuArrow();
+                currentPage.selectNext();
+            }
+        }
         
     }
 

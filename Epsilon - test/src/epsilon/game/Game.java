@@ -72,6 +72,7 @@ public class Game extends Canvas {
         // going to do that our self in accelerated mode
         setIgnoreRepaint(true);
 
+        container.addKeyListener(Input.get());
         this.addKeyListener(Input.get());
         // this.addMouseListener(Input.get());
 
@@ -129,6 +130,8 @@ public class Game extends Canvas {
         if (!menu) {
             lastUpdateTime = System.currentTimeMillis();
             map.update();
+        } else {
+            Menu.get().update();
         }
     }
 

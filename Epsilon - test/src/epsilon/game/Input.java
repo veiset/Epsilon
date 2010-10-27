@@ -34,6 +34,7 @@ public class Input implements MouseListener, KeyListener {
 
     // special menu handling
     private boolean menuHandeled;
+    private boolean menuDirectionHandeled;
 
     private Input() {
 
@@ -93,12 +94,14 @@ public class Input implements MouseListener, KeyListener {
             attack = true;
         } else if (e.getKeyCode() == jumpButton) {
             jump = true;
+            menuDirectionHandeled = false;
         } else if (e.getKeyCode() == leftButton) {
             left = true;
         } else if (e.getKeyCode() == rightButton) {
             right = true;
         } else if (e.getKeyCode() == duckButton) {
             duck = true;
+            menuDirectionHandeled = false;
         } else if (e.getKeyCode() == menuButton) {
             menu = true;
             menuHandeled = false;
@@ -237,11 +240,19 @@ public class Input implements MouseListener, KeyListener {
         return menuHandeled;
     }
 
+    public boolean getMenuArrowHandeled() {
+        return menuDirectionHandeled;
+    }
+
     /**
      * Indicates that the menu keypress has been handeled
      */
     public void handleMenu() {
         menuHandeled = true;
+    }
+
+    public void handleMenuArrow() {
+        menuDirectionHandeled = true;
     }
 
 }
