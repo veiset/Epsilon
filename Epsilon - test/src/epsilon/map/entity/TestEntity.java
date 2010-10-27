@@ -172,12 +172,12 @@ public class TestEntity extends MoveableEntity {
             double dby = c.deltaBottom;
 
             // movement if this entity collides on the left side of something
-            if (c.crossedLeft && pposX < posX && dty > 6 && dby > 6) {
+            if (c.crossedLeft && pposX < posX && dty > 8 && dby > 6) {
                 newPosX -= dlx;
             }
 
             // movement if this entity collides on the right side of something
-            if (c.crossedRight && pposX > posX && dty> 6 && dby > 6) {
+            if (c.crossedRight && pposX > posX && dty> 8 && dby > 6) {
                 newPosX += drx;
             }
 

@@ -120,6 +120,7 @@ public class Game extends Canvas {
             if (!menu) {
                 menu = true;
                 Input.get().handleMenu();
+
             } else {
                 menu = false;
                 Input.get().handleMenu();
@@ -155,6 +156,7 @@ public class Game extends Canvas {
             g.setColor(Color.BLACK);
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,(float)0.3));
             g.fillRect(0, 0, 800, 600);
+            Menu.get().render(g);
         }
 
 	// finally, we've completed drawing so clear up the graphics
