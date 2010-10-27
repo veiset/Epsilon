@@ -25,8 +25,16 @@ public class Floor_1 extends World {
     public Collision collision(Entity toCheckAgainst) {
         Collision c = new Collision();
 
-        int x = (int) toCheckAgainst.getXPosition();
-        int y = (int) toCheckAgainst.getYPosition();
+        double x = 0;
+        double y = 0;
+
+        if (toCheckAgainst instanceof MoveableEntity) {
+            x = ((MoveableEntity)toCheckAgainst).getNewXPosition();
+            y = ((MoveableEntity)toCheckAgainst).getNewYPosition();
+        } else {
+            x = toCheckAgainst.getXPosition();
+            y = toCheckAgainst.getYPosition();
+        }
 
         double left1, left2;
         double right1, right2;
@@ -40,12 +48,12 @@ public class Floor_1 extends World {
 
         left1 = this.posX;
         left2 = x;
-        right1 = this.posX + this.getWidth(); // (+image.width)
+        right1 = this.posX + this.getWidth();
         right2 = x + toCheckAgainst.getWidth();
         top1 = this.posY;
-        top2 = y; // (+ offset?)
-        bottom1 = this.posY + this.getHeight(); // (+image.height)
-        bottom2 = y + toCheckAgainst.getHeight(); // (+ offset?)
+        top2 = y;
+        bottom1 = this.posY + this.getHeight();
+        bottom2 = y + toCheckAgainst.getHeight();
 
         if (bottom1 < top2) {
             return c;
@@ -68,7 +76,7 @@ public class Floor_1 extends World {
 
         for(HitBox h:this.getHitbox()) {
             for(HitBox k:toCheckAgainst.getHitbox()) {
-                temp = h.collidesWith(k, posX, posY, toCheckAgainst.getXPosition(), toCheckAgainst.getYPosition());
+                temp = h.collidesWith(k, posX, posY, x, y);
                 if (temp.collided) {
                     c.collided = true;
                     c.crossedBottom = (c.crossedBottom || temp.crossedBottom);

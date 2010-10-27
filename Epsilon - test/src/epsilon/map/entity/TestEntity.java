@@ -183,15 +183,13 @@ public class TestEntity extends MoveableEntity {
 
             // movement if it collides on the bottom of this entity
             if (c.crossedTop && posY > pposY && (drx > 8 && dlx > 8) ) {
-                newPosY -= (dty-1);
+                newPosY -= dty;
                 touchesGround = true;
             }
 
             // movement if it collides on the top of this entity
             if (c.crossedBottom && posY < pposY && (drx > 8 && dlx > 8)) {
-                pposY += dby - 1;
-                newPosY = pposY;
-                pposY = posY;
+                pposY += dby;
             }
 
         }

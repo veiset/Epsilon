@@ -48,6 +48,18 @@ public abstract class MoveableEntity extends Entity {
         this.posY = newPosY;
     }
 
+
     public abstract boolean facingRight();
+
+    /**
+     *
+     */
+    public double getNewXPosition() {
+        return newPosX;
+    }
+
+    public double getNewYPosition() {
+        return newPosY;
+    }
 
 }
