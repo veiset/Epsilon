@@ -16,6 +16,13 @@ public class Shot extends MoveableEntity {
     private double distanceMax = 300;
     private int speed = 9;
 
+    /**
+     * Gunshot objects.
+     *
+     * @param posX
+     * @param posY
+     * @param headingRight what direction the object is heading
+     */
     public Shot(double posX, double posY, boolean headingRight) {
         super(posX, posY);
 

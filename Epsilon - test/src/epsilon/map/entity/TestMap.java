@@ -36,13 +36,14 @@ public class TestMap implements Map {
 
         bg = new Background("/pics/bg3.png", 1.25);
 
-        TestEntity test = new TestEntity(180, 100);
+        TestEntity test = new TestEntity(-70, 100);
         playerEntity = test;
 
         // TODO: Discuss; should floors have x,y parameter = x*50, y*40 as default?
         // => new Floor(3,4), instead of new Floor(150,160)?
 
 
+        renderableEntities.add(new Floor_1(-500, 525));
         renderableEntities.add(new Floor_1(-500, 565));
         renderableEntities.add(new Floor_1(-450, 565));
         renderableEntities.add(new Floor_1(-400, 565));
@@ -53,6 +54,8 @@ public class TestMap implements Map {
         renderableEntities.add(new Floor_1(-150, 565));
         renderableEntities.add(new Floor_1(-100, 565));
         renderableEntities.add(new Floor_1(-50, 565));
+        renderableEntities.add(new Floor_1(-50, 525));
+
 
         renderableEntities.add(new Floor_1(1000, 565));
         renderableEntities.add(new Floor_1(1050, 565));
@@ -78,6 +81,12 @@ public class TestMap implements Map {
 
         renderableEntities.add(new Floor_1(350, 455));
         renderableEntities.add(new Floor_1(500, 495));
+
+        Enemy enemy = new EnemyPatrol(-300,100);
+        renderableEntities.add(enemy);
+        moveableEntities.add(enemy);
+        entities.add(enemy);
+
 
         renderableEntities.add(test);
         moveableEntities.add(test);

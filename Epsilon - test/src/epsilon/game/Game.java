@@ -1,7 +1,6 @@
 package epsilon.game;
 
 import epsilon.map.Map;
-import epsilon.map.Map;
 import epsilon.map.entity.TestMap;
 import java.awt.AlphaComposite;
 import java.awt.Canvas;
