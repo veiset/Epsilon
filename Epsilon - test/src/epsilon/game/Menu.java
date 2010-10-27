@@ -24,7 +24,7 @@ public class Menu {
 
     private Menu() {
         
-        URL url = this.getClass().getResource("/fonts/punkass.ttf");
+        URL url = this.getClass().getResource("/fonts/thor.ttf");
 
         File f;
         try {
@@ -42,7 +42,7 @@ public class Menu {
             e.printStackTrace();
         }
 
-         currentPage = new optionPage();
+         currentPage = optionPage.get();
         
     }
 
@@ -59,11 +59,14 @@ public class Menu {
     }
 
     public void reset() {
-
+        currentPage = optionPage.get();
+        currentPage.reset();
     }
 
     public void update() {
-        if (!Input.get().getMenuArrowHandeled()) {
+        if (Input.get().useMenu()) {
+            currentPage.useSelected();
+        } else if (!Input.get().getMenuArrowHandeled()) {
             if (Input.get().jump()) {
                 Input.get().handleMenuArrow();
                 currentPage.selectPrevious();

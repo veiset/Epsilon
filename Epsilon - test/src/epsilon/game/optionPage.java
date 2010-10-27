@@ -6,13 +6,27 @@ package epsilon.game;
  */
 public class optionPage extends MenuPage {
 
-    optionPage() {
-        super(new String[]{"Test 1", "Test 2"}, "Options");
+    private static optionPage page = new optionPage();
+
+    private optionPage() {
+        super(new String[]{"Mute", "Exit Game"}, "Options");
     }
 
     @Override
     public void useSelected() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (selected == 0) {
+            if (items[0].equals("Mute")) {
+                items[0] = "UnMute";
+            } else {
+                items[0] = "Mute";
+            }
+        } else if (selected == 1) {
+            Game.game.quit();
+        }
+    }
+
+    public static optionPage get() {
+        return page;
     }
 
 }

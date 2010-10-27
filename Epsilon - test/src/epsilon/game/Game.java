@@ -48,6 +48,9 @@ public class Game extends Canvas {
     // true if the game is in the menu
     private boolean menu;
 
+    // test
+    public static Game game = null;
+
     /**
      * Constructor, intialises all the graphics elements,
      * and starts the game running. Also creates the threads
@@ -75,6 +78,8 @@ public class Game extends Canvas {
         container.addKeyListener(Input.get());
         this.addKeyListener(Input.get());
         // this.addMouseListener(Input.get());
+
+        game = this;
 
     }
 
@@ -124,6 +129,7 @@ public class Game extends Canvas {
 
             } else {
                 menu = false;
+                Menu.get().reset();
                 Input.get().handleMenu();
             }
         }
@@ -142,7 +148,7 @@ public class Game extends Canvas {
      *
      * @param delta time in milliseconds since last update
      */
-    void renderGraphics(long delta) {
+    public void renderGraphics(long delta) {
 
         // Get hold of a graphics context for the accelerated
 	// surface and blank it out
@@ -168,5 +174,9 @@ public class Game extends Canvas {
 	strategy.show();
 
     }
-}
 
+    public void quit() {
+        System.exit(0);
+    }
+
+}

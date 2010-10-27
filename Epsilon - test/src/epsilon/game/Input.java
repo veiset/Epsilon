@@ -23,6 +23,7 @@ public class Input implements MouseListener, KeyListener {
     private int rightButton;
     private int attackButton;
     private int menuButton;
+    private int menuChoiceButton;
 
     // true if a button is pushed
     private boolean jump;
@@ -31,6 +32,7 @@ public class Input implements MouseListener, KeyListener {
     private boolean right;
     private boolean attack;
     private boolean menu;
+    private boolean menuChoice;
 
     // special menu handling
     private boolean menuHandeled;
@@ -44,6 +46,7 @@ public class Input implements MouseListener, KeyListener {
         rightButton = KeyEvent.VK_RIGHT;
         attackButton = KeyEvent.VK_SPACE;
         menuButton = KeyEvent.VK_ESCAPE;
+        menuChoiceButton = KeyEvent.VK_ENTER;
 
         jump = false;
         duck = false;
@@ -51,6 +54,7 @@ public class Input implements MouseListener, KeyListener {
         right = false;
         attack = false;
         menu = false;
+        menuChoice = false;
 
         menuHandeled = true;
 
@@ -105,6 +109,8 @@ public class Input implements MouseListener, KeyListener {
         } else if (e.getKeyCode() == menuButton) {
             menu = true;
             menuHandeled = false;
+        } else if (e.getKeyCode() == menuChoiceButton) {
+            menuChoice = true;
         }
     }
     
@@ -121,6 +127,8 @@ public class Input implements MouseListener, KeyListener {
             duck = false;
         } else if (e.getKeyCode() == menuButton) {
             menu = false;
+        } else if (e.getKeyCode() == menuChoiceButton) {
+            menuChoice = false;
         }
     }
 
@@ -242,6 +250,12 @@ public class Input implements MouseListener, KeyListener {
 
     public boolean getMenuArrowHandeled() {
         return menuDirectionHandeled;
+    }
+
+    public boolean useMenu() {
+        boolean b = menuChoice;
+        menuChoice = false;
+        return b;
     }
 
     /**

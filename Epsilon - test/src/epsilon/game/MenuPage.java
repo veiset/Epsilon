@@ -16,9 +16,9 @@ import java.awt.Graphics2D;
  */
 public abstract class MenuPage {
 
-    private String[] items;
-    private int selected;
-    private String title;
+    protected String[] items;
+    protected int selected;
+    protected String title;
 
     public MenuPage(String[] pageItems, String pageTitle) {
 
@@ -48,7 +48,7 @@ public abstract class MenuPage {
         for (int i=0;i<items.length;i++) {
 
             if (i == selected) {
-                g.setFont(f.deriveFont(60f));
+                g.setFont(f.deriveFont(Font.BOLD,60f));
             }
             
             fm = g.getFontMetrics();
@@ -65,10 +65,8 @@ public abstract class MenuPage {
     }
 
     public void selectNext() {
-        System.out.println("Weeeeeee");
         if (selected < items.length - 1) {
             selected++;
-            System.out.println("Selected: " + selected);
         }
     }
 
@@ -79,5 +77,9 @@ public abstract class MenuPage {
     }
 
     public abstract void useSelected();
+
+    public void reset() {
+        selected = 0;
+    }
 
 }
