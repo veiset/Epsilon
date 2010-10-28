@@ -9,44 +9,41 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.Ellipse2D;
-import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import java.util.Iterator;
 
 /**
- *
- * Painting panel to test network functionality
- * 
- * Move a ball around the panel by sending the coordinates to a server first
  *
  * @author mm
  */
 public class TestPanel extends JPanel implements MouseListener, MouseMotionListener {
 
-    private int xpos, ypos;
+    private int posX, posY;
     private TestWindow tw;
+    private Map map;
+
+    private boolean isConnected = false;
 
 
     /**
-     *
      * Constructor
-     *
      */
-    public TestPanel(TestWindow tw) {
+    public TestPanel(TestWindow tw, Map map) {
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
         addMouseListener(this);
         addMouseMotionListener(this);
         setOpaque(true);
         this.tw = tw;
+        this.map = map;
     }
 
 
     /**
-     *
      * Painting the graphics object.
      * Using Java2D and AA for smoother objects
-     * 
      */
     @Override
     public void paintComponent(Graphics g) {
@@ -56,9 +53,17 @@ public class TestPanel extends JPanel implements MouseListener, MouseMotionListe
             RenderingHints.VALUE_ANTIALIAS_ON);
 
         g2.clearRect(0, 0, getWidth(), getHeight());
-        g2.setPaint(Color.BLACK);
-        g2.fill(new Ellipse2D.Double(xpos, ypos, 20, 20));
 
+        HashMap<String, PlayerEntity> playerList = map.getPlayerList();
+        Collection c = playerList.values();
+        Iterator it = c.iterator();
+
+        while (it.hasNext()) {
+            PlayerEntity p = (PlayerEntity) it.next();
+            System.out.println("Drawing player " + p.getName());
+            p.drawPlayer(g2);
+
+        }
     }
 
 
@@ -72,20 +77,18 @@ public class TestPanel extends JPanel implements MouseListener, MouseMotionListe
 
 
     /**
-     *
      * When the mouse is moved over the panel, the x and y coordinates of the
      * mouse pointer is sendt to the server
-     *
      */
     public void mouseMoved(MouseEvent e) {
-        tw.coordinatesToServer(e.getX(), e.getY());
+        if (isConnected) {
+            tw.sendCoordinates(e.getX(), e.getY());
+        }
     }
 
 
     /**
-     *
      * Set the panel size. change for preferred resoluton
-     *
      */
     @Override
     public Dimension getPreferredSize() {
@@ -94,16 +97,10 @@ public class TestPanel extends JPanel implements MouseListener, MouseMotionListe
 
 
     /**
-     * 
-     * Set coordinates received from the server and call to repaint the panel
-     * 
+     * change the isConnected flag
      */
-    public void setCoordinates(int xpos, int ypos) {
-        this.xpos = xpos;
-        this.ypos = ypos;
-        System.out.println("Setting coordinates " + "x: " + xpos + " y: " + ypos);
-        repaint();
+    public void setConnectedState(boolean state) {
+        this.isConnected = state;
     }
-    
 
 }

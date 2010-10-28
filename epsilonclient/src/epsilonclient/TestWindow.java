@@ -5,20 +5,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 /**
- *
  * Client test GUI
- *
  * Window to contain the painting panel and menu with connection option
  *
  * @author mm
@@ -27,24 +21,24 @@ public class TestWindow extends JFrame {
 
     private TestPanel tp;
     private TestWindow tw = this;
-    private Network net;
+    private ClientHandler clientHandler;
+    private Map map;
 
 
-    /*
+    /**
      * Constructor
-     *
      */
     public TestWindow()  {
         initComponents();
     }
 
 
-    /*
+    /**
      * Initialize components contained in window
-     *
      */
     private void initComponents() {
-        tp = new TestPanel(tw);
+        map = new Map();
+        tp = new TestPanel(tw, map);
         tw.getContentPane().add(tp, BorderLayout.CENTER);
         setVisible(true);
         setBackground(Color.WHITE);
@@ -56,9 +50,8 @@ public class TestWindow extends JFrame {
     }
 
 
-    /*
+    /**
      * Menu with options to connecto to a server and to exit the program
-     * 
      */
     public void makeMenu() {
         JMenuBar menubar = new JMenuBar();
@@ -68,23 +61,24 @@ public class TestWindow extends JFrame {
 
         JMenuItem item1 = new JMenuItem("Connect");
         item1.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {              
-                String input = (String) JOptionPane.showInputDialog(
-                    tw, "Host:", "Connect to Cinema server", JOptionPane.QUESTION_MESSAGE,
-                    null, null, "localhost");
-                if (input == null || input.trim().length() == 0) { return; }
-                final String host = input.trim();
+            public void actionPerformed(ActionEvent e) {
 
-                try {
-                    net = new Network(tw, host);
-                    new Thread(net).start();
-                }
-                catch (SocketException se) {
-                    JOptionPane.showMessageDialog(tw, "Could not connect to server");
-                }
-                catch (UnknownHostException ue) {
-                    JOptionPane.showMessageDialog(tw, "Something wrong with the hostname.");
-                }
+                String nameInput = (String) JOptionPane.showInputDialog(
+                        tw, "Name: ", "Player name", JOptionPane.QUESTION_MESSAGE,
+                        null, null, "mm");
+                String hostInput = (String) JOptionPane.showInputDialog(
+                        tw, "Host:", "Connect to Cinema server", JOptionPane.QUESTION_MESSAGE,
+                        null, null, "127.0.0.1");
+
+                if (hostInput == null || hostInput.trim().length() == 0
+                        || nameInput == null || nameInput.trim().length() == 0) { return; }
+
+                final String host = hostInput.trim();
+                final String name = nameInput.trim();
+
+                clientHandler = new ClientHandler(map, host, name, tp);
+                clientHandler.startClient();
+                tp.setConnectedState(true);
             }
         });
         fileMenu.add(item1);
@@ -106,42 +100,12 @@ public class TestWindow extends JFrame {
     }
 
 
-    /*
-     * Send coordinates to painting panel
-     *
+    /**
+     * send movement coordinates to server
      */
-    public void coordinatesToPaint(int xpos, int ypos) {
-        tp.setCoordinates(xpos, ypos);
+    public void sendCoordinates(int posX, int posY) {
+        clientHandler.sendCoordinates(posX, posY);
     }
 
-
-    /*
-     * Send coordinates to the server
-     *
-     */
-    public void coordinatesToServer(int xpos, int ypos) {
-        try {
-            if (net != null) {
-                net.sendCoordinates(xpos, ypos);
-            }
-            else { System.out.println("Network not initialized"); }
-        }
-        catch (IOException ex) {
-            System.out.println("Could not send packet to server");
-        }
-    }
-
-
-    /*
-     * Programs main method
-     * 
-     */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new TestWindow();
-            }
-        });
-    }
 
 }
