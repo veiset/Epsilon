@@ -20,6 +20,9 @@ public class Sprite {
         /** the hitbox of the animation */
         private HitBox[] hitbox;
 
+        /** */
+        private int offset;
+
 	/**
 	 * Create a new sprite based on an list of urls.
          * Loads the images contained in the urls.
@@ -41,7 +44,8 @@ public class Sprite {
 		this.image = images;
 
                 hitbox = new HitBox[]{new HitBox(0, 0, image[0].getWidth(null), image[0].getHeight(null))};
-                
+
+                offset = calculateOffset(hitbox);
 	}
 
 	/**
@@ -74,6 +78,10 @@ public class Sprite {
             } else {
                 hitbox = h;
             }
+
+            offset = calculateOffset(hitbox);
+
+            System.out.println("Offset: "+offset);
 	}
 
 	/**
@@ -137,5 +145,24 @@ public class Sprite {
                 result[i] = new HitBox(getWidth() - hitbox[i].getOffsetX() - hitbox[i].getWidth(), hitbox[i].getOffsetY(), hitbox[i].getWidth(), hitbox[i].getHeight());
             }
             return result;
+        }
+
+        private int calculateOffset(HitBox[] hitbox) {
+            int left = 800;
+            int right = 0;
+
+            for (int i=0; i<hitbox.length; i++) {
+                if (hitbox[i].getOffsetX() < left) {
+                    left = hitbox[i].getOffsetX();
+                }
+                if (hitbox[i].getOffsetX() +  hitbox[i].getWidth() > right) {
+                    right = hitbox[i].getOffsetX() +  hitbox[i].getWidth();
+                }
+            }
+            return ((right + left)/2)-getWidth()/2;
+        }
+
+        public int getOffset() {
+            return offset;
         }
 }

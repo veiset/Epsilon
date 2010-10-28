@@ -4,7 +4,6 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class Menu {
 
     private Menu() {
         
-        URL url = this.getClass().getResource("/fonts/thor.ttf");
+        URL url = this.getClass().getResource("/fonts/punkass.ttf");
 
         File f;
         try {

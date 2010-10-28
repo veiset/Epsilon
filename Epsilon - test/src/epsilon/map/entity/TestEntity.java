@@ -64,27 +64,29 @@ public class TestEntity extends MoveableEntity {
         if (!isDead) {
             if(Input.get().right() && !Input.get().left()) {
                 if (currentSprite != rightSprite) {
+                    newPosX += (currentSprite.getOffset());
                     currentSprite.resetImage();
                     currentSprite = rightSprite;
                     rightSprite.resetImage();
                     ticker = 0;
                     facingRight = true;
                 }
-                newPosX = posX+4;
+                newPosX += 4;
             } else if (Input.get().left() && !Input.get().right()) {
                 if (currentSprite != leftSprite) {
+                    newPosX += (currentSprite.getOffset());
                     currentSprite.resetImage();
                     currentSprite = leftSprite;
                     leftSprite.resetImage();
                     ticker = 0;
                     facingRight = false;
                 }
-                newPosX = posX-4;
+                newPosX -= 4;
             } else {
                 if (currentSprite != standSpriteRight && currentSprite != standSpriteLeft) {
                     currentSprite.resetImage();
                     // if the guy was moving right, he should be face right when stopped
-                    if (pposX < posX) {
+                    if (currentSprite == rightSprite) {
                         currentSprite = standSpriteRight;
                         standSpriteRight.resetImage();
                         facingRight = true;
@@ -191,7 +193,6 @@ public class TestEntity extends MoveableEntity {
             if (c.crossedBottom && posY < pposY && (drx > 8 && dlx > 8)) {
                 pposY += dby;
             }
-
         }
     }
 }
