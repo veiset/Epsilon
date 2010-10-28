@@ -84,7 +84,7 @@ public class ClientThread implements Runnable {
         try {
             outgoingPacket = new DatagramPacket(buf, buf.length, serverAddress, serverPort);
             socket.send(outgoingPacket);
-            System.out.println("Packet sendt");
+            System.out.println("Sending packet to " + serverAddress);
         }
         catch (IOException e) {
             System.out.println("Could not send packet to server");

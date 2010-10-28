@@ -1,4 +1,3 @@
-
 package epsilonclient;
 
 import java.awt.BorderLayout;
@@ -24,14 +23,12 @@ public class TestWindow extends JFrame {
     private ClientHandler clientHandler;
     private Map map;
 
-
     /**
      * Constructor
      */
     public TestWindow()  {
         initComponents();
     }
-
 
     /**
      * Initialize components contained in window
@@ -48,7 +45,6 @@ public class TestWindow extends JFrame {
         makeMenu();
         pack();
     }
-
 
     /**
      * Menu with options to connecto to a server and to exit the program
@@ -99,13 +95,11 @@ public class TestWindow extends JFrame {
         menubar.add(fileMenu);
     }
 
-
     /**
      * send movement coordinates to server
      */
     public void sendCoordinates(int posX, int posY) {
         clientHandler.sendCoordinates(posX, posY);
     }
-
 
 }

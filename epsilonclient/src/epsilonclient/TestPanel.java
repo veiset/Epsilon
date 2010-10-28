@@ -1,4 +1,3 @@
-
 package epsilonclient;
 
 import java.awt.Color;
@@ -16,6 +15,7 @@ import javax.swing.JPanel;
 import java.util.Iterator;
 
 /**
+ * Panel for drawing players
  *
  * @author mm
  */
@@ -26,7 +26,6 @@ public class TestPanel extends JPanel implements MouseListener, MouseMotionListe
     private Map map;
 
     private boolean isConnected = false;
-
 
     /**
      * Constructor
@@ -39,7 +38,6 @@ public class TestPanel extends JPanel implements MouseListener, MouseMotionListe
         this.tw = tw;
         this.map = map;
     }
-
 
     /**
      * Painting the graphics object.
@@ -66,7 +64,6 @@ public class TestPanel extends JPanel implements MouseListener, MouseMotionListe
         }
     }
 
-
     // not in use
     public void mouseClicked(MouseEvent e) {}
     public void mousePressed(MouseEvent e) {}
@@ -74,7 +71,6 @@ public class TestPanel extends JPanel implements MouseListener, MouseMotionListe
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
     public void mouseDragged(MouseEvent e) {}
-
 
     /**
      * When the mouse is moved over the panel, the x and y coordinates of the
@@ -86,7 +82,6 @@ public class TestPanel extends JPanel implements MouseListener, MouseMotionListe
         }
     }
 
-
     /**
      * Set the panel size. change for preferred resoluton
      */
@@ -94,7 +89,6 @@ public class TestPanel extends JPanel implements MouseListener, MouseMotionListe
     public Dimension getPreferredSize() {
         return new Dimension(800,600);
     }
-
 
     /**
      * change the isConnected flag

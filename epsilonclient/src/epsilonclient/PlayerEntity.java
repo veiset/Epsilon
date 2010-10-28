@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package epsilonclient;
 
 import java.awt.Color;
@@ -11,6 +6,7 @@ import java.awt.geom.Ellipse2D;
 import java.net.InetAddress;
 
 /**
+ * The PlayerEntity class represents a connected player
  *
  * @author mm
  */
@@ -25,9 +21,16 @@ public class PlayerEntity {
 
     // timeout count
 
-    
-    public PlayerEntity(String name, InetAddress ip,
-            int port, int posX, int posY) {
+    /**
+     * Overloaded constructor
+     *
+     * @param name
+     * @param ip
+     * @param port
+     * @param posX
+     * @param posY
+     */
+    public PlayerEntity(String name, InetAddress ip, int port, int posX, int posY) {
         this.name = name;
         this.ip = ip;
         this.port = port;
@@ -35,63 +38,108 @@ public class PlayerEntity {
         this.posY = posY;
     }
 
-
+    /**
+     * Overloaded constructor
+     *
+     * @param name
+     * @param posX
+     * @param posY
+     */
     public PlayerEntity(String name, int posX, int posY) {
         this.name = name;
         this.posX = posX;
         this.posY = posY;
     }
 
-    
+    /**
+     * Overloaded constructor
+     *
+     * @param name
+     */
     public PlayerEntity(String name) {
         this.name = name;
     }
 
-
+    /**
+     * Get player name
+     *
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
-
+    /**
+     * Set a players IP address
+     *
+     * @param ip
+     */
     public void setAddress(InetAddress ip) {
         this.ip = ip;
     }
 
-
+    /**
+     * Get a players IP address
+     *
+     * @return ip
+     */
     public InetAddress getAddress() {
         return ip;
     }
 
-
+    /**
+     * Set a players port
+     *
+     * @param port
+     */
     public void setPort(int port) {
         this.port = port;
     }
 
-
+    /**
+     * Get a players port
+     *
+     * @return
+     */
     public int getPort() {
         return port;
     }
 
-
+    /**
+     * Get players x position
+     *
+     * @return posX
+     */
     public int getPosX() {
         return posX;
     }
 
-
+    /**
+     * Get players y position
+     *
+     * @return posY
+     */
     public int getPosY() {
         return posY;
     }
 
-
+    /**
+     * Set players x position
+     *
+     * @param posX
+     */
     public void setPosX(int posX) {
         this.posX = posX;
     }
 
-
+    /**
+     * Set players y position
+     *
+     * @param posY
+     */
     public void setPosY(int posY) {
         this.posY = posY;
     }
-
 
     /**
      * Draw the player shape
@@ -101,6 +149,5 @@ public class PlayerEntity {
         g2.setPaint(Color.BLACK);
         g2.fill(new Ellipse2D.Double(posX, posY, 20, 20));
     }
-
-
+    
 }

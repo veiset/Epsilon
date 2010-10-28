@@ -1,18 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package epsilonclient;
 
 import javax.swing.SwingUtilities;
 
 /**
- *
+ * The Client class starts the program
+ * 
  * @author mm
  */
 public class Client {
-
 
     /*
      * It all starts here

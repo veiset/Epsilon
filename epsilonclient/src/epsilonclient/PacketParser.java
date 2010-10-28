@@ -1,5 +1,3 @@
-
-
 package epsilonclient;
 
 import java.net.DatagramPacket;
@@ -7,6 +5,8 @@ import java.util.StringTokenizer;
 import java.util.concurrent.BlockingQueue;
 
 /**
+ * The parsing class starts a thread that takes datagrampackets from
+ * a queue and parses its data content
  *
  * @author mm
  */
@@ -17,16 +17,22 @@ public class PacketParser implements Runnable {
     private BlockingQueue<DatagramPacket> packetQueue;
     private TestPanel tp;
     
-
+    /**
+     * Constructor
+     *
+     * @param map
+     * @param packetQueue
+     * @param tp
+     */
     public PacketParser(Map map, BlockingQueue<DatagramPacket> packetQueue, TestPanel tp) {
         this.map = map;
         this.packetQueue = packetQueue;
         this.tp = tp;
     }
 
-
     /**
-     * TODO: better parsing of input and call to paint
+     * Parsing thread.
+     * Parse datagrampacket data content by converting it to a string
      */
     public void run() {
         while (isRunning) {
@@ -52,8 +58,8 @@ public class PacketParser implements Runnable {
                         p = new PlayerEntity(nextString);
                         map.addPlayer(nextString, p);
                     }
-
                 }
+
                 tp.repaint();
             }
             catch (InterruptedException ie) {
@@ -62,10 +68,11 @@ public class PacketParser implements Runnable {
         }
     }
 
-
+    /**
+     * Stop packetparsing thread
+     */
     public void stopParsing() {
         isRunning = false;
     }
     
-
 }
