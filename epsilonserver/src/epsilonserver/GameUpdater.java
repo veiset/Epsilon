@@ -1,21 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package epsilonserver;
 
 import java.util.TimerTask;
 
 /**
+ * Task that updates the game state about 60 times pr. second, every 16th ms
  *
- * @author mm
+ * @author Marius
  */
 public class GameUpdater extends TimerTask {
 
     private Game g;
     private boolean running;
-
 
     /**
      * Constructor
@@ -26,7 +21,6 @@ public class GameUpdater extends TimerTask {
         g = game;
         running = false;
     }
-
 
     /**
      * Method that is run every 16 ms. Only updates the gamestate
@@ -40,6 +34,5 @@ public class GameUpdater extends TimerTask {
             running = false;
         }
     }
-
 
 }

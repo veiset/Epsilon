@@ -1,5 +1,3 @@
-
-
 package epsilonserver;
 
 import java.io.IOException;
@@ -14,6 +12,10 @@ import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
 
 /**
+ * The ServerThread class starts a thread for listening after incoming packets
+ * by using a datagramsocket. when a packet is received it is added to the
+ * packet queue.
+ * The same datagramsocket is also used to send packets to the players
  *
  * @author mm
  */
@@ -23,11 +25,19 @@ public class ServerThread implements Runnable {
     private DatagramSocket socket;
     private BlockingQueue<DatagramPacket> packetQueue;
     private int serverPort = 6001;
-    private int clientPort = 6002; // not currently in use
-    private int BUFFER_SIZE = 256;
+    private int clientPort = 6002;
     private boolean isRunning = true;
 
+    // byte size of sent data
+    private int BUFFER_SIZE = 256;
 
+    /**
+     * Constructor
+     * Create a datagramsocket on a specified port and bound to local IP
+     *
+     * @param map
+     * @param packetQueue
+     */
     public ServerThread(Map map, BlockingQueue<DatagramPacket> packetQueue) {
         this.map = map;
         this.packetQueue = packetQueue;
@@ -45,7 +55,10 @@ public class ServerThread implements Runnable {
 
     }
 
-
+    /**
+     * Thread that listens after incoming packets. If a packet is
+     * received it is added to the packet queue.
+     */
     public void run() {
         System.out.println("Server is running");
 
@@ -69,7 +82,9 @@ public class ServerThread implements Runnable {
         socket.close();
     }
 
-
+    /**
+     * Send gamestate to all registered players
+     */
     public void sendGameState() {
         byte[] buf = new byte[BUFFER_SIZE];
         DatagramPacket outgoingPacket;
@@ -101,7 +116,9 @@ public class ServerThread implements Runnable {
         }        
     }
 
-
+    /**
+     * Stop listening thread
+     */
     public void stopServerThread() {
         this.isRunning = false;
     }

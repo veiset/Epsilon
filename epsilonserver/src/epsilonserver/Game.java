@@ -1,12 +1,14 @@
-
-
 package epsilonserver;
 
 import java.util.Timer;
 
 /**
+ * The game class, coordinates the flow of information
+ * between the different threads.
  *
- * @author mm
+ * Modified by mm
+ *
+ * @author Marius
  */
 public class Game {
 
@@ -22,7 +24,6 @@ public class Game {
     private Map map;
     private ServerHandler serverHandler;
 
-
     /**
      * Constructor
      */
@@ -31,7 +32,6 @@ public class Game {
         // initialise LoopTimer
         lastUpdateTime = System.currentTimeMillis();
     }
-
 
     /**
      * Startup method. Starts the gameupdating
@@ -51,7 +51,6 @@ public class Game {
         
     }
     
-
     /**
      * Method used to update the game, mainly used by the updater task
      */
@@ -60,6 +59,5 @@ public class Game {
         serverHandler.sendGameState();
         
     }
-
 
 }
