@@ -79,6 +79,7 @@ public class Floor_1 extends World {
                 temp = h.collidesWith(k, posX, posY, x, y);
                 if (temp.collided) {
                     c.collided = true;
+                    
                     c.crossedBottom = (c.crossedBottom || temp.crossedBottom);
                     c.crossedTop = (c.crossedTop || temp.crossedTop);
                     c.crossedLeft = (c.crossedLeft || temp.crossedLeft);

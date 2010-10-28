@@ -87,7 +87,7 @@ public class HitBox {
         c.deltaTop = bottom2 - top1;
         c.deltaLeft = right2 - left1;
 
-        return c; //not yet implemented
+        return c;
     }
 
     public void draw (Graphics g, double posX, double posY) {
