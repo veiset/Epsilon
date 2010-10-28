@@ -80,8 +80,6 @@ public class Sprite {
             }
 
             offset = calculateOffset(hitbox);
-
-            System.out.println("Offset: "+offset);
 	}
 
 	/**
