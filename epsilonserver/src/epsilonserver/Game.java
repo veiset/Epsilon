@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package epsilonserver;
 
@@ -22,9 +19,8 @@ public class Game {
     //utility timer used to update the game
     private Timer t;
 
-    private GameState gameState;
+    private Map map;
     private ServerHandler serverHandler;
-    private static int PORT = 6001;
 
 
     /**
@@ -43,10 +39,10 @@ public class Game {
     public void start() {
 
         // initialising the map
-        gameState = new GameState();
-
-        serverHandler = new ServerHandler(PORT, gameState);
-        new Thread(serverHandler).start();
+        map = new Map();
+        
+        serverHandler = new ServerHandler(map);
+        serverHandler.startServer();
 
         // Schedule the GameUpdater Task
         u = new GameUpdater(this);
@@ -60,8 +56,7 @@ public class Game {
      * Method used to update the game, mainly used by the updater task
      */
     public void updateGame() {
-
-        //gameState.update();
+        
         serverHandler.sendGameState();
         
     }

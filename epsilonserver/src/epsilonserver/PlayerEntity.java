@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package epsilonserver;
 
@@ -11,22 +8,36 @@ import java.net.InetAddress;
  *
  * @author mm
  */
-public class Player {
+public class PlayerEntity {
 
     // player info
     private String name;
     private InetAddress ip;
     private int port;
-    private int posX;
-    private int posY;
+    private int posX = 100;
+    private int posY = 100;
 
-    // timeout
+    // timeout count
 
     
-    public Player(String name, InetAddress ip, int port) {
+    public PlayerEntity(String name, InetAddress ip, int port, int posX, int posY) {
         this.name = name;
         this.ip = ip;
         this.port = port;
+        this.posX = posX;
+        this.posY = posY;
+    }
+
+    
+    public PlayerEntity(String name, int posX, int posY) {
+        this.name = name;
+        this.posX = posX;
+        this.posY = posY;
+    }
+
+
+    public PlayerEntity(String name) {
+        this.name = name;
     }
 
 

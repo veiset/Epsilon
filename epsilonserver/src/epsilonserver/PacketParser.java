@@ -1,12 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package epsilonserver;
 
-import java.nio.ByteBuffer;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
 import java.util.StringTokenizer;
+import java.util.concurrent.BlockingQueue;
 
 /**
  *
@@ -14,30 +13,53 @@ import java.util.StringTokenizer;
  */
 public class PacketParser implements Runnable {
 
-    private GameState gameState;
-    private ByteBuffer bb;
+    private boolean isRunning = true;
+    private Map map;
+    private BlockingQueue<DatagramPacket> packetQueue;
 
-    public PacketParser(GameState gameState, ByteBuffer bb) {
-        this.gameState = gameState;
-        this.bb = bb;
+
+    public PacketParser(Map map, BlockingQueue<DatagramPacket> packetQueue) {
+        this.map = map;
+        this.packetQueue = packetQueue;
     }
 
 
-    /**
-     * Start a thread and parse the received data
-     */
     public void run() {
+        while (isRunning) {
+            try {
+                DatagramPacket packet = packetQueue.take();
+                String packetString = new String(packet.getData(), 0, packet.getLength());
 
-        String gameStateString = bb.toString();
-        
-        StringTokenizer part = new StringTokenizer(gameStateString);
-        Player p = gameState.getPlayerByName(part.nextToken());
+                InetAddress address = packet.getAddress();
+                int clientPort = packet.getPort();
 
-        p.setPosX(Integer.parseInt(part.nextToken()));
-        p.setPosY(Integer.parseInt(part.nextToken()));
+                String clientName = "";
+                int posX = 0;
+                int posY = 0;
 
+                StringTokenizer part = new StringTokenizer(packetString);
+
+                while (part.hasMoreTokens()) {
+                    String nextString = part.nextToken();
+
+                    if (nextString.equals("x")) {
+                        posX = Integer.parseInt(part.nextToken());
+                    }
+                    else if (nextString.equals("y")) {
+                        posY = Integer.parseInt(part.nextToken());
+                    }
+                    else {
+                        clientName = nextString;
+                    }
+                }
+                PlayerEntity p = new PlayerEntity(clientName, address, clientPort, posX, posY);
+                map.addPlayer(clientName, p);
+            }
+            catch (InterruptedException ie) {
+                System.out.println("Interrupt from queue");
+            }
+        }
     }
-
-
-
+    
+  
 }
