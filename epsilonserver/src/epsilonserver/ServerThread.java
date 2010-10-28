@@ -34,7 +34,7 @@ public class ServerThread implements Runnable {
 
         try {
             socket = new DatagramSocket(serverPort, InetAddress.getLocalHost());
-            System.out.println("Socket created");
+            System.out.println("Socket created on " + InetAddress.getLocalHost());
         }
         catch (SocketException se) {
             System.out.println("Could not create socket");
