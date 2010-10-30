@@ -25,9 +25,12 @@ public class NetworkPage extends MenuPage {
         if (selected == 0 || selected == 1) {
             typingString = true;
             Input.get().requestString(currentString[selected]);
+            errorMessage = "";
         } else if (selected == 2) {
             // TODO: connect to server here.
+            errorMessage = "Not yet implemented";
         } else if (selected == 3) {
+            errorMessage = "";
             Menu.get().goToPrevious();
         }
     }

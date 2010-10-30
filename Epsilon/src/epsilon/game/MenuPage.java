@@ -19,12 +19,14 @@ public abstract class MenuPage {
     protected String[] items;
     protected int selected;
     protected String title;
+    protected String errorMessage;
 
     public MenuPage(String[] pageItems, String pageTitle) {
 
         items = pageItems;
         selected = 0;
         title = pageTitle;
+        errorMessage = "";
         
     }
 
@@ -61,7 +63,15 @@ public abstract class MenuPage {
             
             g.setFont(f);
         }
-        
+
+        if (!errorMessage.equals("")) {
+            g.setFont(f.deriveFont(Font.ITALIC, 32f));
+            fm = g.getFontMetrics();
+            y += 32 + fm.getHeight()/2;
+            g.setColor(Color.orange);
+            g.drawString("Error: " + errorMessage, 400-(fm.stringWidth("Error: " +errorMessage))/2, y);
+        }
+
     }
 
     public void selectNext() {
