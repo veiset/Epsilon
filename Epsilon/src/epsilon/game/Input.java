@@ -38,6 +38,10 @@ public class Input implements MouseListener, KeyListener {
     private boolean menuHandeled;
     private boolean menuDirectionHandeled;
 
+    // handling typing text in the menu
+    private boolean typing;
+    private String currentText;
+
     private Input() {
 
         jumpButton = KeyEvent.VK_UP;

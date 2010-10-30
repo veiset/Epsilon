@@ -20,10 +20,11 @@ public class Menu {
 
     private Font font;
     private MenuPage currentPage;
+    private MenuPage previousPage;
 
     private Menu() {
         
-        URL url = this.getClass().getResource("/fonts/punkass.ttf");
+        URL url = this.getClass().getResource("/fonts/smelo.ttf");
 
         File f;
         try {
@@ -74,13 +75,17 @@ public class Menu {
                 currentPage.selectNext();
             }
         }
-        
     }
 
     public void setMenu(MenuPage p) {
         currentPage.reset();
+        previousPage = currentPage;
         currentPage = p;
         p.reset();
+    }
+
+    public void goToPrevious() {
+        currentPage = previousPage;
     }
 
 

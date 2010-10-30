@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 /**
  *
+ *
  * @author Marius
  */
 public class NetworkMap implements Map {

@@ -1,7 +1,6 @@
 package epsilon.game;
 
 import epsilon.map.Map;
-import epsilon.map.entity.TestMap;
 import java.awt.AlphaComposite;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -127,14 +126,13 @@ public class Game extends Canvas {
 
             } else {
                 menu = false;
-                Menu.get().reset();
                 Input.get().handleMenu();
             }
         }
-        if (!menu) {
+        if (!menu && map != null) {
             lastUpdateTime = System.currentTimeMillis();
             map.update();
-        } else {
+        } else if (menu) {
             Menu.get().update();
         }
     }
