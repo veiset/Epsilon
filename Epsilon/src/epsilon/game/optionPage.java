@@ -4,11 +4,11 @@ package epsilon.game;
  *
  * @author Marius
  */
-public class optionPage extends MenuPage {
+public class OptionPage extends MenuPage {
 
-    private static optionPage page = new optionPage();
+    private static OptionPage page = new OptionPage();
 
-    private optionPage() {
+    private OptionPage() {
         super(new String[]{"Mute", "Exit Game"}, "Options");
     }
 
@@ -25,7 +25,7 @@ public class optionPage extends MenuPage {
         }
     }
 
-    public static optionPage get() {
+    public static OptionPage get() {
         return page;
     }
 

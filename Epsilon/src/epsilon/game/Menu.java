@@ -41,7 +41,7 @@ public class Menu {
             e.printStackTrace();
         }
 
-         currentPage = optionPage.get();
+         currentPage = OptionPage.get();
         
     }
 
@@ -58,7 +58,7 @@ public class Menu {
     }
 
     public void reset() {
-        currentPage = optionPage.get();
+        currentPage = OptionPage.get();
         currentPage.reset();
     }
 
@@ -75,6 +75,10 @@ public class Menu {
             }
         }
         
+    }
+
+    public void setStartupMenu() {
+        currentPage.reset();
     }
 
 }
