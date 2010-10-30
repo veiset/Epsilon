@@ -82,7 +82,7 @@ public class NetworkMap implements Map {
 
         String filename = "/sound/zabutom.lets.shooting.mp3";
         soundtrack = new SoundPlayer(filename);
-        soundtrack.play();
+        //soundtrack.play();
 
     }
 

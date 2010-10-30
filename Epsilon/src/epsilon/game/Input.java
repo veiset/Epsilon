@@ -40,7 +40,8 @@ public class Input implements MouseListener, KeyListener {
 
     // handling typing text in the menu
     private boolean typing;
-    private String currentText;
+    private StringBuffer currentText;
+    private String lastFinishedText;
 
     private Input() {
 
@@ -98,23 +99,46 @@ public class Input implements MouseListener, KeyListener {
     }
 
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == attackButton) {
-            attack = true;
-        } else if (e.getKeyCode() == jumpButton) {
-            jump = true;
-            menuDirectionHandeled = false;
-        } else if (e.getKeyCode() == leftButton) {
-            left = true;
-        } else if (e.getKeyCode() == rightButton) {
-            right = true;
-        } else if (e.getKeyCode() == duckButton) {
-            duck = true;
-            menuDirectionHandeled = false;
-        } else if (e.getKeyCode() == menuButton) {
-            menu = true;
-            menuHandeled = false;
-        } else if (e.getKeyCode() == menuChoiceButton) {
-            menuChoice = true;
+        if (typing) {
+            if (e.getKeyCode() == menuChoiceButton) {
+                if (currentText.length() > 0) {
+                    lastFinishedText = currentText.toString();
+                } else {
+                    lastFinishedText = "";
+                }
+                currentText = new StringBuffer();
+                typing = false;
+            } else if (e.getKeyCode() == menuButton) {
+                lastFinishedText = "";
+                currentText = new StringBuffer();
+                typing = false;
+            } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                if (currentText.length() > 0) {
+                    currentText.deleteCharAt(currentText.length()-1);
+                }
+            } else if (e.getKeyChar() != KeyEvent.CHAR_UNDEFINED) {
+                currentText.append(e.getKeyChar());
+            }
+
+        } else {
+            if (e.getKeyCode() == attackButton) {
+                attack = true;
+            } else if (e.getKeyCode() == jumpButton) {
+                jump = true;
+                menuDirectionHandeled = false;
+            } else if (e.getKeyCode() == leftButton) {
+                left = true;
+            } else if (e.getKeyCode() == rightButton) {
+                right = true;
+            } else if (e.getKeyCode() == duckButton) {
+                duck = true;
+                menuDirectionHandeled = false;
+            } else if (e.getKeyCode() == menuButton) {
+                menu = true;
+                menuHandeled = false;
+            } else if (e.getKeyCode() == menuChoiceButton) {
+                menuChoice = true;
+            }
         }
     }
     
@@ -271,6 +295,27 @@ public class Input implements MouseListener, KeyListener {
 
     public void handleMenuArrow() {
         menuDirectionHandeled = true;
+    }
+
+    public boolean isTyping() {
+        return typing;
+    }
+
+    public String getCurrentText() {
+        return currentText.toString();
+    }
+
+    public String getFinalText() {
+        return lastFinishedText;
+    }
+
+    public void requestString(String currentString) {
+        currentText = new StringBuffer(currentString);
+        typing = true;
+    }
+
+    public void requestString() {
+        requestString("");
     }
 
 }

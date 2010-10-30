@@ -24,7 +24,7 @@ public class Menu {
 
     private Menu() {
         
-        URL url = this.getClass().getResource("/fonts/smelo.ttf");
+        URL url = this.getClass().getResource("/fonts/thor.ttf");
 
         File f;
         try {
@@ -64,17 +64,7 @@ public class Menu {
     }
 
     public void update() {
-        if (Input.get().useMenu()) {
-            currentPage.useSelected();
-        } else if (!Input.get().getMenuArrowHandeled()) {
-            if (Input.get().jump()) {
-                Input.get().handleMenuArrow();
-                currentPage.selectPrevious();
-            } else if (Input.get().duck()) {
-                Input.get().handleMenuArrow();
-                currentPage.selectNext();
-            }
-        }
+        currentPage.update();
     }
 
     public void setMenu(MenuPage p) {

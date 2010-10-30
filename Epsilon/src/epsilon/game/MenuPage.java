@@ -78,6 +78,22 @@ public abstract class MenuPage {
 
     public abstract void useSelected();
 
+    public void update() {
+
+        if (Input.get().useMenu()) {
+            useSelected();
+        } else if (!Input.get().getMenuArrowHandeled()) {
+            if (Input.get().jump()) {
+                Input.get().handleMenuArrow();
+                selectPrevious();
+            } else if (Input.get().duck()) {
+                Input.get().handleMenuArrow();
+                selectNext();
+            }
+        }
+
+    }
+
     public void reset() {
         selected = 0;
     }

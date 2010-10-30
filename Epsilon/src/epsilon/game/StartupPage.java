@@ -23,7 +23,7 @@ public class StartupPage extends MenuPage {
             Game.get().menuDone();
         } else if (selected == 1) {
             Menu.get().setMenu(NetworkPage.get());
-        } else if (selected == 3) {
+        } else if (selected == 2) {
             Game.get().quit();
         }
     }
