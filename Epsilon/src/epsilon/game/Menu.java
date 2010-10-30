@@ -77,8 +77,12 @@ public class Menu {
         
     }
 
-    public void setStartupMenu() {
+    public void setMenu(MenuPage p) {
         currentPage.reset();
+        currentPage = p;
+        p.reset();
     }
+
+
 
 }

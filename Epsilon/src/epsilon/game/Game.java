@@ -101,8 +101,8 @@ public class Game extends Canvas {
         createBufferStrategy(2);
         strategy = getBufferStrategy();
 
-        // initialising the map
-        map = new TestMap();
+        Menu.get().setMenu(StartupPage.get());
+        menu = true;
 
         // Schedule the GameUpdater Task
         u = new GameUpdater(this);
@@ -157,7 +157,12 @@ public class Game extends Canvas {
 	g.fillRect(0,0,800,600);
 
         // tell the map to draw all entities currently on screen onto the graphics surface
-        map.render(g, (int)delta);
+        if (map != null) {
+            map.render(g, (int)delta);
+        } else {
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, 800, 800);
+        }
 
         if (menu) {
             g.setColor(Color.BLACK);
@@ -179,6 +184,14 @@ public class Game extends Canvas {
 
     public static Game get() {
         return game;
+    }
+
+    public void setMap(Map sMap) {
+        map = sMap;
+    }
+
+    public void menuDone() {
+        menu = false;
     }
 
 }
