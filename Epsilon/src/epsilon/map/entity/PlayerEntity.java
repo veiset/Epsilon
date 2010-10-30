@@ -11,21 +11,21 @@ import java.awt.Graphics;
  *
  * @author Marius
  */
-public class TestEntity extends MoveableEntity {
+public class PlayerEntity extends MoveableEntity {
 
     // keeps track of when to change pictures in the sprite
-    private int ticker;
+    protected int ticker;
 
     // used for checking if the entity can jump
     private boolean touchesGround;
 
     // the different sprites this entity uses
-    private Sprite rightSprite;
-    private Sprite standSpriteRight;
-    private Sprite leftSprite;
-    private Sprite standSpriteLeft;
+    protected Sprite rightSprite;
+    protected Sprite standSpriteRight;
+    protected Sprite leftSprite;
+    protected Sprite standSpriteLeft;
+    protected boolean facingRight = true;
     private boolean isDead = false;
-    private boolean facingRight = true;
 
     /**
      * Constructor for the entity that initialises sprites
@@ -33,7 +33,7 @@ public class TestEntity extends MoveableEntity {
      * @param posX The starting X position of the entity
      * @param posY The starting Y position of the entity
      */
-    public TestEntity(int posX,int posY) {
+    public PlayerEntity(int posX,int posY) {
         super(posX, posY);
         ticker = 0;
         touchesGround = false;

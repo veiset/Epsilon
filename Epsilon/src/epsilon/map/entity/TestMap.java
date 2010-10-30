@@ -36,7 +36,7 @@ public class TestMap implements Map {
 
         bg = new Background("/pics/bg3.png", 1.25);
 
-        TestEntity test = new TestEntity(-70, 400);
+        PlayerEntity test = new PlayerEntity(-70, 400);
         playerEntity = test;
 
         // TODO: Discuss; should floors have x,y parameter = x*50, y*40 as default?
