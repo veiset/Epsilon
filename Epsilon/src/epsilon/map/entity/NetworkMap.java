@@ -9,11 +9,10 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 /**
- * Map made for testing purposes.
  *
  * @author Marius
  */
-public class TestMap implements Map {
+public class NetworkMap implements Map {
 
     ArrayList<Entity> renderableEntities;
     ArrayList<MoveableEntity> moveableEntities;
@@ -27,7 +26,7 @@ public class TestMap implements Map {
 
     private int shotCooldown = 0;
 
-    public TestMap() {
+    public NetworkMap () {
 
         renderableEntities = new ArrayList<Entity>();
         moveableEntities = new ArrayList<MoveableEntity>();
@@ -36,63 +35,50 @@ public class TestMap implements Map {
 
         bg = new Background("/pics/bg3.png", 1.25);
 
-        PlayerEntity test = new PlayerEntity(-70, 400);
-        playerEntity = test;
+        playerEntity = new PlayerEntity(-80, 200);
 
-        // TODO: Discuss; should floors have x,y parameter = x*50, y*40 as default?
-        // => new Floor(3,4), instead of new Floor(150,160)?
+        renderableEntities.add(playerEntity);
+        moveableEntities.add(playerEntity);
+        entities.add(playerEntity);
 
-
-        renderableEntities.add(new Floor_1(-500, 525));
-        renderableEntities.add(new Floor_1(-500, 565));
-        renderableEntities.add(new Floor_1(-450, 565));
-        renderableEntities.add(new Floor_1(-400, 565));
-        renderableEntities.add(new Floor_1(-350, 565));
-        renderableEntities.add(new Floor_1(-300, 565));
-        renderableEntities.add(new Floor_1(-250, 565));
-        renderableEntities.add(new Floor_1(-200, 565));
-        renderableEntities.add(new Floor_1(-150, 565));
-        renderableEntities.add(new Floor_1(-100, 565));
-        renderableEntities.add(new Floor_1(-50, 565));
-        renderableEntities.add(new Floor_1(-50, 525));
-
-
-        renderableEntities.add(new Floor_1(1000, 565));
-        renderableEntities.add(new Floor_1(1050, 565));
-        renderableEntities.add(new Floor_1(1100, 565));
-        renderableEntities.add(new Floor_1(1150, 565));
-        renderableEntities.add(new Floor_1(1200, 565));
-        renderableEntities.add(new Floor_1(1250, 565));
-        renderableEntities.add(new Floor_1(1300, 565));
-        renderableEntities.add(new Floor_1(1350, 565));
-        renderableEntities.add(new Floor_1(1400, 565));
-        renderableEntities.add(new Floor_1(1450, 565));
-
-        
-
-        renderableEntities.add(new Floor_1(80, 505));
-
-        renderableEntities.add(new Floor_1(250, 415));
-        renderableEntities.add(new Floor_1(300, 415));
-
-        renderableEntities.add(new Floor_1(500, 385));
-        renderableEntities.add(new Floor_1(550, 385));
+        renderableEntities.add(new Floor(-500, 525));
+        renderableEntities.add(new Floor(-500, 565));
+        renderableEntities.add(new Floor(-450, 565));
+        renderableEntities.add(new Floor(-400, 565));
+        renderableEntities.add(new Floor(-350, 565));
+        renderableEntities.add(new Floor(-300, 565));
+        renderableEntities.add(new Floor(-250, 565));
+        renderableEntities.add(new Floor(-200, 565));
+        renderableEntities.add(new Floor(-150, 565));
+        renderableEntities.add(new Floor(-100, 565));
+        renderableEntities.add(new Floor(-50, 565));
+        renderableEntities.add(new Floor(-50, 525));
 
 
-        renderableEntities.add(new Floor_1(350, 455));
-        renderableEntities.add(new Floor_1(500, 495));
+        renderableEntities.add(new Floor(1000, 565));
+        renderableEntities.add(new Floor(1050, 565));
+        renderableEntities.add(new Floor(1100, 565));
+        renderableEntities.add(new Floor(1150, 565));
+        renderableEntities.add(new Floor(1200, 565));
+        renderableEntities.add(new Floor(1250, 565));
+        renderableEntities.add(new Floor(1300, 565));
+        renderableEntities.add(new Floor(1350, 565));
+        renderableEntities.add(new Floor(1400, 565));
+        renderableEntities.add(new Floor(1450, 565));
 
-        Enemy enemy = new EnemyPatrol(-300,100);
-        renderableEntities.add(enemy);
-        moveableEntities.add(enemy);
-        entities.add(enemy);
 
 
-        renderableEntities.add(test);
-        moveableEntities.add(test);
-        entities.add(test);
+        renderableEntities.add(new Floor(80, 505));
 
-        // Test MP3 playing
+        renderableEntities.add(new Floor(250, 415));
+        renderableEntities.add(new Floor(300, 415));
+
+        renderableEntities.add(new Floor(500, 385));
+        renderableEntities.add(new Floor(550, 385));
+
+        renderableEntities.add(new Floor(350, 455));
+        renderableEntities.add(new Floor(500, 495));
+
         String filename = "/sound/zabutom.lets.shooting.mp3";
         soundtrack = new SoundPlayer(filename);
         soundtrack.play();
@@ -159,5 +145,7 @@ public class TestMap implements Map {
         for (int i=0;i<temp.length;i++) {
             temp[i].move();
         }
+
     }
+
 }

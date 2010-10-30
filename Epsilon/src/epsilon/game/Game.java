@@ -48,15 +48,15 @@ public class Game extends Canvas {
     // true if the game is in the menu
     private boolean menu;
 
-    // test
-    public static Game game = null;
+    private static Game game = new Game();
+
 
     /**
      * Constructor, intialises all the graphics elements,
      * and starts the game running. Also creates the threads
      * used by the game
      */
-    public Game() {
+    private Game() {
 
         // create a frame to contain our game
         container = new JFrame("Epsilon");
@@ -78,8 +78,6 @@ public class Game extends Canvas {
         container.addKeyListener(Input.get());
         this.addKeyListener(Input.get());
         // this.addMouseListener(Input.get());
-
-        game = this;
 
     }
 
@@ -177,6 +175,10 @@ public class Game extends Canvas {
 
     public void quit() {
         System.exit(0);
+    }
+
+    public static Game get() {
+        return game;
     }
 
 }

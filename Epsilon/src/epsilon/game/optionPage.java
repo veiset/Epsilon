@@ -21,7 +21,7 @@ public class optionPage extends MenuPage {
                 items[0] = "Mute";
             }
         } else if (selected == 1) {
-            Game.game.quit();
+            Game.get().quit();
         }
     }
 

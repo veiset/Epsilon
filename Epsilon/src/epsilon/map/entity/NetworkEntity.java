@@ -1,11 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package epsilon.map.entity;
-
-import java.net.InetAddress;
 
 /**
  *
@@ -15,9 +8,9 @@ public class NetworkEntity extends PlayerEntity {
 
     private String name;
 
-    public NetworkEntity(int PosX, int PosY, String playerName) {
+    public NetworkEntity(int posX, int posY, String playerName) {
 
-        super(PosX, PosY);
+        super(posX, posY);
 
         this.name = playerName;
 
@@ -30,7 +23,42 @@ public class NetworkEntity extends PlayerEntity {
         newPosX = posX;
         newPosY = posY;
 
-        // TODO: get 
+        // TODO: get new position from the network class, and place it in newPosX and newPosY
+
+        if (newPosX > posX) {
+            if (currentSprite != rightSprite) {
+                newPosX += (currentSprite.getOffset());
+                currentSprite.resetImage();
+                currentSprite = rightSprite;
+                rightSprite.resetImage();
+                ticker = 0;
+                facingRight = true;
+            }
+        } else if (newPosX < posX) {
+            if (currentSprite != leftSprite) {
+                newPosX += (currentSprite.getOffset());
+                currentSprite.resetImage();
+                currentSprite = leftSprite;
+                leftSprite.resetImage();
+                ticker = 0;
+                facingRight = false;
+            }
+        } else {
+            if (currentSprite != standSpriteRight && currentSprite != standSpriteLeft) {
+                currentSprite.resetImage();
+                // if the guy was moving right, he should be face right when stopped
+                if (currentSprite == rightSprite) {
+                    currentSprite = standSpriteRight;
+                    standSpriteRight.resetImage();
+                    facingRight = true;
+                } else { // last moved left, animation should be inverted
+                    currentSprite = standSpriteLeft;
+                    standSpriteLeft.resetImage();
+                    facingRight = false;
+                }
+                ticker = 0;
+            }
+        }
 
         // go to the next picture in the sprite if it is time
         if (ticker < 5) {
