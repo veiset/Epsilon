@@ -4,17 +4,29 @@ import epsilon.game.Collision;
 import java.awt.Graphics;
 
 /**
+ * Class describing a hitbox of an entity It uses offset and size to create
+ * smaller boxes within a sprite to allow collision detection on parts of a sprite instead of whole sprites
  *
  * @author Marius
  */
 public class HitBox {
 
+    // the offset from the top left corner of the sprite
     private int offsetX;
     private int offsetY;
 
+    // the size of the hitbox
     private int width;
     private int height;
 
+    /**
+     * Creates a new hitbox based on the offset and size of the hitbox
+     *
+     * @param offX offset in x direction (right, left) from the top left corner of the sprite
+     * @param offY offset in x direction (up, down) from the top left corner of the sprite
+     * @param width the width of the hitbox in pixels
+     * @param height the height of the hitbox in pixels
+     */
     public HitBox(int offX, int offY, int width, int height) {
         offsetX = offX;
         offsetY = offY;
@@ -23,6 +35,17 @@ public class HitBox {
         this.height = height;
     }
 
+    /**
+     * Checks if two hitboxes collides. It needs the position of it's own
+     * entity and the position of the entity of the other hitbox
+     *
+     * @param box the hitbox that should be checked for collision
+     * @param ownPosX the X-Axis position of this hitbox's entity
+     * @param ownPosY the Y-Axis position of this hitbox's entity
+     * @param otherPosX the X-Axis position of the other hitbox's entity
+     * @param otherPosY the Y-Axis position of the other hitbox's entity
+     * @return a collision object with information about a collision
+     */
     public Collision collidesWith(HitBox box, double ownPosX, double ownPosY, double otherPosX, double otherPosY) {
 
         Collision c = new Collision();
@@ -31,11 +54,6 @@ public class HitBox {
         double right1, right2;
         double top1, top2;
         double bottom1, bottom2;
-
-        // variables ending with 1 is for this object,
-        // and variables ending with 2 is for the object toCheckAgainst
-        // all offsets should come from the incomming object, and not
-        // some magical numbers I made up.
 
         left1 = ownPosX+offsetX;
         left2 = otherPosX + box.getOffsetX();
@@ -90,22 +108,49 @@ public class HitBox {
         return c;
     }
 
+    /**
+     * Draws the hitbox onto the specified graphics object
+     *
+     * @param g the graphics object to drawn on
+     * @param posX the X-axis position of the entity that has this hitbox
+     * @param posY the Y-axis potision of the entity that has this hitbox
+     */
     public void draw (Graphics g, double posX, double posY) {
         g.drawRect((int)posX + offsetX, (int) posY + offsetY, width, height);
     }
 
+    /**
+     * Getter method for the offsetx variable
+     *
+     * @return the offset along the X-axis
+     */
     public int getOffsetX() {
         return offsetX;
     }
 
+    /**
+     * Getter method for the offsety variable
+     *
+     * @return the offset along the Y-axis
+     */
     public int getOffsetY() {
         return offsetY;
     }
 
+    /**
+     * Getter method for the width variable
+     *
+     * @return the width of the hitbox
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Getter method for the height variable
+     *
+     * @return the height of the hitbox
+     */
     public int getHeight() {
         return height;
     }

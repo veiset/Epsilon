@@ -49,15 +49,27 @@ public abstract class MoveableEntity extends Entity {
     }
 
 
+    /**
+     * Checks if the Entity is facing right
+     *
+     * @return true if the entity is facing right
+     */
     public abstract boolean facingRight();
 
     /**
+     * Getter method for the newPosX variable
      *
+     * @return the new x position calculated so far
      */
     public double getNewXPosition() {
         return newPosX;
     }
 
+    /**
+     * Getter method for the newPosY variable
+     *
+     * @return the new y position calculated so far
+     */
     public double getNewYPosition() {
         return newPosY;
     }

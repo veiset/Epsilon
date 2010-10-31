@@ -19,6 +19,7 @@ public abstract class Entity {
     protected double pposX;
     protected double pposY;
 
+    // the sprite that is currently rendered
     protected Sprite currentSprite;
 
     /*

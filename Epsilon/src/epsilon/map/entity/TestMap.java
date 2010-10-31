@@ -9,24 +9,35 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 /**
- * Map made for testing purposes.
+ * Map made for testing purposes, now used as a single player map
  *
  * @author Marius
  */
 public class TestMap implements Map {
 
+    /*
+     * The different lists used for storing entities
+     * There are a number of them to keep the iterating over lists to a minimum
+     */
     ArrayList<Entity> renderableEntities;
     ArrayList<MoveableEntity> moveableEntities;
     ArrayList<Entity> entities;
     ArrayList<Shot> shots;
+
+    // the soundtrack that is played continuously while playing the map
     SoundPlayer soundtrack;
 
+    // the entity of the player played on this computer. Used for calculating rendering positions
     PlayerEntity playerEntity;
 
+    // the background object used on this map
     Background bg;
 
     private int shotCooldown = 0;
 
+    /**
+     * Initialises all entities on the map, and all fields in the object
+     */
     public TestMap() {
 
         renderableEntities = new ArrayList<Entity>();
@@ -38,10 +49,6 @@ public class TestMap implements Map {
 
         PlayerEntity test = new PlayerEntity(-70, 400);
         playerEntity = test;
-
-        // TODO: Discuss; should floors have x,y parameter = x*50, y*40 as default?
-        // => new Floor(3,4), instead of new Floor(150,160)?
-
 
         renderableEntities.add(new Floor_1(-500, 525));
         renderableEntities.add(new Floor_1(-500, 565));
@@ -67,8 +74,6 @@ public class TestMap implements Map {
         renderableEntities.add(new Floor_1(1350, 565));
         renderableEntities.add(new Floor_1(1400, 565));
         renderableEntities.add(new Floor_1(1450, 565));
-
-        
 
         renderableEntities.add(new Floor_1(80, 505));
 

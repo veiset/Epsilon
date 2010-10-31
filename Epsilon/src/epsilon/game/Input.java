@@ -326,15 +326,19 @@ public class Input implements MouseListener, KeyListener {
 
     /**
      * Requests input. The input handler will pause all other input until the
-     * string has been entered, and either the escape
+     * string has been entered, and either the escape or enter key is pressed
      *
-     * @param currentString
+     * @param currentString an optional string if the field already contains text
      */
     public void requestString(String currentString) {
         currentText = new StringBuffer(currentString);
         typing = true;
     }
 
+    /**
+     * Requests input. The input handler will pause all other input until the
+     * string has been entered, and either the escape or enter key is pressed
+     */
     public void requestString() {
         requestString("");
     }

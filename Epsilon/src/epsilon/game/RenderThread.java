@@ -58,7 +58,7 @@ public class RenderThread extends Thread {
     /**
      * Calculates the FPS. Only updates every 100 runs of the rendering thread.
      *
-     * @param delta
+     * @param delta amount of milliseconds between each run of the calcFPS
      */
     private void calcFPS(long delta) {
         if (currentIt < 100) {

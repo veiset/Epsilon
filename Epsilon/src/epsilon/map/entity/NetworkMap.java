@@ -15,18 +15,29 @@ import java.util.ArrayList;
  */
 public class NetworkMap implements Map {
 
+    /*
+     * The different lists used for storing entities
+     * There are a number of them to keep the iterating over lists to a minimum
+     */
     ArrayList<Entity> renderableEntities;
     ArrayList<MoveableEntity> moveableEntities;
     ArrayList<Entity> entities;
     ArrayList<Shot> shots;
+
+    // the soundtrack that is played continuously while playing the map
     SoundPlayer soundtrack;
 
+    // the entity of the player played on this computer
     PlayerEntity playerEntity;
 
+    // the background object that is displayed on the map
     Background bg;
 
     private int shotCooldown = 0;
 
+    /**
+     * Initialises all entities on the map, and all fields in the object
+     */
     public NetworkMap () {
 
         renderableEntities = new ArrayList<Entity>();
@@ -85,7 +96,7 @@ public class NetworkMap implements Map {
         //soundtrack.play();
 
     }
-
+    
     public void render(Graphics g, int delta) {
 
         bg.render(g, playerEntity.getXPosition(), playerEntity.getYPosition());
@@ -148,7 +159,6 @@ public class NetworkMap implements Map {
         }
 
     }
-
 
     public double[] getPlayerPosition() {
         return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition()};

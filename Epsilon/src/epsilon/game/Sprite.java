@@ -137,18 +137,33 @@ public class Sprite {
             return hitbox;
         }
 
+        /**
+         * Moves the hitboxes around in the picture, so that they will be in
+         * the correct position if the pictures is flipped over the Y-axis
+         *
+         * @param hitbox an array of hitbox objects that is used for this picture when it isn't flipped
+         * @return a new hitbox array with the correct offsets for a flipped image
+         */
         private HitBox[] flipHitBox(HitBox[] hitbox) {
             HitBox[] result = new HitBox[hitbox.length];
             for (int i=0;i<hitbox.length;i++) {
+                // black magic happens here
                 result[i] = new HitBox(getWidth() - hitbox[i].getOffsetX() - hitbox[i].getWidth(), hitbox[i].getOffsetY(), hitbox[i].getWidth(), hitbox[i].getHeight());
             }
             return result;
         }
 
+        /**
+         * Calculates an appropriate offset baes on the hitboxes
+         *
+         * @param hitbox an array of hitbox objects that should be used for the offset calculation
+         * @return the number of pixels the offset should be set at.
+         */
         private int calculateOffset(HitBox[] hitbox) {
             int left = 800;
             int right = 0;
 
+            // more black magic happens here
             for (int i=0; i<hitbox.length; i++) {
                 if (hitbox[i].getOffsetX() < left) {
                     left = hitbox[i].getOffsetX();
@@ -157,9 +172,15 @@ public class Sprite {
                     right = hitbox[i].getOffsetX() +  hitbox[i].getWidth();
                 }
             }
+            
             return ((right + left)/2)-getWidth()/2;
         }
 
+        /**
+         * Method for getting the offset to be used when flipping the image
+         *
+         * @return the amount of pixels the image should be moved when flipping the image
+         */
         public int getOffset() {
             return offset;
         }

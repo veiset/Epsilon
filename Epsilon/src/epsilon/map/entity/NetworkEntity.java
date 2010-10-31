@@ -1,20 +1,28 @@
 package epsilon.map.entity;
 
 /**
+ * 
  *
  * @author Marius
  */
 public class NetworkEntity extends PlayerEntity {
 
+    // the name of the network player. used for lookup in the network class
     private String name;
 
+    /**
+     * Sets the name and position variables of the entity
+     *
+     * @param posX the X-axis position of the entity
+     * @param posY the Y-axis position of the entity
+     * @param playerName the name of the entity
+     */
     public NetworkEntity(int posX, int posY, String playerName) {
 
         super(posX, posY);
 
         this.name = playerName;
 
-        
     }
 
     @Override
@@ -67,7 +75,5 @@ public class NetworkEntity extends PlayerEntity {
             ticker = 0;
             currentSprite.nextImage();
         }
-        
     }
-
 }

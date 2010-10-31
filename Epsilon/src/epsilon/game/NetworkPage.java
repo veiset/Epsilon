@@ -10,12 +10,23 @@ import java.net.UnknownHostException;
  */
 public class NetworkPage extends MenuPage {
 
+    // only instance of this class
     private static NetworkPage page = new NetworkPage();
 
+    // local variables used for hanlding this specific page
+
+    // Indicates wether the user is currently entering text into a field
     private boolean typingString;
+    
+    // Field used for saving what is currently entered into each line of the lineitems
     private String[] currentString;
+
+    // This should be the same string array that is sent to the superclass. It's used for setting the right text on the page items
     private String[] originalStrings;
 
+    /**
+     * Private constructor used for initialising variables
+     */
     private NetworkPage() {
         super(new String[]{"IP address: ", "Name: ", " Connect", "Back"}, "Network setup");
         originalStrings = new String[]{"IP address: ", "Name: ", "Connect", "Back"};
@@ -32,7 +43,7 @@ public class NetworkPage extends MenuPage {
         } else if (selected == 2) {
             // TODO: connect to server here.
             try {
-                InetAddress conn = InetAddress.getByName(currentString[0]);
+                InetAddress conn = InetAddress.getByName(currentString[0].trim());
                 errorMessage = "Connected to: " + conn.getHostAddress();
             } catch (UnknownHostException e) {
                 errorMessage = "Invalid IP address.";
@@ -44,6 +55,11 @@ public class NetworkPage extends MenuPage {
         }
     }
 
+    /**
+     * Method that gives access to the single object of this class
+     *
+     * @return the only instance of this class
+     */
     public static NetworkPage get() {
          return page;
     }

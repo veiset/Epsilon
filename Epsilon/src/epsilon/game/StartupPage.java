@@ -1,6 +1,5 @@
 package epsilon.game;
 
-import epsilon.map.entity.NetworkMap;
 import epsilon.map.entity.TestMap;
 
 /**
@@ -9,8 +8,12 @@ import epsilon.map.entity.TestMap;
  */
 public class StartupPage extends MenuPage {
 
+    // only instance of this class
     private static StartupPage page = new StartupPage();
 
+    /**
+     * Private constructor used for initialising variables
+     */
     private StartupPage() {
         super(new String[]{"Single Player", "Multi Player", "Exit Game"}, "Choose Gameplay Mode");
     }
@@ -28,6 +31,11 @@ public class StartupPage extends MenuPage {
         }
     }
 
+    /**
+     * Method that gives access to the single object of this class
+     *
+     * @return the only instance of this class
+     */
     public static StartupPage get() {
         return page;
     }

@@ -7,7 +7,7 @@ import epsilon.game.Input;
 import java.awt.Graphics;
 
 /**
- * Test class that extends entity
+ * The class used to describe a player played on this computer
  *
  * @author Marius
  */

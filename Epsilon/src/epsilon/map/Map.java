@@ -23,6 +23,11 @@ public interface Map {
      */
     public void update();
 
+    /**
+     * Returns the position of the player currently playing the game
+     *
+     * @return a double array with a length of two, containing the x and y position
+     */
     public double[] getPlayerPosition();
 
 }
