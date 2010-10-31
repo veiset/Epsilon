@@ -5,6 +5,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -26,6 +28,9 @@ public class NetworkHandler {
 
     private BlockingQueue<DatagramPacket> packetQueue;
 
+    private HashMap<String, double[]> playerPosList;
+    private ArrayList<String> newPlayers;
+
     private DatagramSocket socket;
 
     /**
@@ -33,6 +38,8 @@ public class NetworkHandler {
      */
     private NetworkHandler() {
         packetQueue = new LinkedBlockingQueue<DatagramPacket>();
+        playerPosList = new HashMap<String, double[]>();
+        newPlayers = new ArrayList<String>();
     }
 
     /**
@@ -69,7 +76,7 @@ public class NetworkHandler {
         }
 
         listener = new ListenerThread(socket, packetQueue);
-        parser = new PacketParser(packetQueue);
+        parser = new PacketParser(packetQueue, playerPosList, newPlayers);
         sender = new SenderThread(socket, serverAddress, name);
 
         new Thread(listener).start();
@@ -105,5 +112,42 @@ public class NetworkHandler {
         return handshake_result;
     }
 
+    /**
+     * Get a networks players position by name
+     *
+     * @param playerName
+     * @return playerPos
+     */
+    public double[] getPlayerPositionByName(String playerName) {
+        double[] playerPos = playerPosList.get(playerName);
+        return playerPos;
+    }
 
+    /**
+     * Check if there are new players
+     *
+     * @return hasNewPlayers
+     */
+    public boolean hasNewPlayers() {
+        boolean newPlayerState = false;
+
+        if (!newPlayers.isEmpty()) {
+            newPlayerState = true;
+        }
+        
+        return newPlayerState;
+    }
+
+    /**
+     * Get name of player added last to the new player list
+     * 
+     * @return newPlayer
+     */
+    public synchronized String getNewPlayer() {
+        int arraySize = newPlayers.size();
+        String newPlayer = newPlayers.get(arraySize-1);
+        newPlayers.remove(arraySize-1);
+        return newPlayer;
+    }
+    
 }
