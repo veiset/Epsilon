@@ -208,4 +208,8 @@ public class Game extends Canvas {
         menu = false;
     }
 
+    public double[] getPlayerPosition() {
+        return map.getPlayerPosition();
+    }
+
 }

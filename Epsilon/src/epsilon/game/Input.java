@@ -324,6 +324,12 @@ public class Input implements MouseListener, KeyListener {
         return lastFinishedText;
     }
 
+    /**
+     * Requests input. The input handler will pause all other input until the
+     * string has been entered, and either the escape
+     *
+     * @param currentString
+     */
     public void requestString(String currentString) {
         currentText = new StringBuffer(currentString);
         typing = true;
