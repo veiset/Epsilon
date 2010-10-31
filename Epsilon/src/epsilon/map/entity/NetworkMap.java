@@ -149,4 +149,9 @@ public class NetworkMap implements Map {
 
     }
 
+
+    public double[] getPlayerPosition() {
+        return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition()};
+    }
+
 }

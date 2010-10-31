@@ -45,7 +45,7 @@ public abstract class MenuPage {
 
         g.setFont(f);
         g.setColor(Color.GREEN);
-        y += 30;
+        y += 50;
 
         for (int i=0;i<items.length;i++) {
 
@@ -55,7 +55,7 @@ public abstract class MenuPage {
             
             fm = g.getFontMetrics();
 
-            y += 15 + fm.getHeight()/2;
+            y += 45 + fm.getHeight()/2;
 
             g.drawString(items[i], 400-(fm.stringWidth(items[i])/2), y);
             
@@ -67,7 +67,7 @@ public abstract class MenuPage {
         if (!errorMessage.equals("")) {
             g.setFont(f.deriveFont(Font.ITALIC, 18f));
             fm = g.getFontMetrics();
-            y += 32 + fm.getHeight()/2;
+            y += 48 + fm.getHeight()/2;
             g.setColor(Color.orange);
             g.drawString("Error: " + errorMessage, 400-(fm.stringWidth("Error: " +errorMessage))/2, y);
         }

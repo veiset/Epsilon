@@ -160,4 +160,10 @@ public class TestMap implements Map {
             temp[i].move();
         }
     }
+
+    public double[] getPlayerPosition() {
+        return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition()};
+    }
+
+
 }

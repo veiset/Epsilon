@@ -23,4 +23,6 @@ public interface Map {
      */
     public void update();
 
+    public double[] getPlayerPosition();
+
 }
