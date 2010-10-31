@@ -1,5 +1,8 @@
 package epsilon.game;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 /**
  *
  *
@@ -19,7 +22,7 @@ public class NetworkPage extends MenuPage {
         typingString = false;
         currentString = new String[]{"", "" , "", ""};
     }
-
+    
     @Override
     public void useSelected() {
         if (selected == 0 || selected == 1) {
@@ -28,7 +31,13 @@ public class NetworkPage extends MenuPage {
             errorMessage = "";
         } else if (selected == 2) {
             // TODO: connect to server here.
-            errorMessage = "Not yet implemented";
+            try {
+                InetAddress conn = InetAddress.getByName(currentString[0]);
+                errorMessage = "Connected to: " + conn.getHostAddress();
+            } catch (UnknownHostException e) {
+                errorMessage = "Invalid IP address.";
+            }
+            //errorMessage = "Not yet implemented";
         } else if (selected == 3) {
             errorMessage = "";
             Menu.get().goToPrevious();
@@ -57,7 +66,7 @@ public class NetworkPage extends MenuPage {
 
                 items[selected] = originalStrings[selected] + Input.get().getFinalText();
             } else {
-                items[selected] = originalStrings[selected] + Input.get().getCurrentText();
+                items[selected] = originalStrings[selected] + Input.get().getCurrentText() + "_";
             }
         }
     }

@@ -24,7 +24,7 @@ public class Menu {
 
     private Menu() {
         
-        URL url = this.getClass().getResource("/fonts/thor.ttf");
+        URL url = this.getClass().getResource("/fonts/agentred.ttf");
 
         File f;
         try {
@@ -35,7 +35,7 @@ public class Menu {
 
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, f);
-            font = font.deriveFont(48f);
+            font = font.deriveFont(24f);
         } catch (FontFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {

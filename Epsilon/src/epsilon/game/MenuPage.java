@@ -34,7 +34,7 @@ public abstract class MenuPage {
 
         int y = 0;
         
-        g.setFont(f.deriveFont(72f));
+        g.setFont(f.deriveFont(32f));
         g.setColor(Color.RED);
 
         FontMetrics fm = g.getFontMetrics();
@@ -50,7 +50,7 @@ public abstract class MenuPage {
         for (int i=0;i<items.length;i++) {
 
             if (i == selected) {
-                g.setFont(f.deriveFont(Font.BOLD,60f));
+                g.setFont(f.deriveFont(Font.BOLD,32f));
             }
             
             fm = g.getFontMetrics();
@@ -65,7 +65,7 @@ public abstract class MenuPage {
         }
 
         if (!errorMessage.equals("")) {
-            g.setFont(f.deriveFont(Font.ITALIC, 32f));
+            g.setFont(f.deriveFont(Font.ITALIC, 18f));
             fm = g.getFontMetrics();
             y += 32 + fm.getHeight()/2;
             g.setColor(Color.orange);
