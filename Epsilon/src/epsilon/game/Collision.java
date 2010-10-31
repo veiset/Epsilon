@@ -3,6 +3,10 @@ package epsilon.game;
 import epsilon.map.entity.Entity;
 
 /**
+ * Class that contains information about a collision between two entities
+ * It uses public fields and contains wich side of the entity it collides with
+ * The delta contains how big the overlap is in each direction as seen from the
+ * colliding entity.
  *
  * @author Marius
  */

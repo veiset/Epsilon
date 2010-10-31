@@ -74,29 +74,13 @@ public class Input implements MouseListener, KeyListener {
         return input;
     }
 
-    public void mouseClicked(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void mouseEntered(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void mouseExited(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void keyTyped(KeyEvent e) {
-        // deprecated
-    }
+    // Unused eventhandlers
+    public void mouseClicked(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
+    public void keyTyped(KeyEvent e) {}
 
     public void keyPressed(KeyEvent e) {
         if (typing) {
@@ -276,10 +260,20 @@ public class Input implements MouseListener, KeyListener {
         return menuHandeled;
     }
 
+    /**
+     * Checks if the arrow button press is already handeled
+     *
+     * @return
+     */
     public boolean getMenuArrowHandeled() {
         return menuDirectionHandeled;
     }
 
+    /**
+     * Indicates that the menu option has been pressed
+     *
+     * @return
+     */
     public boolean useMenu() {
         boolean b = menuChoice;
         menuChoice = false;
@@ -293,18 +287,39 @@ public class Input implements MouseListener, KeyListener {
         menuHandeled = true;
     }
 
+    /**
+     * Indicates that the arrow keypress has been handeled
+     */
     public void handleMenuArrow() {
         menuDirectionHandeled = true;
     }
 
+    /**
+     * Checks if the Input class is handling String input
+     *
+     * @return true if the Input class is currently handling a string input
+     */
     public boolean isTyping() {
         return typing;
     }
 
+    /**
+     * The current text that is entered so far in the string input.
+     * Only guaranteed to return text is isTyping is true
+     *
+     * @return the text entered so far in the string input
+     */
     public String getCurrentText() {
         return currentText.toString();
     }
 
+    /**
+     * The final string input.
+     * Only guaranteed to contain the text if the requeststring method
+     * has been run and the istyping method returns false
+     *
+     * @return The final string of the string input
+     */
     public String getFinalText() {
         return lastFinishedText;
     }

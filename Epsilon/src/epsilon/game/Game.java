@@ -176,18 +176,34 @@ public class Game extends Canvas {
 
     }
 
+    /**
+     * Closes the game. Currently uses System.exit(0). Should be avoided
+     */
     public void quit() {
         System.exit(0);
     }
 
+    /**
+     * Returns the single object of the game class
+     *
+     * @return the single instance of this class
+     */
     public static Game get() {
         return game;
     }
 
+    /**
+     * Changes wich map the game is playing
+     *
+     * @param sMap the new map to be used.
+     */
     public void setMap(Map sMap) {
         map = sMap;
     }
 
+    /**
+     * Indicates that the Menu handling is done, and that it should start rendering and updating the game again.
+     */
     public void menuDone() {
         menu = false;
     }

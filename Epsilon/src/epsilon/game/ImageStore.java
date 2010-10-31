@@ -82,6 +82,16 @@ public class ImageStore {
             System.exit(0);
     }
 
+    /**
+     *
+     * Creates a new image, and adds it to the image store.
+     * Also Caches it and loads it into video memory.
+     *
+     * @param ref relative reference to the image to be used
+     * @param flip indicating wether the image should be flipped
+     * @param scale variable defining the scaling of the image
+     *
+     */
     public Image getImage(String ref, boolean flip, double scale) {
         /** check if the image is already cached */
         if (flip) {
@@ -142,7 +152,5 @@ public class ImageStore {
 
         return image;
     }
-
-
 
 }
