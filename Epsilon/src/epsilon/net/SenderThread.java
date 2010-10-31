@@ -41,7 +41,7 @@ public class SenderThread implements Runnable {
         DatagramPacket outgoingPacket;
 
         double[] posArray = game.getPlayerPosition();
-        String playerPosString = clientName + " x " + posArray[0] + " y " + posArray[1];
+        String playerPosString = clientName + posArray[0] + posArray[1];
 
         if (!playerPosString.isEmpty()) {
             System.out.println("\n" + "Sending string: " + playerPosString + "\n");

@@ -76,7 +76,7 @@ public class NetworkHandler {
         }
 
         listener = new ListenerThread(socket, packetQueue);
-        parser = new PacketParser(packetQueue, playerPosList, newPlayers);
+        parser = new PacketParser(packetQueue, playerPosList, this);
         sender = new SenderThread(socket, serverAddress, name);
 
         new Thread(listener).start();
@@ -96,7 +96,7 @@ public class NetworkHandler {
     /**
      * Send player position to server
      */
-    public void send() {
+    public void sendPlayerAction() {
         new Thread(sender).start();
     }
 
@@ -148,6 +148,15 @@ public class NetworkHandler {
         String newPlayer = newPlayers.get(arraySize-1);
         newPlayers.remove(arraySize-1);
         return newPlayer;
+    }
+
+    /**
+     * Add a players name to the new players list
+     *
+     * @param name
+     */
+    public synchronized void addNewPlayer(String playerName) {
+       newPlayers.add(playerName);
     }
     
 }

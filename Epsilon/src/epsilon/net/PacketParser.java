@@ -1,7 +1,6 @@
 package epsilon.net;
 
 import java.net.DatagramPacket;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.concurrent.BlockingQueue;
@@ -16,7 +15,7 @@ public class PacketParser implements Runnable {
 
     private BlockingQueue<DatagramPacket> packetQueue;
     private HashMap<String, double[]> playerPosList;
-    private ArrayList<String> newPlayers;
+    private NetworkHandler netHandler;
 
     private boolean isRunning = true;    
 
@@ -24,11 +23,11 @@ public class PacketParser implements Runnable {
      * Constructor
      * @param packetQueue
      */
-    public PacketParser(BlockingQueue<DatagramPacket> packetQueue, 
-            HashMap<String, double[]> playerPosList, ArrayList<String> newPlayers) {
+    public PacketParser(BlockingQueue<DatagramPacket> packetQueue,
+            HashMap<String, double[]> playerPosList, NetworkHandler netHandler) {
         this.packetQueue = packetQueue;
         this.playerPosList = playerPosList;
-        this.newPlayers = newPlayers;
+        this.netHandler = netHandler;
     }
 
     /**
@@ -40,10 +39,7 @@ public class PacketParser implements Runnable {
                 DatagramPacket packet = packetQueue.take();
                 String packetString = new String(packet.getData(), 0, packet.getLength());
 
-
                 StringTokenizer part = new StringTokenizer(packetString);
-
-                int playerCount = part.countTokens() / 3;
 
                 while (part.hasMoreTokens()) {
                     String name = part.nextToken();
@@ -60,12 +56,11 @@ public class PacketParser implements Runnable {
                         System.out.println("Cant convert x or y coordinates to double");
                     }
 
+                    if (!playerPosList.containsKey(name)) {
+                        netHandler.addNewPlayer(name);
+                    }
                     
-
-
-
-
-
+                    playerPosList.put(name, posArray);
                 }
             }
             catch (InterruptedException ie) {
