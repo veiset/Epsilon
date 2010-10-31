@@ -1,14 +1,13 @@
 package epsilon.map.entity;
 
+import epsilon.net.NetworkHandler;
+
 /**
  * 
  *
  * @author Marius
  */
 public class NetworkEntity extends PlayerEntity {
-
-    // the name of the network player. used for lookup in the network class
-    private String name;
 
     /**
      * Sets the name and position variables of the entity
@@ -17,11 +16,9 @@ public class NetworkEntity extends PlayerEntity {
      * @param posY the Y-axis position of the entity
      * @param playerName the name of the entity
      */
-    public NetworkEntity(int posX, int posY, String playerName) {
+    public NetworkEntity(double posX, double posY, String playerName) {
 
-        super(posX, posY);
-
-        this.name = playerName;
+        super(posX, posY, playerName);
 
     }
 
@@ -31,7 +28,9 @@ public class NetworkEntity extends PlayerEntity {
         newPosX = posX;
         newPosY = posY;
 
-        // TODO: get new position from the network class, and place it in newPosX and newPosY
+        double[] d = NetworkHandler.getInstance().getPlayerPositionByName(super.getName());
+        newPosX = d[0];
+        newPosY = d[1];
 
         if (newPosX > posX) {
             if (currentSprite != rightSprite) {

@@ -19,6 +19,9 @@ public class PlayerEntity extends MoveableEntity {
     // used for checking if the entity can jump
     private boolean touchesGround;
 
+    // the name of the player
+    private String name;
+
     // the different sprites this entity uses
     protected Sprite rightSprite;
     protected Sprite standSpriteRight;
@@ -33,10 +36,12 @@ public class PlayerEntity extends MoveableEntity {
      * @param posX The starting X position of the entity
      * @param posY The starting Y position of the entity
      */
-    public PlayerEntity(int posX,int posY) {
+    public PlayerEntity(double posX,double posY, String name) {
         super(posX, posY);
         ticker = 0;
         touchesGround = false;
+
+        this.name = name;
 
         // Create the different sprites used in this entity, and assign them hitboxes
         HitBox[] hitbox = new HitBox[3];
@@ -194,5 +199,14 @@ public class PlayerEntity extends MoveableEntity {
                 newPosY += dby;
             }
         }
+    }
+
+    /**
+     * Getter method for the name
+     *
+     * @return the name of the player
+     */
+    public String getName() {
+        return name;
     }
 }

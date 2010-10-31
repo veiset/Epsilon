@@ -1,5 +1,7 @@
 package epsilon.game;
 
+import epsilon.map.entity.NetworkMap;
+import epsilon.net.NetworkHandler;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -41,14 +43,21 @@ public class NetworkPage extends MenuPage {
             Input.get().requestString(currentString[selected]);
             errorMessage = "";
         } else if (selected == 2) {
-            // TODO: connect to server here.
+            InetAddress conn = null;
             try {
-                InetAddress conn = InetAddress.getByName(currentString[0].trim());
-                errorMessage = "Connected to: " + conn.getHostAddress();
+                conn = InetAddress.getByName(currentString[0].trim());
+                //errorMessage = "Connected to: " + conn.getHostAddress();
             } catch (UnknownHostException e) {
                 errorMessage = "Invalid IP address.";
+                conn = null;
             }
-            //errorMessage = "Not yet implemented";
+            if (conn != null && !currentString[1].equals("")) {
+                NetworkHandler.getInstance().connect(conn, currentString[1]);
+                Game.get().setMap(new NetworkMap(currentString[1]));
+                Game.get().menuDone();
+            } else if (currentString[1].equals("")) {
+                errorMessage = "Please enter a valid name";
+            }
         } else if (selected == 3) {
             errorMessage = "";
             Menu.get().goToPrevious();

@@ -5,6 +5,7 @@ import epsilon.game.Input;
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
 import epsilon.map.Map;
+import epsilon.net.NetworkHandler;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -38,7 +39,7 @@ public class NetworkMap implements Map {
     /**
      * Initialises all entities on the map, and all fields in the object
      */
-    public NetworkMap () {
+    public NetworkMap (String name) {
 
         renderableEntities = new ArrayList<Entity>();
         moveableEntities = new ArrayList<MoveableEntity>();
@@ -47,7 +48,7 @@ public class NetworkMap implements Map {
 
         bg = new Background("/pics/bg3.png", 1.25);
 
-        playerEntity = new PlayerEntity(-80, 200);
+        playerEntity = new PlayerEntity(-70, 400, name);
 
         renderableEntities.add(playerEntity);
         moveableEntities.add(playerEntity);
@@ -61,6 +62,7 @@ public class NetworkMap implements Map {
         renderableEntities.add(new Floor(-300, 565));
         renderableEntities.add(new Floor(-250, 565));
         renderableEntities.add(new Floor(-200, 565));
+
         renderableEntities.add(new Floor(-150, 565));
         renderableEntities.add(new Floor(-100, 565));
         renderableEntities.add(new Floor(-50, 565));
@@ -77,8 +79,6 @@ public class NetworkMap implements Map {
         renderableEntities.add(new Floor(1350, 565));
         renderableEntities.add(new Floor(1400, 565));
         renderableEntities.add(new Floor(1450, 565));
-
-
 
         renderableEntities.add(new Floor(80, 505));
 
@@ -111,6 +111,16 @@ public class NetworkMap implements Map {
     }
 
     public void update() {
+
+        while(NetworkHandler.getInstance().hasNewPlayers()) {
+            String s = NetworkHandler.getInstance().getNewPlayer();
+            double[] d = NetworkHandler.getInstance().getPlayerPositionByName(s);
+
+            NetworkEntity n = new NetworkEntity(d[0], d[1], s);
+            renderableEntities.add(n);
+            moveableEntities.add(n);
+            entities.add(n);
+        }
 
         if (shotCooldown>0) {
             shotCooldown--;

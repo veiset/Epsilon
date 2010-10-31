@@ -47,7 +47,7 @@ public class TestMap implements Map {
 
         bg = new Background("/pics/bg3.png", 1.25);
 
-        PlayerEntity test = new PlayerEntity(-70, 400);
+        PlayerEntity test = new PlayerEntity(-70, 400, "");
         playerEntity = test;
 
         renderableEntities.add(new Floor_1(-500, 525));
