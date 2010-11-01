@@ -8,7 +8,6 @@ import java.util.concurrent.BlockingQueue;
 /**
  * PacketParser class creates a parsing thread that takes
  * incoming packets from the packet queue and parses its data.
- * 
  * @author mm
  */
 public class PacketParser implements Runnable {
