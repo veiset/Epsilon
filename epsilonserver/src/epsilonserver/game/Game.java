@@ -1,5 +1,7 @@
-package epsilonserver;
+package epsilonserver.game;
 
+import epsilonserver.entity.EntityHandler;
+import epsilonserver.net.NetworkHandler;
 import java.util.Timer;
 
 /**
@@ -21,13 +23,15 @@ public class Game {
     //utility timer used to update the game
     private Timer t;
 
-    private Map map;
-    private ServerHandler serverHandler;
+    private EntityHandler eHandler;
+    private NetworkHandler netHandler;
+
+    private static Game game = new Game();
 
     /**
      * Constructor
      */
-    public Game() {
+    private Game() {
 
         // initialise LoopTimer
         lastUpdateTime = System.currentTimeMillis();
@@ -38,26 +42,36 @@ public class Game {
      */
     public void start() {
 
-        // initialising the map
-        map = new Map();
-        
-        serverHandler = new ServerHandler(map);
-        serverHandler.startServer();
+        eHandler = EntityHandler.getInstance();
+
+        netHandler = NetworkHandler.getInstance();
+        netHandler.startServer();
 
         // Schedule the GameUpdater Task
         u = new GameUpdater(this);
         t = new Timer();
         t.schedule(u, 0, 16);
-        
+
     }
-    
+
+
+    /**
+     * Returns the single object of the game class
+     *
+     * @return the single instance of this class
+     */
+    public static Game get() {
+        return game;
+    }
+
+
     /**
      * Method used to update the game, mainly used by the updater task
      */
     public void updateGame() {
-        
-        serverHandler.sendGameState();
-        
+
+        netHandler.updateClients();
+
     }
 
 }

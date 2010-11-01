@@ -1,4 +1,4 @@
-package epsilonserver;
+package epsilonserver.game;
 
 import java.util.TimerTask;
 
