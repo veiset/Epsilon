@@ -1,6 +1,10 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package epsilon.map.entity;
 
-import epsilon.game.Collision;
 import epsilon.game.Input;
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
@@ -10,11 +14,10 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 /**
- * Map made for testing purposes, now used as a single player map
  *
  * @author Marius
  */
-public class TestMap implements Map {
+public class WorldTestMap implements Map {
 
     /*
      * The different lists used for storing entities
@@ -40,13 +43,12 @@ public class TestMap implements Map {
     /**
      * Initialises all entities on the map, and all fields in the object
      */
-    public TestMap() {
+    public WorldTestMap() {
 
         renderableEntities = new ArrayList<Entity>();
         moveableEntities = new ArrayList<MoveableEntity>();
         entities = new ArrayList<Entity>();
         shots = new ArrayList<Shot>();
-
         worldstore = new WorldStore(50);
 
         bg = new Background("/pics/bg3.png", 1.25);
@@ -90,12 +92,6 @@ public class TestMap implements Map {
 
         worldstore.add(new Floor_1(350, 455));
         worldstore.add(new Floor_1(500, 495));
-
-        Enemy enemy = new EnemyPatrol(-300,100);
-        renderableEntities.add(enemy);
-        moveableEntities.add(enemy);
-        entities.add(enemy);
-
 
         renderableEntities.add(test);
         moveableEntities.add(test);

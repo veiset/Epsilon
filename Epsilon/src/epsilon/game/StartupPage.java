@@ -1,6 +1,7 @@
 package epsilon.game;
 
 import epsilon.map.entity.TestMap;
+import epsilon.map.entity.WorldTestMap;
 
 /**
  *
@@ -15,7 +16,7 @@ public class StartupPage extends MenuPage {
      * Private constructor used for initialising variables
      */
     private StartupPage() {
-        super(new String[]{"Single Player", "Multi Player", "Exit Game"}, "Choose Gameplay Mode");
+        super(new String[]{"Single Player", "Multi Player", "World Test Map" , "Exit Game"}, "Choose Gameplay Mode");
     }
 
     @Override
@@ -27,6 +28,10 @@ public class StartupPage extends MenuPage {
         } else if (selected == 1) {
             Menu.get().setMenu(NetworkPage.get());
         } else if (selected == 2) {
+            Game.get().setMap(new WorldTestMap());
+            Menu.get().setMenu(OptionPage.get());
+            Game.get().menuDone();
+        } else if (selected == 3) {
             Game.get().quit();
         }
     }

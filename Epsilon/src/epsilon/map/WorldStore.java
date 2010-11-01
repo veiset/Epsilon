@@ -1,6 +1,8 @@
 package epsilon.map;
 
+import epsilon.game.Collision;
 import epsilon.map.entity.Entity;
+import epsilon.map.entity.MoveableEntity;
 import epsilon.map.entity.World;
 import java.awt.Graphics;
 import java.util.HashMap;
@@ -54,12 +56,57 @@ public class WorldStore {
      * Renders all the world objects currently on the screen
      * Hardcoded for 800x600
      */
-    public void renderAll(Graphics g, int delta, double renderXPosition) {
+    public void renderAll(Graphics g, int delta, double renderXPosition, double renderYPosition) {
+
+        long x = (int)Math.round(renderXPosition);
+        long reminder = x % width;
+        long ref = x - reminder;
+
+        while (ref > renderXPosition - width) {
+            ref -= width;
+        }
+
+        World[] temp = null;
+
+        while (ref < renderXPosition + 800 + width) {
+            temp = map.get(ref);
+            if (temp != null) {
+                for(int i=0;i<temp.length;i++) {
+                    temp[i].render(g, delta, renderXPosition, renderYPosition);
+                }
+            }
+            ref += width;
+        }
 
     }
 
-    public void checkCollision (Entity e) {
+    /**
+     * Checks for collision on all world entities on the same 
+     *
+     * @param e The entity to check for collision
+     */
+    public void checkCollision (MoveableEntity e) {
+
+        long x = (int)Math.round(e.getXPosition());
+        long reminder = x % width;
+        long ref = x - reminder;
         
+        World[] temp = null;
+        Collision c = null;
+
+        while (ref < e.getXPosition() + e.getWidth()) {
+            temp = map.get(ref);
+            if (temp != null) {
+                for(int i=0;i<temp.length;i++) {
+                    c = temp[i].collision(e);
+                    if (c.collided) {
+                        e.collided(c);
+                    }
+                }
+            }
+            ref += width;
+        }
+
     }
 
 }

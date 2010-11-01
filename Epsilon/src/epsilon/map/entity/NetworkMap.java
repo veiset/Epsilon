@@ -5,6 +5,7 @@ import epsilon.game.Input;
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
 import epsilon.map.Map;
+import epsilon.map.WorldStore;
 import epsilon.net.NetworkHandler;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class NetworkMap implements Map {
     ArrayList<MoveableEntity> moveableEntities;
     ArrayList<Entity> entities;
     ArrayList<Shot> shots;
+    WorldStore worldstore;
 
     // the soundtrack that is played continuously while playing the map
     SoundPlayer soundtrack;
@@ -45,6 +47,7 @@ public class NetworkMap implements Map {
         moveableEntities = new ArrayList<MoveableEntity>();
         entities = new ArrayList<Entity>();
         shots = new ArrayList<Shot>();
+        worldstore = new WorldStore(50);
 
         bg = new Background("/pics/bg3.png", 1.25);
 
@@ -54,41 +57,41 @@ public class NetworkMap implements Map {
         moveableEntities.add(playerEntity);
         entities.add(playerEntity);
 
-        renderableEntities.add(new Floor(-500, 525));
-        renderableEntities.add(new Floor(-500, 565));
-        renderableEntities.add(new Floor(-450, 565));
-        renderableEntities.add(new Floor(-400, 565));
-        renderableEntities.add(new Floor(-350, 565));
-        renderableEntities.add(new Floor(-300, 565));
-        renderableEntities.add(new Floor(-250, 565));
-        renderableEntities.add(new Floor(-200, 565));
+        worldstore.add(new Floor(-500, 525));
+        worldstore.add(new Floor(-500, 565));
+        worldstore.add(new Floor(-450, 565));
+        worldstore.add(new Floor(-400, 565));
+        worldstore.add(new Floor(-350, 565));
+        worldstore.add(new Floor(-300, 565));
+        worldstore.add(new Floor(-250, 565));
+        worldstore.add(new Floor(-200, 565));
 
-        renderableEntities.add(new Floor(-150, 565));
-        renderableEntities.add(new Floor(-100, 565));
-        renderableEntities.add(new Floor(-50, 565));
-        renderableEntities.add(new Floor(-50, 525));
+        worldstore.add(new Floor(-150, 565));
+        worldstore.add(new Floor(-100, 565));
+        worldstore.add(new Floor(-50, 565));
+        worldstore.add(new Floor(-50, 525));
 
-        renderableEntities.add(new Floor(1000, 565));
-        renderableEntities.add(new Floor(1050, 565));
-        renderableEntities.add(new Floor(1100, 565));
-        renderableEntities.add(new Floor(1150, 565));
-        renderableEntities.add(new Floor(1200, 565));
-        renderableEntities.add(new Floor(1250, 565));
-        renderableEntities.add(new Floor(1300, 565));
-        renderableEntities.add(new Floor(1350, 565));
-        renderableEntities.add(new Floor(1400, 565));
-        renderableEntities.add(new Floor(1450, 565));
+        worldstore.add(new Floor(1000, 565));
+        worldstore.add(new Floor(1050, 565));
+        worldstore.add(new Floor(1100, 565));
+        worldstore.add(new Floor(1150, 565));
+        worldstore.add(new Floor(1200, 565));
+        worldstore.add(new Floor(1250, 565));
+        worldstore.add(new Floor(1300, 565));
+        worldstore.add(new Floor(1350, 565));
+        worldstore.add(new Floor(1400, 565));
+        worldstore.add(new Floor(1450, 565));
 
-        renderableEntities.add(new Floor(80, 505));
+        worldstore.add(new Floor(80, 505));
 
-        renderableEntities.add(new Floor(250, 415));
-        renderableEntities.add(new Floor(300, 415));
+        worldstore.add(new Floor(250, 415));
+        worldstore.add(new Floor(300, 415));
 
-        renderableEntities.add(new Floor(500, 385));
-        renderableEntities.add(new Floor(550, 385));
+        worldstore.add(new Floor(500, 385));
+        worldstore.add(new Floor(550, 385));
 
-        renderableEntities.add(new Floor(350, 455));
-        renderableEntities.add(new Floor(500, 495));
+        worldstore.add(new Floor(350, 455));
+        worldstore.add(new Floor(500, 495));
 
         String filename = "/sound/zabutom.lets.shooting.mp3";
         soundtrack = new SoundPlayer(filename);
@@ -99,6 +102,8 @@ public class NetworkMap implements Map {
     public void render(Graphics g, int delta) {
 
         bg.render(g, playerEntity.getXPosition(), playerEntity.getYPosition());
+        worldstore.renderAll(g, delta, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
+
         Entity[] temp = new Entity[renderableEntities.size()];
         renderableEntities.toArray(temp);
 
@@ -106,6 +111,7 @@ public class NetworkMap implements Map {
             temp[i].render(g, delta, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
             temp[i].renderHitBox(g, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
         }
+
 
     }
 
@@ -155,13 +161,7 @@ public class NetworkMap implements Map {
             temp[i].calculateMovement();
         }
 
-        // temp collision, simple test
-        for (Entity ent : renderableEntities) {
-            Collision c = ent.collision(playerEntity);
-            if(c.collided) {
-                playerEntity.collided(c);
-            }
-        }
+        worldstore.checkCollision(playerEntity);
 
         for (int i=0;i<temp.length;i++) {
             temp[i].move();
