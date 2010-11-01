@@ -45,7 +45,7 @@ public class PacketParser implements Runnable {
                     String posX = part.nextToken();
                     String posY = part.nextToken();
 
-                    double[] posArray = new double[1];
+                    double[] posArray = new double[2];
 
                     try {
                         posArray[0] = Double.parseDouble(posX);

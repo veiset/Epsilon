@@ -46,7 +46,6 @@ public class NetworkPage extends MenuPage {
             InetAddress conn = null;
             try {
                 conn = InetAddress.getByName(currentString[0].trim());
-                //errorMessage = "Connected to: " + conn.getHostAddress();
             } catch (UnknownHostException e) {
                 errorMessage = "Invalid IP address.";
                 conn = null;
@@ -54,6 +53,7 @@ public class NetworkPage extends MenuPage {
             if (conn != null && !currentString[1].equals("")) {
                 NetworkHandler.getInstance().connect(conn, currentString[1]);
                 Game.get().setMap(new NetworkMap(currentString[1]));
+                Menu.get().setMenu(OptionPage.get());
                 Game.get().menuDone();
             } else if (currentString[1].equals("")) {
                 errorMessage = "Please enter a valid name";
