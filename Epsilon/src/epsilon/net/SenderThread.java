@@ -8,7 +8,6 @@ import java.net.InetAddress;
 
 /**
  * SenderThread creates a thread that gets the players position and sends it to the server
- *
  * @author mm
  */
 public class SenderThread implements Runnable {

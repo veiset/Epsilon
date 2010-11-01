@@ -27,14 +27,13 @@ public class NetworkHandler {
     private SenderThread sender;
 
     private BlockingQueue<DatagramPacket> packetQueue;
-
     private HashMap<String, double[]> playerPosList;
     private ArrayList<String> newPlayers;
 
     private DatagramSocket socket;
 
     /**
-     * private constructor
+     * Private constructor
      */
     private NetworkHandler() {
         packetQueue = new LinkedBlockingQueue<DatagramPacket>();
@@ -43,8 +42,8 @@ public class NetworkHandler {
     }
 
     /**
-     * inner class to create a instance of NetworkHandler. this is
-     * loaded when NetworkHandlre.getInstance() method is called or
+     * Inner class to create a instance of NetworkHandler which is
+     * loaded when NetworkHandler.getInstance() method is called or
      * when INSTANCE is accessed.
      */
     private static class NetworkHandlerHolder {
@@ -53,7 +52,7 @@ public class NetworkHandler {
 
     /**
      * Get instance of NetworkHandler
-     * @return
+     * @return INSTANCE
      */
     public static NetworkHandler getInstance() {
         return NetworkHandlerHolder.INSTANCE;
@@ -65,7 +64,7 @@ public class NetworkHandler {
     public void connect(InetAddress serverAddress, String name) {
 
         try {
-            socket = new DatagramSocket(SERVER_PORT, InetAddress.getLocalHost());
+            socket = new DatagramSocket(CLIENT_PORT, InetAddress.getLocalHost());
             System.out.println("Socket created on interface " + InetAddress.getLocalHost());
         }
         catch (SocketException se) {
@@ -90,7 +89,6 @@ public class NetworkHandler {
     public void disconnect() {
         listener.stopListener();
         parser.stopParser();
-        socket.close();
     }
 
     /**

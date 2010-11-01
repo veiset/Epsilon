@@ -19,7 +19,6 @@ public class ListenerThread implements Runnable {
     
     /**
      * Constructor
-     * 
      * @param socket
      * @param packetQueue
      */
