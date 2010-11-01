@@ -26,7 +26,8 @@ public class NetworkHandler {
     private ListenerThread listener;
     private SenderThread sender;
 
-    private BlockingQueue<DatagramPacket> packetQueue;
+    private BlockingQueue<DatagramPacket> incomingPacketQueue;
+    private BlockingQueue<DatagramPacket> outgoingPacketQueue;
     private HashMap<String, double[]> playerPosList;
     private ArrayList<String> newPlayers;
 
@@ -36,7 +37,8 @@ public class NetworkHandler {
      * Private constructor
      */
     private NetworkHandler() {
-        packetQueue = new LinkedBlockingQueue<DatagramPacket>();
+        incomingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
+        outgoingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
         playerPosList = new HashMap<String, double[]>();
         newPlayers = new ArrayList<String>();
     }
@@ -74,12 +76,13 @@ public class NetworkHandler {
             System.out.println("Host address not found");
         }
 
-        listener = new ListenerThread(socket, packetQueue);
-        parser = new PacketParser(packetQueue, playerPosList, this);
-        sender = new SenderThread(socket, serverAddress, name);
+        listener = new ListenerThread(socket, incomingPacketQueue);
+        parser = new PacketParser(incomingPacketQueue, playerPosList, this);
+        sender = new SenderThread(socket, serverAddress, name, outgoingPacketQueue);
 
         new Thread(listener).start();
         new Thread(parser).start();
+        new Thread(sender).start();
 
     }
 
@@ -89,13 +92,14 @@ public class NetworkHandler {
     public void disconnect() {
         listener.stopListener();
         parser.stopParser();
+        sender.stopSender();
     }
 
     /**
      * Send player position to server
      */
     public void sendPlayerAction() {
-        new Thread(sender).start();
+        sender.addToSendQueue();
     }
 
     /**
