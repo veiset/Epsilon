@@ -1,6 +1,7 @@
 package epsilonserver.net;
 
 import epsilonserver.entity.EntityHandler;
+import epsilonserver.game.ServerGUI;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -29,8 +30,7 @@ public class NetworkHandler {
 
     private BlockingQueue<DatagramPacket> incomingPacketQueue;
     private BlockingQueue<DatagramPacket> outgoingPacketQueue;
-    private HashMap<String, double[]> playerPosList;
-    private ArrayList<String> newPlayers;
+
     
     private DatagramSocket socket;
 
@@ -40,8 +40,6 @@ public class NetworkHandler {
     private NetworkHandler() {
         incomingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
         outgoingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
-        playerPosList = new HashMap<String, double[]>();
-        newPlayers = new ArrayList<String>();
     }
 
     /**
@@ -68,7 +66,7 @@ public class NetworkHandler {
 
         try {
             socket = new DatagramSocket(SERVER_PORT, InetAddress.getLocalHost());
-            System.out.println("Socket created on interface " + InetAddress.getLocalHost());
+            ServerGUI.getInstance().setLogMessage("Socket created on interface " + InetAddress.getLocalHost());
         }
         catch (SocketException se) {
             System.out.println("Could not create socket");
@@ -93,9 +91,8 @@ public class NetworkHandler {
         listener.stopListener();
         parser.stopParser();
         sender.stopSender();
-        listener = null;
-        parser = null;
-        sender = null;
+        socket.close();
+        ServerGUI.getInstance().setLogMessage("Server stopped");
     }
 
     /**

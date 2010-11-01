@@ -1,5 +1,6 @@
 package epsilonserver.net;
 
+import epsilonserver.game.ServerGUI;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -31,7 +32,7 @@ public class ListenerThread implements Runnable {
      * received it is added to the packet queue.
      */
     public void run() {
-        System.out.println("Listening thread started");
+        ServerGUI.getInstance().setLogMessage("Listener thread started");
 
         byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];
         DatagramPacket incomingPacket;

@@ -2,6 +2,7 @@ package epsilonserver.net;
 
 import epsilonserver.entity.EntityHandler;
 import epsilonserver.entity.NetworkEntity;
+import epsilonserver.game.ServerGUI;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -39,7 +40,7 @@ public class SenderThread implements Runnable {
      * sending the information to all registered clients.
      */
     public void run() {
-        System.out.println("Sender thread started");
+        ServerGUI.getInstance().setLogMessage("Sender thread started");
         while (isRunning) {
 
             HashMap<InetAddress, NetworkEntity> playerList = eHandler.getPlayerList();

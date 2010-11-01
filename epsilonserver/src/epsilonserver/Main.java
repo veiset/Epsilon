@@ -1,6 +1,6 @@
 package epsilonserver;
 
-import epsilonserver.game.Game;
+import epsilonserver.game.ServerGUI;
 
 
 /**
@@ -11,8 +11,7 @@ import epsilonserver.game.Game;
 public class Main {
 
     public static void main(String[] args) {
-        Game g = Game.get();
-        g.start();
+        ServerGUI sgui = ServerGUI.getInstance();
     }
 
 }
