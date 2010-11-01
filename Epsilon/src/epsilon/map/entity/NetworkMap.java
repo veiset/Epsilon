@@ -68,7 +68,6 @@ public class NetworkMap implements Map {
         renderableEntities.add(new Floor(-50, 565));
         renderableEntities.add(new Floor(-50, 525));
 
-
         renderableEntities.add(new Floor(1000, 565));
         renderableEntities.add(new Floor(1050, 565));
         renderableEntities.add(new Floor(1100, 565));
@@ -167,6 +166,8 @@ public class NetworkMap implements Map {
         for (int i=0;i<temp.length;i++) {
             temp[i].move();
         }
+
+        NetworkHandler.getInstance().sendPlayerAction();
 
     }
 
