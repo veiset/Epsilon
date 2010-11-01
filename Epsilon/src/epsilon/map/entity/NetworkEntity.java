@@ -40,7 +40,7 @@ public class NetworkEntity extends PlayerEntity {
                 ticker = 0;
                 facingRight = true;
             }
-        } else if (newPosX < posX - 1) {
+        } else if (newPosX < posX) {
             if (currentSprite != leftSprite) {
                 currentSprite.resetImage();
                 currentSprite = leftSprite;
