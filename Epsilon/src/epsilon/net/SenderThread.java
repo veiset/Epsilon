@@ -47,7 +47,7 @@ public class SenderThread implements Runnable {
         }
 
         buf = playerPosString.getBytes();
-        outgoingPacket = new DatagramPacket(buf, buf.length, serverAddress, NetworkHandler.CLIENT_PORT);
+        outgoingPacket = new DatagramPacket(buf, buf.length, serverAddress, NetworkHandler.SERVER_PORT);
         
         try {
             socket.send(outgoingPacket);
