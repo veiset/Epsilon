@@ -38,9 +38,11 @@ public class PacketParser implements Runnable {
                 DatagramPacket packet = packetQueue.take();
                 String packetString = new String(packet.getData(), 0, packet.getLength());
 
+                System.out.println(packetString);
+
                 StringTokenizer part = new StringTokenizer(packetString);
 
-                while (part.hasMoreTokens()) {
+                while (part.hasMoreTokens() && part.countTokens( )% 3 == 0) {
                     String name = part.nextToken();
                     String posX = part.nextToken();
                     String posY = part.nextToken();
@@ -48,8 +50,8 @@ public class PacketParser implements Runnable {
                     double[] posArray = new double[2];
 
                     try {
-                        posArray[0] = Double.parseDouble(posX);
-                        posArray[1] = Double.parseDouble(posY);
+                        posArray[0] = Double.valueOf(posX);
+                        posArray[1] = Double.valueOf(posY);
                     }
                     catch (NumberFormatException e) {
                         System.out.println("Cant convert x or y coordinates to double");

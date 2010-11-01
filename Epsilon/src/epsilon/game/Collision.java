@@ -12,14 +12,43 @@ import epsilon.map.entity.Entity;
  */
 public class Collision {
 
+    /**
+     * Is set to true if there has been a collision
+     */
     public boolean collided;
 
+    /**
+     * true if the Entity the collidingEntity collided with crossed the left
+     * side of the collidingEntity
+     */
     public boolean crossedLeft;
+
+    /**
+     * true if the Entity the collidingEntity collided with crossed the right
+     * side of the collidingEntity
+     */
     public boolean crossedRight;
+
+    /**
+     * true if the Entity the collidingEntity collided with crossed the top
+     * of the collidingEntity
+     */
     public boolean crossedTop;
+
+    /**
+     * true if the Entity the collidingEntity collided with crossed the top
+     * of the collidingEntity
+     */
     public boolean crossedBottom;
-    
+
+    /**
+     * The entity that was creating the collision object
+     */
     public Entity collidingEntity;
+
+    /**
+     * The entity that was
+     */
     public Entity collidedWith;
 
     public double deltaLeft;
@@ -27,6 +56,9 @@ public class Collision {
     public double deltaTop;
     public double deltaBottom;
 
+    /**
+     * Sets up an empty collision object
+     */
     public Collision() {
         collided = false;
 

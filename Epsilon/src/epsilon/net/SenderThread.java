@@ -48,7 +48,6 @@ public class SenderThread implements Runnable {
             try {
                 DatagramPacket packet = outgoingPacketQueue.take();
                 socket.send(packet);
-                System.out.println("Packet sent");
             }
             catch (IOException ioe) {
                 System.out.println("Could not get packet from outgoing packet queue");
@@ -70,7 +69,7 @@ public class SenderThread implements Runnable {
         String playerPosString = clientName + " " + posArray[0] + " " + posArray[1];
 
         if (!playerPosString.isEmpty()) {
-            System.out.println("\n" + "Sending string: " + playerPosString + "\n");
+            //System.out.println("\n" + "Sending string: " + playerPosString + "\n");
         }
 
         byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];

@@ -1,6 +1,5 @@
 package epsilon.map.entity;
 
-import epsilon.game.Collision;
 import epsilon.game.Input;
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
@@ -176,3 +175,4 @@ public class NetworkMap implements Map {
     }
 
 }
+ 

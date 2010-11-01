@@ -58,6 +58,28 @@ public class PlayerEntity extends MoveableEntity {
         currentSprite = standSpriteRight;
     }
 
+    public PlayerEntity(double posX,double posY, String name, String[] pics) {
+        super(posX, posY);
+        ticker = 0;
+        touchesGround = false;
+
+        this.name = name;
+
+        // Create the different sprites used in this entity, and assign them hitboxes
+        HitBox[] hitbox = new HitBox[3];
+
+        hitbox[0] = new HitBox(37, 75, 17, 16);
+        hitbox[1] = new HitBox(45,46,5,29);
+        hitbox[2] = new HitBox(36,28,19,18);
+
+        rightSprite = new Sprite(pics, false, hitbox);
+        standSpriteRight = new Sprite(pics, false, hitbox);
+        leftSprite = new Sprite(pics,true, hitbox);
+        standSpriteLeft = new Sprite(pics,true, hitbox);
+
+        currentSprite = standSpriteRight;
+    }
+
     @Override
     public void calculateMovement() {
 

@@ -18,7 +18,7 @@ public class NetworkEntity extends PlayerEntity {
      */
     public NetworkEntity(double posX, double posY, String playerName) {
 
-        super(posX, posY, playerName);
+        super(posX, posY, playerName, new String[]{"/pics/sheep_enemy.png"});
 
     }
 
@@ -34,16 +34,14 @@ public class NetworkEntity extends PlayerEntity {
 
         if (newPosX > posX) {
             if (currentSprite != rightSprite) {
-                newPosX += (currentSprite.getOffset());
                 currentSprite.resetImage();
                 currentSprite = rightSprite;
                 rightSprite.resetImage();
                 ticker = 0;
                 facingRight = true;
             }
-        } else if (newPosX < posX) {
+        } else if (newPosX < posX - 1) {
             if (currentSprite != leftSprite) {
-                newPosX += (currentSprite.getOffset());
                 currentSprite.resetImage();
                 currentSprite = leftSprite;
                 leftSprite.resetImage();
