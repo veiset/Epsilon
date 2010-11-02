@@ -72,22 +72,13 @@ public class NetworkHandler {
         try {
 
             InetAddress bindIP = getFirstNonLoopbackAddress(true, false);
-            if (bindIP == null) {
-                socket = new DatagramSocket(CLIENT_PORT, bindIP);
-                System.out.println("Socket created on interface " + bindIP);
-            }
-            else {
-                socket = new DatagramSocket(CLIENT_PORT, InetAddress.getLocalHost());
-                System.out.println("Socket created on interface " + InetAddress.getLocalHost());
-            }
-            
+            socket = new DatagramSocket(CLIENT_PORT, bindIP);
+            System.out.println("Socket created on non-loopback interface " + bindIP);
         }
         catch (SocketException se) {
             System.out.println("Could not create socket");
         }
-        catch (UnknownHostException ue) {
-            System.out.println("Host address not found");
-        }
+
 
         listener = new ListenerThread(socket, incomingPacketQueue);
         parser = new PacketParser(incomingPacketQueue, playerPosList, this);
