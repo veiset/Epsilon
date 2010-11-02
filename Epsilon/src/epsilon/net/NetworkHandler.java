@@ -2,10 +2,14 @@ package epsilon.net;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -66,8 +70,17 @@ public class NetworkHandler {
     public void connect(InetAddress serverAddress, String name) {
 
         try {
-            socket = new DatagramSocket(CLIENT_PORT, InetAddress.getLocalHost());
-            System.out.println("Socket created on interface " + InetAddress.getLocalHost());
+
+            InetAddress bindIP = getFirstNonLoopbackAddress(true, false);
+            if (bindIP == null) {
+                socket = new DatagramSocket(CLIENT_PORT, bindIP);
+                System.out.println("Socket created on interface " + bindIP);
+            }
+            else {
+                socket = new DatagramSocket(CLIENT_PORT, InetAddress.getLocalHost());
+                System.out.println("Socket created on interface " + InetAddress.getLocalHost());
+            }
+            
         }
         catch (SocketException se) {
             System.out.println("Could not create socket");
@@ -159,6 +172,39 @@ public class NetworkHandler {
      */
     public synchronized void addNewPlayer(String playerName) {
        newPlayers.add(playerName);
+    }
+
+    /**
+     * 
+     *
+     * @param preferIpv4
+     * @param preferIPv6
+     * @return
+     * @throws SocketException
+     */
+    private static InetAddress getFirstNonLoopbackAddress(boolean preferIpv4, boolean preferIPv6) throws SocketException {
+        Enumeration en = NetworkInterface.getNetworkInterfaces();
+        while (en.hasMoreElements()) {
+            NetworkInterface i = (NetworkInterface) en.nextElement();
+            for (Enumeration en2 = i.getInetAddresses(); en2.hasMoreElements();) {
+                InetAddress addr = (InetAddress) en2.nextElement();
+                if (!addr.isLoopbackAddress()) {
+                    if (addr instanceof Inet4Address) {
+                        if (preferIPv6) {
+                            continue;
+                        }
+                        return addr;
+                    }
+                    if (addr instanceof Inet6Address) {
+                        if (preferIpv4) {
+                            continue;
+                        }
+                        return addr;
+                    }
+                }
+            }
+        }
+        return null;
     }
     
 }
