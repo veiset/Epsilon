@@ -146,12 +146,12 @@ public class Datahistory {
         Iterator<Block> itr2 = offset1.iterator();
         while (itr2.hasNext()) {
             Block block = itr2.next();
-            block.printJava(1500);
+            block.printJava(75*50);
         }
         Iterator<Block> itr3 = offset2.iterator();
         while (itr3.hasNext()) {
             Block block = itr3.next();
-            block.printJava(3000);
+            block.printJava(2*75*50);
         }
     }
 }
