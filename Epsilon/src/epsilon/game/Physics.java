@@ -7,7 +7,7 @@ package epsilon.game;
 public class Physics {
 
     // environment variables
-    public static double GRAVITY = -490.0;
+    public static double GRAVITY = -700.0;
 
     /**
      * This method takes the current position on the Y-axis and the previous
