@@ -21,13 +21,19 @@ import java.util.Iterator;
 public class Datahistory {
 
     // local variables
-    ArrayList<Block> database;
+    private ArrayList<Block> offset0;
+    private ArrayList<Block> offset1;
+    private ArrayList<Block> offset2;
+    private ArrayList<Block> current;
 
     /**
      * The constructor for Datahistory
      */
     public Datahistory() {
-        database = new ArrayList<Block>();
+        offset0 = new ArrayList<Block>();
+        offset1 = new ArrayList<Block>();
+        offset2 = new ArrayList<Block>();
+        current = offset0;
     }
 
     /**
@@ -37,15 +43,15 @@ public class Datahistory {
      * @param shape
      */
     public void add(Block block) {
-        database.add(block);
+        current.add(block);
     }
 
     public boolean remove(int row, int col) {
-        Iterator<Block> itr = database.iterator();
+        Iterator<Block> itr = current.iterator();
         while (itr.hasNext()) {
             Block block = itr.next();
             if (block.getRow() == row && block.getCol() == col) {
-                database.remove(block);
+                current.remove(block);
                 return true;
             }
         }
@@ -58,7 +64,7 @@ public class Datahistory {
      * @param g Graphic
      */
     public void paint(Graphics g) {
-        Iterator<Block> itr = database.iterator();
+        Iterator<Block> itr = current.iterator();
         while (itr.hasNext()) {
             Block block = itr.next();
             g.setColor(Color.BLACK);
@@ -76,7 +82,7 @@ public class Datahistory {
     public void save(File file) throws Exception {
         FileOutputStream fileoutput = new FileOutputStream(file);
         ObjectOutputStream objOS = new ObjectOutputStream(fileoutput);
-        objOS.writeObject(database);
+        objOS.writeObject(current);
         objOS.close();
         fileoutput.close();
     }
@@ -91,7 +97,7 @@ public class Datahistory {
     public void load(File file) throws Exception {
         FileInputStream fileinput = new FileInputStream(file);
         ObjectInputStream objIS = new ObjectInputStream(fileinput);
-        database = (ArrayList) objIS.readObject();
+        current = (ArrayList) objIS.readObject();
         objIS.close();
         fileinput.close();
     }
@@ -100,8 +106,8 @@ public class Datahistory {
      * Removing the last added object from the arraylist.
      */
     public void back() {
-        if (database.size() > 0) {
-            database.remove(database.size() - 1);
+        if (current.size() > 0) {
+            current.remove(current.size() - 1);
         }
     }
 
@@ -109,14 +115,43 @@ public class Datahistory {
      * Removing all the objects in the arraylist.
      */
     public void clear() {
-        database.clear();
+        current.clear();
     }
 
+    public void setCurrentDB(int offset) {
+        if (offset==0) {
+            current = offset0;
+        } else if (offset==1) {
+            current = offset1;
+        } else if (offset==2) {
+            current = offset2;
+        }
+        System.out.println(current.size());
+    }
+
+    public ArrayList<Block> getCurrent() {
+        return current;
+    }
+    /**
+     * Runs the print method on all the Block objects.
+     *
+     * @see epsilon.tools.mapcreator.Block
+     */
     public void printall() {
-        Iterator<Block> itr = database.iterator();
+        Iterator<Block> itr = offset0.iterator();
         while (itr.hasNext()) {
             Block block = itr.next();
-            block.printJava();
+            block.printJava(0);
+        }
+        Iterator<Block> itr2 = offset1.iterator();
+        while (itr2.hasNext()) {
+            Block block = itr2.next();
+            block.printJava(1500);
+        }
+        Iterator<Block> itr3 = offset2.iterator();
+        while (itr3.hasNext()) {
+            Block block = itr3.next();
+            block.printJava(3000);
         }
     }
 }

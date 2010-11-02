@@ -35,8 +35,7 @@ public class DrawGUI {
     /**
      * Starting the program, and creating object referances.
      */
-    public DrawGUI()
-    {
+    public DrawGUI() {
         buttons = new JToggleButton[2][5];
         groups = new ButtonGroup[2];
         db = new Datahistory();
@@ -49,22 +48,18 @@ public class DrawGUI {
      *
      * @param args String[]
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         new DrawGUI(); // initialize the program
     }
 
     /**
      * The method for creating the frames
      */
-    public void makeFrame()
-    {
+    public void makeFrame() {
         // Creating the frame, drawboard and the menus
-        JFrame mainFrame = new JFrame("Graphics demo");
+        JFrame mainFrame = new JFrame("Map generator");
         final Drawboard drawBoard = new Drawboard(db);
-        makeMenu(mainFrame,drawBoard);
-
-        //toolbar(mainFrame,drawBoard);
+        makeMenu(mainFrame, drawBoard);
 
         Container contentPane = mainFrame.getContentPane();
         contentPane.add(drawBoard);
@@ -75,10 +70,11 @@ public class DrawGUI {
 
         // Creating a windowListiner for closing, so the program is properly shut down.
         mainFrame.addWindowListener(new WindowAdapter() {
+
             @Override
             public void windowClosing(WindowEvent e) {
-                System.exit(0); } /* windowClosing */ }
-       );
+                System.exit(0);
+            } /* windowClosing */ });
     }
 
     /**
@@ -87,24 +83,70 @@ public class DrawGUI {
      * @param mainFrame
      * @param drawBoard
      */
-    private void makeMenu(final JFrame mainFrame, final Drawboard drawBoard)
-    {
+    private void makeMenu(final JFrame mainFrame, final Drawboard drawBoard) {
 
         JMenuBar menubar = new JMenuBar();
         mainFrame.setJMenuBar(menubar);
         JMenu fileMenu = new JMenu("File");
-        JMenu editMenu = new JMenu("Mode");
+        JMenu editMenu = new JMenu("Offset");
+
+        JMenuItem offset0 = new JMenuItem("Offset: 0");
+        // Action listiner for file-opening
+        offset0.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    drawBoard.setOffset(0);
+                    drawBoard.repaint();
+                } catch (Exception e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        });
+        editMenu.add(offset0);
+
+
+        JMenuItem offset1 = new JMenuItem("Offset: 1");
+        // Action listiner for file-opening
+        offset1.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    drawBoard.setOffset(1);
+                    drawBoard.repaint();
+                } catch (Exception e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        });
+        editMenu.add(offset1);
+
+        JMenuItem offset2 = new JMenuItem("Offset: 2");
+        // Action listiner for file-opening
+        offset2.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    drawBoard.setOffset(2);
+                    drawBoard.repaint();
+                } catch (Exception e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        });
+        editMenu.add(offset2);
+
 
         // Creating MenuItem with accordingly icon
         JMenuItem item1 = new JMenuItem("Clear");
         // Action listiner for file-opening
-        item1.addActionListener(new ActionListener(){
+        item1.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 try {
                     db.clear();
                     drawBoard.repaint();
-                }
-                catch (Exception e2) {
+                } catch (Exception e2) {
                     System.out.println(e2.getMessage());
                 }
             }
@@ -114,24 +156,25 @@ public class DrawGUI {
 
         // Action listiner for file-saving
         JMenuItem item2 = new JMenuItem("Show");
-        item2.addActionListener(new ActionListener(){
+        item2.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 try {
                     db.printall();
                     drawBoard.repaint();
-                }
-                catch (Exception e2) {
+                } catch (Exception e2) {
                     System.out.println(e2.getMessage());
                 }
             }
         });
         fileMenu.add(item2);
-        
         fileMenu.add(new JSeparator());
 
 
         // Adding both menu-groups to the menubar
         menubar.add(fileMenu);
+        menubar.add(editMenu);
+
     }
 
     /**
@@ -141,8 +184,7 @@ public class DrawGUI {
      * @return
      * @throws java.lang.Exception
      */
-    private File getFile() throws Exception
-    {
+    private File getFile() throws Exception {
         int returnVal = fc.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
@@ -150,5 +192,4 @@ public class DrawGUI {
         }
         return null;
     }
-
 }

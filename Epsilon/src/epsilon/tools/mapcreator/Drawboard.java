@@ -19,14 +19,10 @@ public class Drawboard extends JPanel implements MouseListener, MouseMotionListe
 
     // Local variables
     private Datahistory db;
-    private String mode = "line";
-    private boolean paint = false;
-    private int newX, newY, xPos, yPos = 0;
-    private Color color = Color.black;
     private int focus = 4;
     private boolean fill = false;
     private boolean er = false;
-    private Shape shape;
+    private int offset = 0;
 
     /**
      * This is the main panel, starting the listiners
@@ -73,24 +69,6 @@ public class Drawboard extends JPanel implements MouseListener, MouseMotionListe
     }
 
     /**
-     * Setting the mode of the drawing object
-     *
-     * @param mode String Acepts line, rect, circle
-     */
-    public void setMode(String mode) {
-        this.mode = mode;
-    }
-
-    /**
-     * Sets the color of the drawing object
-     *
-     * @param color Color
-     */
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    /**
      * Main paint method
      *
      * @param g
@@ -117,20 +95,12 @@ public class Drawboard extends JPanel implements MouseListener, MouseMotionListe
      * @param e Mousevent
      */
     public void mousePressed(MouseEvent e) {
-        // Getting the position of where the event accured (where the mouse was pressed)
-        xPos = e.getX();
-        yPos = e.getY();
-
     }
 
     /**
      * @param e MouseEvent
      */
     public void mouseReleased(MouseEvent e) {
-        // Mouse released, and where it got released
-        newX = e.getX();
-        newY = e.getY();
-        paint = true;
         repaint();
     }
 
@@ -182,10 +152,8 @@ public class Drawboard extends JPanel implements MouseListener, MouseMotionListe
         int row = (e.getX()/20);
         int col = (e.getY()/20);
         if (!db.remove(row,col)) {
-            System.out.println("del not true");
             db.add(new Block(row,col));
         }
-        System.out.println(row + ":" + col);
         repaint();
     }
 
@@ -197,6 +165,11 @@ public class Drawboard extends JPanel implements MouseListener, MouseMotionListe
     // Unused part of the 'MouseMotionListiner' interface
 
     public void mouseMoved(MouseEvent arg0) {
+    }
+
+    public void setOffset(int i) {
+        db.setCurrentDB(i);
+        repaint();
     }
 
  
