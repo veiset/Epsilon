@@ -1,5 +1,7 @@
-package epsilon.game;
+package epsilon.menu;
 
+import epsilon.game.Game;
+import epsilon.game.Input;
 import epsilon.map.entity.NetworkMap;
 import epsilon.net.NetworkHandler;
 import java.net.InetAddress;

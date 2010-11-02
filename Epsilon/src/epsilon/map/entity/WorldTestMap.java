@@ -57,41 +57,6 @@ public class WorldTestMap implements Map {
         playerEntity = test;
 
         worldstore.add(new Floor_1(-500, 525));
-        worldstore.add(new Floor_1(-500, 565));
-        worldstore.add(new Floor_1(-450, 565));
-        worldstore.add(new Floor_1(-400, 565));
-        worldstore.add(new Floor_1(-350, 565));
-        worldstore.add(new Floor_1(-300, 565));
-        worldstore.add(new Floor_1(-250, 565));
-        worldstore.add(new Floor_1(-200, 565));
-        worldstore.add(new Floor_1(-150, 565));
-        worldstore.add(new Floor_1(-100, 565));
-        worldstore.add(new Floor_1(-50, 565));
-        worldstore.add(new Floor_1(-50, 525));
-
-
-        worldstore.add(new Floor_1(1000, 565));
-        worldstore.add(new Floor_1(1050, 565));
-        worldstore.add(new Floor_1(1100, 565));
-        worldstore.add(new Floor_1(1150, 565));
-        worldstore.add(new Floor_1(1200, 565));
-        worldstore.add(new Floor_1(1250, 565));
-        worldstore.add(new Floor_1(1300, 565));
-        worldstore.add(new Floor_1(1350, 565));
-        worldstore.add(new Floor_1(1400, 565));
-        worldstore.add(new Floor_1(1450, 565));
-
-        worldstore.add(new Floor_1(80, 505));
-
-        worldstore.add(new Floor_1(250, 415));
-        worldstore.add(new Floor_1(300, 415));
-
-        worldstore.add(new Floor_1(500, 385));
-        worldstore.add(new Floor_1(550, 385));
-
-
-        worldstore.add(new Floor_1(350, 455));
-        worldstore.add(new Floor_1(500, 495));
 
         renderableEntities.add(test);
         moveableEntities.add(test);

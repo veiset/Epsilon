@@ -1,4 +1,4 @@
-package epsilon.game;
+package epsilon.menu;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;

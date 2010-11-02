@@ -1,4 +1,6 @@
-package epsilon.game;
+package epsilon.menu;
+
+import epsilon.game.Game;
 
 /**
  *

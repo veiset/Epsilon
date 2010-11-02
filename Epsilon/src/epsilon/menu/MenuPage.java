@@ -3,8 +3,9 @@
  * and open the template in the editor.
  */
 
-package epsilon.game;
+package epsilon.menu;
 
+import epsilon.game.Input;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;

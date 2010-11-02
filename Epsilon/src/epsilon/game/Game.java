@@ -1,5 +1,7 @@
 package epsilon.game;
 
+import epsilon.menu.Menu;
+import epsilon.menu.StartupPage;
 import epsilon.map.Map;
 import java.awt.AlphaComposite;
 import java.awt.Canvas;

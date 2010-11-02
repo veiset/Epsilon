@@ -1,5 +1,6 @@
-package epsilon.game;
+package epsilon.menu;
 
+import epsilon.game.Game;
 import epsilon.map.entity.TestMap;
 import epsilon.map.entity.WorldTestMap;
 
