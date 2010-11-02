@@ -10,7 +10,7 @@ import java.net.InetAddress;
 public class NetworkEntity {
 
     private String name;
-    private double[] posArray;
+    private String[] posArray;
     private InetAddress ip;
     private long timeout;
 
@@ -20,7 +20,7 @@ public class NetworkEntity {
      * @param posY
      * @param playerName
      */
-    public NetworkEntity(String playerName, InetAddress ip, double[] posArray) {
+    public NetworkEntity(String playerName, InetAddress ip, String[] posArray) {
         this.posArray = posArray;
         this.name = playerName;
         this.ip = ip;
@@ -62,7 +62,7 @@ public class NetworkEntity {
      * Set players coordinates
      * @param posArray
      */
-    public void setCoordinates(double[] posArray) {
+    public synchronized void setCoordinates(String[] posArray) {
         this.posArray = posArray;
     }
 
@@ -70,8 +70,17 @@ public class NetworkEntity {
      *  Get a array with player coordinates
      * @return posArray
      */
-    public double[] getCoordinates() {
+    public synchronized String[] getCoordinates() {
         return posArray;
+    }
+
+    /**
+     * Get players name and coordinates
+     * @return
+     */
+    public synchronized String getPlayerState() {
+        String playerState = name + " " + posArray[0] + " " + posArray[1] + " ";
+        return playerState;
     }
 
 

@@ -1,14 +1,18 @@
 package epsilonserver.net;
 
-import epsilonserver.entity.EntityHandler;
 import epsilonserver.game.ServerGUI;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -31,6 +35,8 @@ public class NetworkHandler {
     private BlockingQueue<DatagramPacket> incomingPacketQueue;
     private BlockingQueue<DatagramPacket> outgoingPacketQueue;
 
+    private Map<InetAddress, String> entityList;
+
     
     private DatagramSocket socket;
 
@@ -40,6 +46,8 @@ public class NetworkHandler {
     private NetworkHandler() {
         incomingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
         outgoingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
+
+        entityList = Collections.synchronizedMap(new HashMap<InetAddress, String>());
     }
 
     /**
@@ -65,7 +73,8 @@ public class NetworkHandler {
     public void startServer() {
 
         try {
-            socket = new DatagramSocket(SERVER_PORT, InetAddress.getLocalHost());
+            InetAddress bindIP = getFirstNonLoopbackAddress(true, false);
+            socket = new DatagramSocket(SERVER_PORT, bindIP);
             ServerGUI.getInstance().setLogMessage("Socket created on interface " + InetAddress.getLocalHost());
         }
         catch (SocketException se) {
@@ -76,8 +85,8 @@ public class NetworkHandler {
         }
 
         listener = new ListenerThread(socket, incomingPacketQueue);
-        parser = new PacketParser(incomingPacketQueue);
-        sender = new SenderThread(socket, outgoingPacketQueue);
+        parser = new PacketParser(incomingPacketQueue, entityList);
+        sender = new SenderThread(socket, outgoingPacketQueue, entityList);
 
         new Thread(listener).start();
         new Thread(parser).start();
@@ -102,6 +111,37 @@ public class NetworkHandler {
         sender.addToSendQueue();
     }
 
-
+    /**
+     * iterate through all addresses on host and return first non-loopback address
+     *
+     * @param preferIpv4
+     * @param preferIPv6
+     * @return addr
+     * @throws SocketException
+     */
+    private static InetAddress getFirstNonLoopbackAddress(boolean preferIpv4, boolean preferIPv6) throws SocketException {
+        Enumeration en = NetworkInterface.getNetworkInterfaces();
+        while (en.hasMoreElements()) {
+            NetworkInterface i = (NetworkInterface) en.nextElement();
+            for (Enumeration en2 = i.getInetAddresses(); en2.hasMoreElements();) {
+                InetAddress addr = (InetAddress) en2.nextElement();
+                if (!addr.isLoopbackAddress()) {
+                    if (addr instanceof Inet4Address) {
+                        if (preferIPv6) {
+                            continue;
+                        }
+                        return addr;
+                    }
+                    if (addr instanceof Inet6Address) {
+                        if (preferIpv4) {
+                            continue;
+                        }
+                        return addr;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
 }

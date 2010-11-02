@@ -4,6 +4,7 @@ import epsilonserver.entity.EntityHandler;
 import epsilonserver.entity.NetworkEntity;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.BlockingQueue;
 
@@ -19,13 +20,16 @@ public class PacketParser implements Runnable {
 
     private boolean isRunning = true;
 
+    private Map<InetAddress, String> entityList;
+
     /**
      * Constructor
      * @param packetQueue
      */
-    public PacketParser(BlockingQueue<DatagramPacket> packetQueue) {
+    public PacketParser(BlockingQueue<DatagramPacket> packetQueue, Map<InetAddress, String> entityList) {
         this.packetQueue = packetQueue;
         eHandler = EntityHandler.getInstance();
+        this.entityList = entityList;
     }
 
     /**
@@ -39,33 +43,24 @@ public class PacketParser implements Runnable {
 
                 InetAddress ip = packet.getAddress();
 
-                StringTokenizer part = new StringTokenizer(packetString);
+//                StringTokenizer part = new StringTokenizer(packetString);
 
-                String name = part.nextToken();
-                String posX = part.nextToken();
-                String posY = part.nextToken();
+//                String name = part.nextToken();
+//                String posX = part.nextToken();
+//                String posY = part.nextToken();
+//
+//                String[] posArray = new String[2];
+//                posArray[0] = posX;
+//                posArray[1] = posY;
 
-                double[] posArray = new double[2];
+//                if (!eHandler.hasPlayer(ip)) {
+//                    eHandler.addPlayer(name, ip, posArray);
+//                }
+//                else {
+//                    eHandler.setPlayerCoordinates(ip, posArray);
+//                }
 
-                try {
-                    posArray[0] = Double.parseDouble(posX);
-                    posArray[1] = Double.parseDouble(posY);
-                }
-                catch (NumberFormatException e) {
-                    System.out.println("Cant convert x or y coordinates to double");
-                }
-
-                NetworkEntity entity = eHandler.getPlayerByIP(ip);
-
-                if (entity == null) {
-                    entity = new NetworkEntity(name, ip, posArray);
-                    eHandler.addPlayer(ip, entity);
-                    System.out.println("Created new network entity");
-                }
-                else {
-                    entity.setCoordinates(posArray);
-                    System.out.println("Set new coordinates on a player");
-                }
+                entityList.put(ip, packetString);
 
             }
             catch (InterruptedException ie) {

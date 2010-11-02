@@ -41,7 +41,7 @@ public class ListenerThread implements Runnable {
             try {
                 incomingPacket = new DatagramPacket(buf, buf.length);
                 socket.receive(incomingPacket);
-                System.out.println("Packet received from " + incomingPacket.getAddress());
+                //System.out.println("Packet received from " + incomingPacket.getAddress());
                 packetQueue.put(incomingPacket);
             }
             catch (IOException e) {
@@ -51,7 +51,7 @@ public class ListenerThread implements Runnable {
                 System.out.println("Could not add packet to queue");
             }
         }
-        socket.close();
+        
     }
 
     /**

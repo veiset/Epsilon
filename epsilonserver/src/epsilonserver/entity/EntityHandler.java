@@ -2,8 +2,11 @@ package epsilonserver.entity;
 
 import java.net.InetAddress;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Test map containing a list of players
@@ -11,14 +14,16 @@ import java.util.Iterator;
  */
 public class EntityHandler {
 
-    private HashMap<InetAddress, NetworkEntity> entityList;
+    //private ConcurrentHashMap<InetAddress, NetworkEntity> entityList;
+    Map<InetAddress, NetworkEntity> entityList;
 
     /**
      * Private constructor
      * Initialize hashmap containing players
      */
     private EntityHandler() {
-        entityList = new HashMap<InetAddress, NetworkEntity>();
+        //entityList = new ConcurrentHashMap<InetAddress, NetworkEntity>();
+        entityList = Collections.synchronizedMap(new HashMap<InetAddress, NetworkEntity>());
     }
 
     /**
@@ -43,47 +48,56 @@ public class EntityHandler {
      * @param name
      * @param p
      */
-    public void addPlayer(InetAddress ip, NetworkEntity nEntity) {
-        entityList.put(ip, nEntity);
+    public synchronized void addPlayer(String name, InetAddress ip, String[] posArray) {
+        NetworkEntity entity = new NetworkEntity(name, ip, posArray);
+        entityList.put(ip, entity);
     }
 
     /**
-     * Get a string representation of all the players
-     * @return gameStateString
+     *
+     * @return pl
      */
-    public String getGameStateString(InetAddress ip) {
-        String gameStateString = "";
+    public synchronized HashMap getGameStateMap() {
+
+        HashMap<InetAddress, String> pl = new HashMap<InetAddress, String>();
 
         Collection c = entityList.values();
         Iterator it = c.iterator();
 
-        while (it.hasNext()) {
+        while(it.hasNext()) {
             NetworkEntity ne = (NetworkEntity) it.next();
-            if (!ne.getAddress().equals(ip)) {
-                double[] posArray = ne.getCoordinates();
-                gameStateString += ne.getPlayerName() + " " + posArray[0] + " " + posArray[1] + " ";
-            }
+            InetAddress ip = ne.getAddress();
+            String st = ne.getPlayerState();
+            pl.put(ip, st);
         }
 
-        return gameStateString;
+        return pl;
     }
 
     /**
-     * Get list of players
-     * @return playerList;
-     */
-    public HashMap getPlayerList() {
-        return entityList;
-    }
-
-    /**
-     * Get a player object that has a specified ip adress
+     *
      * @param ip
-     * @return p
+     * @param posArray
      */
-    public NetworkEntity getPlayerByIP(InetAddress ip) {
-        NetworkEntity p = entityList.get(ip);
-        return p;
+    public synchronized void setPlayerCoordinates(InetAddress ip, String[] posArray) {
+        NetworkEntity entity = entityList.get(ip);
+        entity.setCoordinates(posArray);
+    }
+
+
+
+    /**
+     * Check if player exists
+     *
+     * @param ip
+     * @return
+     */
+    public synchronized boolean hasPlayer(InetAddress ip) {
+        boolean hasPlayer = false;
+        if (entityList.containsKey(ip)) {
+            hasPlayer = true;
+        }
+        return hasPlayer;
     }
 
 }
