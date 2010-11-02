@@ -6,6 +6,7 @@ import epsilon.game.Sprite;
 import java.awt.Graphics;
 
 /**
+ * Gunshot objects.
  *
  * @author vz
  */
@@ -19,8 +20,8 @@ public class Shot extends MoveableEntity {
     /**
      * Gunshot objects.
      *
-     * @param posX
-     * @param posY
+     * @param posX start position X
+     * @param posY start position Y
      * @param headingRight what direction the object is heading
      */
     public Shot(double posX, double posY, boolean headingRight) {

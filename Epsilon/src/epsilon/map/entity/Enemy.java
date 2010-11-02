@@ -9,6 +9,12 @@ import java.awt.Graphics;
  */
 public abstract class Enemy extends MoveableEntity {
 
+    /**
+     * Creating an enemy, with starting positions.
+     *
+     * @param posX starting position X
+     * @param posY starting position Y
+     */
     public Enemy(int posX, int posY) {
         super(posX,posY);
     }

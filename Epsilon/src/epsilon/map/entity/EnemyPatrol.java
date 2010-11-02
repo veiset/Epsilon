@@ -5,6 +5,8 @@ import epsilon.game.Physics;
 import epsilon.game.Sprite;
 
 /**
+ * Artificial intelligence for a simple enemy-patrol. This enemy walks right
+ * and left, and thats about it.
  *
  * @author vz
  */
@@ -16,6 +18,13 @@ public class EnemyPatrol extends Enemy {
     private Sprite spriteFacingLeft;
     private Sprite spriteFacingRight;
 
+    /**
+     * EnemyPatrol with starting position, enemy walking 100 pixels to the left
+     * and then 100 pixels to the right. Then repeat.
+     *
+     * @param posX enemy starting posX
+     * @param posY enemy starting posY
+     */
     public EnemyPatrol(int posX, int posY) {
         super(posX, posY);
         HitBox[] hitbox = new HitBox[1];
@@ -35,11 +44,13 @@ public class EnemyPatrol extends Enemy {
     @Override
     public void calculateMovement() {
 
+        // applying gravity!
         if (posY < 480) {
             double temp = Physics.calculateGravity(posY, pposY, 16);
             newPosY = posY - temp;
         }
 
+        // very basic AI
         if (facingRight && (posX < startXpos + 100)) {
             newPosX = posX + 1;
         } else if (facingRight) {

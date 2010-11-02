@@ -9,6 +9,12 @@ import java.awt.Graphics;
  */
 public class Floor extends World {
 
+    /**
+     * Creating a Floor object at a specified position
+     *
+     * @param posX the top x-position of the floor object
+     * @param posY the left y-position of the floor object
+     */
     public Floor(int posX, int posY) {
         super(posX, posY);
         currentSprite = new Sprite(new String[]{"/pics/crate.png"});

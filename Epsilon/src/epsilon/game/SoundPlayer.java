@@ -6,16 +6,31 @@ import java.net.URL;
 
 import javazoom.jl.player.Player;
 
+/**
+ * Sound-player for playing MP3 files. Using a thread for each sound that is
+ * played. Each object of SoundPlayer contains one MP3-file path.
+ *
+ * @author vz
+ */
 public class SoundPlayer {
 
     private Player player;
     private URL url;
 
+    /**
+     * Creating a object that plays the MP3-file, the method SoundPlayer.play()
+     * needs to be run before the MP3-file starts playing.
+     *
+     * @param filename file relative to classpath
+     */
     public SoundPlayer(String filename) {
         url = this.getClass().getResource(filename);
 
     }
 
+    /**
+     * Closing the MP3-file.
+     */
     public void close() {
         if (player != null) {
             player.close();
@@ -25,6 +40,7 @@ public class SoundPlayer {
     // play the MP3 file to the sound card
     public void play() {
         try {
+            // Using classpath and casting url.getContent() to BufferedInputStream
             BufferedInputStream bis = (BufferedInputStream) url.getContent();
             player = new Player(bis);
         } catch (Exception e) {
@@ -40,13 +56,17 @@ public class SoundPlayer {
             public void run() {
                 try {
                     player.play();
-                    System.out.println("test");
                 } catch (Exception e) {
                     System.out.println(e);
                 }
             }
         }.start();
     }
+
+    /**
+     * Checks if the sound is finished, and plays the MP3-file again if
+     * it is completed.
+     */
     public void repeat() {
         if (player.isComplete()) {
             play();

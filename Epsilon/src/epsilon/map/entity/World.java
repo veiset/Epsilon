@@ -3,12 +3,20 @@ package epsilon.map.entity;
 import java.awt.Graphics;
 
 /**
+ * Abstract class with methods all world objects are sharing. 
+ * These objects are not movable.
  *
  * @author vz
  */
 public abstract class World extends Entity {
 
 
+    /**
+     * World object constructor.
+     *
+     * @param posX position X
+     * @param posY position Y
+     */
     public World(int posX,int posY) {
         super(posX,posY);
     }

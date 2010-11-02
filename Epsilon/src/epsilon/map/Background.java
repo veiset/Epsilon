@@ -6,18 +6,33 @@ import java.awt.Image;
 
 /**
  *
- * Class used for drawing the background of a map
+ * Class used for drawing the background of a map. The background is moving
+ * slower than the player object.
  *
- * @author Marius, vz
+ * @author vz
  */
 public class Background {
 
+    // background image
     private Image bgImage;
+
+    // start values
     private int repeat = 0;
     private int repeatPos = 0;
+
+    // image width
     private int imageSize = 2000;
+
+    // relative distance is how fast the background will move relative to
+    // the x and y positions the Background.render() method will get as input.
     private double relativeDistance = 0.5;
 
+    /**
+     * Initializing the background handler.
+     *
+     * @param ref path of the image
+     * @param scale scale of the image
+     */
     public Background(String ref, double scale) {
         ImageStore s = ImageStore.get();
 
@@ -27,6 +42,15 @@ public class Background {
         imageSize = bgImage.getWidth(null);
     }
 
+    /**
+     * Updates the background image relative to where the player position is.
+     * Using an offset to move the background slower than the player, creating
+     * more feeling of depth.
+     *
+     * @param g graphics object to render background on
+     * @param x x-position
+     * @param y y-position
+     */
     public void render(Graphics g, double x, double y) {
 
         // times the background has been repeated, as x isn't relative to the screen positions
