@@ -1,5 +1,6 @@
 package epsilon.map.entity;
 
+import epsilon.game.Collision;
 import epsilon.game.Input;
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
@@ -156,11 +157,19 @@ public class NetworkMap implements Map {
         MoveableEntity[] temp = new MoveableEntity[moveableEntities.size()];
         moveableEntities.toArray(temp);
 
+        Collision c;
+
         for (int i = 0; i < temp.length; i++) {
             temp[i].calculateMovement();
+            c = temp[i].collision(playerEntity);
+            if (c.collided) {
+                playerEntity.collided(c);
+            }
         }
 
         worldstore.checkCollision(playerEntity);
+
+        Entity[] temp2 = renderableEntities.toArray(new Entity[renderableEntities.size()]);
 
         for (int i=0;i<temp.length;i++) {
             temp[i].move();

@@ -46,7 +46,7 @@ public class PlayerEntity extends MoveableEntity {
         // Create the different sprites used in this entity, and assign them hitboxes
         HitBox[] hitbox = new HitBox[3];
 
-        hitbox[0] = new HitBox(37, 75, 17, 16);
+        hitbox[0] = new HitBox(37, 75, 20, 16);
         hitbox[1] = new HitBox(45,46,5,29);
         hitbox[2] = new HitBox(36,28,19,18);
 
@@ -139,7 +139,7 @@ public class PlayerEntity extends MoveableEntity {
                 newPosY = posY-temp;
             } else if (Input.get().jump()) {
                 // if it touches the ground, jump!
-                newPosY -= 6;
+                newPosY -= 7;
             }
 
             // go to the next picture in the sprite if it is time
@@ -170,11 +170,6 @@ public class PlayerEntity extends MoveableEntity {
     }
 
     @Override
-    public Collision collision(Entity entity) {
-        return new Collision(); // yet to be implemented
-    }
-
-    @Override
     public void renderHitBox(Graphics g, double x, double y) {
 
         double posX = this.posX - x;
@@ -192,7 +187,7 @@ public class PlayerEntity extends MoveableEntity {
     @Override
     public void collided(Collision c) {
 
-        if (c.collidedWith instanceof World) {
+        if (c.collidedWith instanceof World || c.collidedWith instanceof NetworkEntity) {
 
             // overlap between the two entities in pixels
             double dlx = c.deltaLeft;
@@ -220,6 +215,8 @@ public class PlayerEntity extends MoveableEntity {
             if (c.crossedBottom && posY < pposY && (drx > 8 && dlx > 8)) {
                 newPosY += dby;
             }
+        } else if (c.collidedWith instanceof Shot) {
+            System.out.println(" You should be dead! ");
         }
     }
 

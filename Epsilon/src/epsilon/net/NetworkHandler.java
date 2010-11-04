@@ -81,7 +81,7 @@ public class NetworkHandler {
 
 
         listener = new ListenerThread(socket, incomingPacketQueue);
-        parser = new PacketParser(incomingPacketQueue, playerPosList, this);
+        parser = new PacketParser(incomingPacketQueue, playerPosList, this, name);
         sender = new SenderThread(socket, serverAddress, name, outgoingPacketQueue);
 
         new Thread(listener).start();

@@ -1,5 +1,6 @@
 package epsilon.net;
 
+import epsilon.game.Game;
 import java.net.DatagramPacket;
 import java.util.HashMap;
 import java.util.StringTokenizer;
@@ -16,17 +17,20 @@ public class PacketParser implements Runnable {
     private HashMap<String, double[]> playerPosList;
     private NetworkHandler netHandler;
 
-    private boolean isRunning = true;    
+    private boolean isRunning = true;
+
+    private String name;
 
     /**
      * Constructor
      * @param packetQueue
      */
     public PacketParser(BlockingQueue<DatagramPacket> packetQueue,
-            HashMap<String, double[]> playerPosList, NetworkHandler netHandler) {
+            HashMap<String, double[]> playerPosList, NetworkHandler netHandler, String name) {
         this.packetQueue = packetQueue;
         this.playerPosList = playerPosList;
         this.netHandler = netHandler;
+        this.name = name;
     }
 
     /**
@@ -47,21 +51,27 @@ public class PacketParser implements Runnable {
                     String posX = part.nextToken();
                     String posY = part.nextToken();
 
-                    double[] posArray = new double[2];
+                    if (!name.equals(this.name)) {
 
-                    try {
-                        posArray[0] = Double.valueOf(posX);
-                        posArray[1] = Double.valueOf(posY);
-                    }
-                    catch (NumberFormatException e) {
-                        System.out.println("Cant convert x or y coordinates to double");
-                    }
+                        double[] posArray = new double[2];
 
-                    if (!playerPosList.containsKey(name)) {
-                        netHandler.addNewPlayer(name);
+                        try {
+                            posArray[0] = Double.valueOf(posX);
+                            posArray[1] = Double.valueOf(posY);
+                        }
+                        catch (NumberFormatException e) {
+                            System.out.println("Cant convert x or y coordinates to double");
+                        }
+
+                        if (!playerPosList.containsKey(name)) {
+                            netHandler.addNewPlayer(name);
+                        }
+
+                        System.out.println(name);
+
+                        playerPosList.put(name, posArray);
+
                     }
-                    
-                    playerPosList.put(name, posArray);
                 }
             }
             catch (InterruptedException ie) {
