@@ -1,19 +1,12 @@
 package epsilonserver.net;
 
 import epsilonserver.entity.EntityHandler;
-import epsilonserver.entity.NetworkEntity;
 import epsilonserver.game.ServerGUI;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * SenderThread creates a thread that gets the registered players position
@@ -28,17 +21,14 @@ public class SenderThread implements Runnable {
 
     private BlockingQueue<DatagramPacket> outgoingPacketQueue;
 
-    private Map<InetAddress, String> entityList;
-
     /**
      * Constructor
      * @param socket
      */
-    public SenderThread(DatagramSocket socket, BlockingQueue<DatagramPacket> outgoingPacketQueue, Map<InetAddress, String> entityList) {
+    public SenderThread(DatagramSocket socket, BlockingQueue<DatagramPacket> outgoingPacketQueue) {
         this.socket = socket;
         this.outgoingPacketQueue = outgoingPacketQueue;
         eHandler = EntityHandler.getInstance();
-        this.entityList = entityList;
     }
 
     /**
@@ -61,8 +51,9 @@ public class SenderThread implements Runnable {
             catch (IOException e) {
                 System.out.println("Problem accessing socket");
             }
-  
+
         }
+        
     }
 
     /**
@@ -71,32 +62,17 @@ public class SenderThread implements Runnable {
     public synchronized void addToSendQueue() {
         byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];
 
-        //HashMap<InetAddress, String> pl = eHandler.getGameStateMap();
-
-        InetAddress[] adrArray = new InetAddress[entityList.size()];
-        adrArray = (InetAddress[]) entityList.keySet().toArray(adrArray);
+        InetAddress[] adrArray = eHandler.getAddressArray();
 
         for (int i = 0; i < adrArray.length; i++) {
-            String gameStateString = "";
+            InetAddress ip = adrArray[i];
 
-            Iterator itr = entityList.keySet().iterator();
-            while (itr.hasNext()) {
-                InetAddress a = (InetAddress) itr.next();
+            String gs = eHandler.getGameStateString(ip);
+            buf = gs.getBytes();
 
-                if (!a.equals(adrArray[i])) {
-                    gameStateString += entityList.get(a);
-                }
-
+            if(!gs.equals("")) {
+                System.out.println(gs);
             }
-
-            if(!gameStateString.equals("")) {
-                System.out.println(gameStateString);
-            }
-
-            buf = gameStateString.getBytes();
-
-            InetAddress ip = (InetAddress) adrArray[i];
-
 
             DatagramPacket outgoingPacket =
                     new DatagramPacket(buf, buf.length, ip, NetworkHandler.CLIENT_PORT);
@@ -107,7 +83,7 @@ public class SenderThread implements Runnable {
             catch (InterruptedException e) {
                 System.out.println("Could not add packet to outgoing packet queue");
             }
-
+            
         }
     }
 

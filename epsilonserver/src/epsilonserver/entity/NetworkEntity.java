@@ -30,7 +30,7 @@ public class NetworkEntity {
      * Get player name
      * @return name
      */
-    public String getPlayerName() {
+    public synchronized String getPlayerName() {
         return name;
     }
 
@@ -54,7 +54,7 @@ public class NetworkEntity {
      * Get players IP address
      * @return ip
      */
-    public InetAddress getAddress() {
+    public synchronized InetAddress getAddress() {
         return ip;
     }
 

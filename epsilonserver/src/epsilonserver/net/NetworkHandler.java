@@ -9,10 +9,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -34,9 +31,6 @@ public class NetworkHandler {
 
     private BlockingQueue<DatagramPacket> incomingPacketQueue;
     private BlockingQueue<DatagramPacket> outgoingPacketQueue;
-
-    private Map<InetAddress, String> entityList;
-
     
     private DatagramSocket socket;
 
@@ -46,8 +40,6 @@ public class NetworkHandler {
     private NetworkHandler() {
         incomingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
         outgoingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
-
-        entityList = Collections.synchronizedMap(new HashMap<InetAddress, String>());
     }
 
     /**
@@ -85,8 +77,8 @@ public class NetworkHandler {
         }
 
         listener = new ListenerThread(socket, incomingPacketQueue);
-        parser = new PacketParser(incomingPacketQueue, entityList);
-        sender = new SenderThread(socket, outgoingPacketQueue, entityList);
+        parser = new PacketParser(incomingPacketQueue);
+        sender = new SenderThread(socket, outgoingPacketQueue);
 
         new Thread(listener).start();
         new Thread(parser).start();

@@ -1,10 +1,8 @@
 package epsilonserver.net;
 
 import epsilonserver.entity.EntityHandler;
-import epsilonserver.entity.NetworkEntity;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
-import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.BlockingQueue;
 
@@ -20,16 +18,13 @@ public class PacketParser implements Runnable {
 
     private boolean isRunning = true;
 
-    private Map<InetAddress, String> entityList;
-
     /**
      * Constructor
      * @param packetQueue
      */
-    public PacketParser(BlockingQueue<DatagramPacket> packetQueue, Map<InetAddress, String> entityList) {
+    public PacketParser(BlockingQueue<DatagramPacket> packetQueue) {
         this.packetQueue = packetQueue;
         eHandler = EntityHandler.getInstance();
-        this.entityList = entityList;
     }
 
     /**
@@ -43,15 +38,13 @@ public class PacketParser implements Runnable {
 
                 InetAddress ip = packet.getAddress();
 
-//                StringTokenizer part = new StringTokenizer(packetString);
+                String[] s = packetString.split(" ");
 
-//                String name = part.nextToken();
-//                String posX = part.nextToken();
-//                String posY = part.nextToken();
-//
-//                String[] posArray = new String[2];
-//                posArray[0] = posX;
-//                posArray[1] = posY;
+                String[] posArray = new String[2];
+                posArray[0] = s[1];
+                posArray[1] = s[2];
+
+                eHandler.createIfAbsent(ip, s[0], posArray);
 
 //                if (!eHandler.hasPlayer(ip)) {
 //                    eHandler.addPlayer(name, ip, posArray);
@@ -60,7 +53,6 @@ public class PacketParser implements Runnable {
 //                    eHandler.setPlayerCoordinates(ip, posArray);
 //                }
 
-                entityList.put(ip, packetString);
 
             }
             catch (InterruptedException ie) {
