@@ -51,7 +51,7 @@ public class PacketParser implements Runnable {
                     String posX = part.nextToken();
                     String posY = part.nextToken();
 
-                    if (!name.equals(this.name)) {
+                    //if (!name.equals(this.name)) {
 
                         double[] posArray = new double[2];
 
@@ -71,7 +71,7 @@ public class PacketParser implements Runnable {
 
                         playerPosList.put(name, posArray);
 
-                    }
+                    //}
                 }
             }
             catch (InterruptedException ie) {

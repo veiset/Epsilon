@@ -183,5 +183,9 @@ public class NetworkMap implements Map {
         return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition()};
     }
 
+    public void resetPlayerPosition() {
+        playerEntity.resetPosition();
+    }
+
 }
  

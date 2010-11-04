@@ -214,4 +214,8 @@ public class Game extends Canvas {
         return map.getPlayerPosition();
     }
 
+    public void resetPlayerPosition() {
+        map.resetPlayerPosition();
+    }
+
 }

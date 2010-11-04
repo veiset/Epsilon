@@ -30,4 +30,9 @@ public interface Map {
      */
     public double[] getPlayerPosition();
 
+    /**
+     *
+     */
+    public void resetPlayerPosition();
+
 }

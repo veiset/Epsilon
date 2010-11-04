@@ -22,6 +22,9 @@ public class PlayerEntity extends MoveableEntity {
     // the name of the player
     private String name;
 
+    private double origPosX;
+    private double origPosY;
+
     // the different sprites this entity uses
     protected Sprite rightSprite;
     protected Sprite standSpriteRight;
@@ -40,6 +43,8 @@ public class PlayerEntity extends MoveableEntity {
         super(posX, posY);
         ticker = 0;
         touchesGround = false;
+        origPosX = posX;
+        origPosY = posY;
 
         this.name = name;
 
@@ -227,5 +232,17 @@ public class PlayerEntity extends MoveableEntity {
      */
     public String getName() {
         return name;
+    }
+
+    public void resetPosition() {
+        posX = origPosX;
+        newPosX = origPosX;
+        pposX = origPosX;
+
+        posY = origPosY;
+        newPosY = origPosY;
+        pposY = origPosY;
+
+        isDead = false;
     }
 }

@@ -15,7 +15,7 @@ public class OptionPage extends MenuPage {
      * Private constructor used for initialising variables
      */
     private OptionPage() {
-        super(new String[]{"Mute", "Exit Game"}, "Options");
+        super(new String[]{"Mute", "Reset Position", "Exit Game"}, "Options");
     }
 
     @Override
@@ -27,6 +27,8 @@ public class OptionPage extends MenuPage {
                 items[0] = "Mute";
             }
         } else if (selected == 1) {
+            Game.get().resetPlayerPosition();
+        } else if (selected == 2) {
             Game.get().quit();
         }
     }

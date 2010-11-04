@@ -363,4 +363,8 @@ public class WorldTestMap implements Map {
         worldstore.add(new Floor_1(3250,480));
         worldstore.add(new Floor_1(3300,480));
     }
+
+    public void resetPlayerPosition() {
+        playerEntity.resetPosition();
+    }
 }
