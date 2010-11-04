@@ -11,6 +11,7 @@ import java.util.concurrent.BlockingQueue;
 /**
  * SenderThread creates a thread that gets the registered players position
  * and sends it to the registered clients.
+ *
  * @author mm
  */
 public class SenderThread implements Runnable {
@@ -23,6 +24,7 @@ public class SenderThread implements Runnable {
 
     /**
      * Constructor
+     *
      * @param socket
      */
     public SenderThread(DatagramSocket socket, BlockingQueue<DatagramPacket> outgoingPacketQueue) {
@@ -32,8 +34,7 @@ public class SenderThread implements Runnable {
     }
 
     /**
-     * Thread for creating a packet with player positions and
-     * sending the information to all registered clients.
+     * Thread that gets a packet from the outgoing packet queue and sends it 
      */
     public void run() {
 
@@ -62,17 +63,18 @@ public class SenderThread implements Runnable {
     public synchronized void addToSendQueue() {
         byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];
 
-        InetAddress[] adrArray = eHandler.getAddressArray();
+        String[] nameArray = eHandler.getNameArray();
 
-        for (int i = 0; i < adrArray.length; i++) {
-            InetAddress ip = adrArray[i];
+        for (int i = 0; i < nameArray.length; i++) {
 
-            String gs = eHandler.getGameStateString(ip);
+            String gs = eHandler.getGameStateString(nameArray[i]);
             buf = gs.getBytes();
 
-            if(!gs.equals("")) {
-                System.out.println(gs);
-            }
+            //if(!gs.equals("")) {
+            //    System.out.println(gs);
+            //}
+
+            InetAddress ip = eHandler.getAddressByName(nameArray[i]);
 
             DatagramPacket outgoingPacket =
                     new DatagramPacket(buf, buf.length, ip, NetworkHandler.CLIENT_PORT);

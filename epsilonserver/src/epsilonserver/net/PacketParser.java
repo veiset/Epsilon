@@ -46,14 +46,6 @@ public class PacketParser implements Runnable {
 
                 eHandler.createIfAbsent(ip, s[0], posArray);
 
-//                if (!eHandler.hasPlayer(ip)) {
-//                    eHandler.addPlayer(name, ip, posArray);
-//                }
-//                else {
-//                    eHandler.setPlayerCoordinates(ip, posArray);
-//                }
-
-
             }
             catch (InterruptedException ie) {
                 System.out.println("Interrupt from queue");
