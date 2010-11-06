@@ -44,7 +44,6 @@ public class SenderThread implements Runnable {
      * sending the information to the server
      */
     public void run() {
-        System.out.println("Sender thread started");
         while (isRunning) {
 
             try {

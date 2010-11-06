@@ -4,7 +4,6 @@ import java.net.DatagramPacket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -47,7 +46,7 @@ public class PacketParser implements Runnable {
 
                 String[] strArray = packetString.split(" ");
                 String incomingHashToken = strArray[strArray.length-1];
-                String modifiedPacketString = packetString.replace(" " + incomingHashToken, "");
+                String modifiedPacketString = packetString.replace(incomingHashToken, "");
 
                 try {
                     MessageDigest hash = MessageDigest.getInstance("SHA");
@@ -66,6 +65,9 @@ public class PacketParser implements Runnable {
                 }
 
                 if (calculatedHash.equals(incomingHashToken)) {
+
+                    System.out.println(strArray.length);
+                    System.out.println(packetString);
 
                     for (int i = 0; i < strArray.length-1; i += 3) {
                         String pname = strArray[i];
