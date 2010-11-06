@@ -84,7 +84,7 @@ public class SenderThread implements Runnable {
             StringBuilder hexString = new StringBuilder();
 
             for (int i = 0; i < hashSum.length; i++) {
-                hexString.append(Integer.toHexString(hashSum[i]));
+                hexString.append(Integer.toHexString(0xFF & hashSum[i]));
             }
 
             String hashString = hexString.toString();

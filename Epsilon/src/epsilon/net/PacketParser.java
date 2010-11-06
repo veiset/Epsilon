@@ -56,7 +56,7 @@ public class PacketParser implements Runnable {
                     StringBuilder hexString = new StringBuilder();
 
                     for (int i = 0; i < hashSum.length; i++) {
-                        hexString.append(Integer.toHexString(hashSum[i]));
+                        hexString.append(Integer.toHexString(0xFF & hashSum[i]));
                     }
 
                     calculatedHash = hexString.toString();
