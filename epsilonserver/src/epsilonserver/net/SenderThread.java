@@ -70,38 +70,48 @@ public class SenderThread implements Runnable {
         for (int i = 0; i < nameArray.length; i++) {
 
             String sendString = "";
-            String gs = "";
+            String gameStateString = "";
 
-            gs = eHandler.getGameStateString(nameArray[i]);
-            buf = gs.getBytes();
+            gameStateString = eHandler.getGameStateString(nameArray[i]);
 
-            try {
-                MessageDigest hash = MessageDigest.getInstance("SHA");
-                byte[] hashsum = hash.digest(buf);
-                String hashString = hashsum.toString();
-                sendString = gs + " " + hashString;
+            if (!gameStateString.equals("")) {
 
-            }
-            catch (NoSuchAlgorithmException e) {
-                System.out.println("Could not hash outgoing message");
-            }
+                try {
+                    MessageDigest hash = MessageDigest.getInstance("SHA");
+                    byte[] hashSum = hash.digest(gameStateString.getBytes());
+                    System.out.println(hashSum.length);
 
-            buf = sendString.getBytes();
+                    StringBuilder hexString = new StringBuilder();
 
-            if(!sendString.equals("")) {
-                System.out.println(sendString);
-            }
+                    for (int j = 0; j < hashSum.length; j++) {
+                        hexString.append(Integer.toHexString(0xFF & hashSum[j]));
+                    }
 
-            InetAddress ip = eHandler.getAddressByName(nameArray[i]);
+                    String hashString = hexString.toString();
+                    sendString = gameStateString + hashString;
+                    System.out.println("Added hash to outgoing message" + hashString);
+                }
+                catch (NoSuchAlgorithmException e) {
+                    System.out.println("Could not hash outgoing message");
+                }
 
-            DatagramPacket outgoingPacket =
-                    new DatagramPacket(buf, buf.length, ip, NetworkHandler.CLIENT_PORT);
+                buf = sendString.getBytes();
 
-            try {
-                outgoingPacketQueue.put(outgoingPacket);
-            }
-            catch (InterruptedException e) {
-                System.out.println("Could not add packet to outgoing packet queue");
+                if(!sendString.equals("")) {
+                    System.out.println(sendString);
+                }
+
+                InetAddress ip = eHandler.getAddressByName(nameArray[i]);
+
+                DatagramPacket outgoingPacket =
+                        new DatagramPacket(buf, buf.length, ip, NetworkHandler.CLIENT_PORT);
+
+                try {
+                    outgoingPacketQueue.put(outgoingPacket);
+                }
+                catch (InterruptedException e) {
+                    System.out.println("Could not add packet to outgoing packet queue");
+                }
             }
             
         }

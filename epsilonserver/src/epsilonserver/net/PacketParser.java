@@ -36,33 +36,51 @@ public class PacketParser implements Runnable {
         while (isRunning) {
             try {
                 DatagramPacket packet = packetQueue.take();
+
+                System.out.println("Packet received");
+
                 String packetString = new String(packet.getData(), 0, packet.getLength());
-                String calculatedHash = "";
 
                 InetAddress ip = packet.getAddress();
 
-                String[] s = packetString.split(" ");
+                String[] strArray = packetString.split(" ");
 
-                String[] posArray = new String[2];
-                posArray[0] = s[1];
-                posArray[1] = s[2];
+                if (strArray.length == 4) {
 
-                String incomningHash = s[3];
+                    String[] posArray = new String[2];
+                    posArray[0] = strArray[1];
+                    posArray[1] = strArray[2];
 
-                try {
-                    String temp = s[0] + " " + s[1] + " " + s[2];
-                    MessageDigest hash = MessageDigest.getInstance("SHA");
-                    byte[] hashSum = hash.digest(temp.getBytes());
-                    calculatedHash = hashSum.toString();
+                    String incomningHash = strArray[3];
+                    System.out.println("Incoming hash: " + incomningHash);
+                    String calculatedHash = "";
 
-                }
-                catch (NoSuchAlgorithmException e) {
-                    System.out.println("Could not hash incoming message");
-                }
+                    try {
+                        String temp = strArray[0] + " " + strArray[1] + " " + strArray[2];
+                        MessageDigest hash = MessageDigest.getInstance("SHA");
+                        byte[] hashSum = hash.digest(temp.getBytes());
+
+                        System.out.println(hashSum.length);
+
+                        StringBuilder hexString = new StringBuilder();
+
+                        for (int i = 0; i < hashSum.length; i++) {
+                            hexString.append(Integer.toHexString(0xFF & hashSum[i]));
+                        }
+         
+                        calculatedHash = hexString.toString();
+                        System.out.println("Calculated hash: " + calculatedHash);
+
+                    }
+                    catch (NoSuchAlgorithmException e) {
+                        System.out.println("Could not hash incoming message");
+                    }
 
 
-                if (incomningHash.equals(calculatedHash)) {
-                    eHandler.createIfAbsent(ip, s[0], posArray);
+                    if (calculatedHash.equals(incomningHash)) {
+                        eHandler.createIfAbsent(ip, strArray[0], posArray);
+                        System.out.println("Incoming hashing complete");
+                    }
                 }
             }
             catch (InterruptedException ie) {
