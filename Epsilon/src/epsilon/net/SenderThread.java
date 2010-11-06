@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -65,15 +67,31 @@ public class SenderThread implements Runnable {
      */
     public void addToSendQueue() {
 
+        byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];
         double[] posArray = game.getPlayerPosition();
+
         String playerPosString = clientName + " " + posArray[0] + " " + posArray[1];
+        String sendString = "";
 
         if (!playerPosString.isEmpty()) {
             //System.out.println("\n" + "Sending string: " + playerPosString + "\n");
         }
 
-        byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];
         buf = playerPosString.getBytes();
+
+        try {
+            MessageDigest hash = MessageDigest.getInstance("SHA");
+            byte[] hashsum = hash.digest(buf);
+            String hashString = hashsum.toString();
+            sendString = playerPosString + " " + hashString;
+
+        }
+        catch (NoSuchAlgorithmException e) {
+            System.out.println("Could not hash outgoing message");
+        }
+
+        buf = sendString.getBytes();
+
         DatagramPacket outgoingPacket =
                 new DatagramPacket(buf, buf.length, serverAddress, NetworkHandler.SERVER_PORT);
 

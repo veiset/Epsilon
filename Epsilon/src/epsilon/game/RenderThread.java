@@ -51,7 +51,7 @@ public class RenderThread extends Thread {
             lastLoopTime = System.currentTimeMillis();
             game.renderGraphics(delta);
             if(calcFPS){calcFPS(delta);}
-            //try { Thread.sleep(5); } catch (Exception e) {}
+            try { Thread.sleep(1); } catch (Exception e) {}
         }
     }
 

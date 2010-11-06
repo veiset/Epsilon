@@ -1,7 +1,8 @@
 package epsilon.net;
 
-import epsilon.game.Game;
 import java.net.DatagramPacket;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.concurrent.BlockingQueue;
@@ -40,36 +41,47 @@ public class PacketParser implements Runnable {
         while (isRunning) {
             try {
                 DatagramPacket packet = packetQueue.take();
+
                 String packetString = new String(packet.getData(), 0, packet.getLength());
+                String calculatedHash = "";
 
-                System.out.println(packetString);
+                String[] strArray = packetString.split(" ");
+                String hashToken = strArray[strArray.length-1];
+                String modifiedPacketString = packetString.replace(" " + hashToken, "");
 
-                StringTokenizer part = new StringTokenizer(packetString);
+                try {
+                    MessageDigest hash = MessageDigest.getInstance("SHA");
+                    byte[] hashSum = hash.digest(modifiedPacketString.getBytes());
+                    calculatedHash = hashSum.toString();
+                }
+                catch (NoSuchAlgorithmException e) {
+                    System.out.println("could not hash incoming message");
+                }
 
-                while (part.hasMoreTokens() && part.countTokens( )% 3 == 0) {
-                    String name = part.nextToken();
-                    String posX = part.nextToken();
-                    String posY = part.nextToken();
+                if (calculatedHash.equals(hashToken)) {
 
-                    if (!name.equals(this.name)) {
+                    for (int i = 0; i < strArray.length-1; i += 3) {
+                        String pname = strArray[i];
+                        String posX = strArray[i+1];
+                        String posY = strArray[i+2];
+                        
+                        if (!pname.equals(this.name)) {
+                            double[] posArray = new double[2];
 
-                        double[] posArray = new double[2];
+                            try {
+                                posArray[0] = Double.valueOf(posX);
+                                posArray[1] = Double.valueOf(posY);
+                            }
+                            catch (NumberFormatException e) {
+                                System.out.println("Cant convert x or y coordinates to double"); 
+                            }
 
-                        try {
-                            posArray[0] = Double.valueOf(posX);
-                            posArray[1] = Double.valueOf(posY);
+                            if (!playerPosList.containsKey(pname)) {
+                                netHandler.addNewPlayer(pname);
+                            }
+
+                            playerPosList.put(pname, posArray);
                         }
-                        catch (NumberFormatException e) {
-                            System.out.println("Cant convert x or y coordinates to double");
-                        }
-
-                        if (!playerPosList.containsKey(name)) {
-                            netHandler.addNewPlayer(name);
-                        }
-
-                        System.out.println(name);
-
-                        playerPosList.put(name, posArray);
 
                     }
                 }
