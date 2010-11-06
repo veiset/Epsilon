@@ -92,6 +92,8 @@ public class SenderThread implements Runnable {
 
         buf = sendString.getBytes();
 
+        System.out.println("Message added to send queue: " + sendString);
+
         DatagramPacket outgoingPacket =
                 new DatagramPacket(buf, buf.length, serverAddress, NetworkHandler.SERVER_PORT);
 
