@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -67,12 +69,28 @@ public class SenderThread implements Runnable {
 
         for (int i = 0; i < nameArray.length; i++) {
 
-            String gs = eHandler.getGameStateString(nameArray[i]);
+            String sendString = "";
+            String gs = "";
+
+            gs = eHandler.getGameStateString(nameArray[i]);
             buf = gs.getBytes();
 
-            //if(!gs.equals("")) {
-            //    System.out.println(gs);
-            //}
+            try {
+                MessageDigest hash = MessageDigest.getInstance("SHA");
+                byte[] hashsum = hash.digest(buf);
+                String hashString = hashsum.toString();
+                sendString = gs + " " + hashString;
+
+            }
+            catch (NoSuchAlgorithmException e) {
+                System.out.println("Could not hash outgoing message");
+            }
+
+            buf = sendString.getBytes();
+
+            if(!sendString.equals("")) {
+                System.out.println(sendString);
+            }
 
             InetAddress ip = eHandler.getAddressByName(nameArray[i]);
 

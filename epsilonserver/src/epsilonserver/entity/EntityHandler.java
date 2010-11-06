@@ -7,11 +7,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Test map containing a list of players
+ * 
  * @author mm
  */
 public class EntityHandler {
 
     private ConcurrentHashMap<String, NetworkEntity> entityList;
+
+    private long tmeoutValue = 5000;
 
     /**
      * Private constructor
@@ -112,14 +115,41 @@ public class EntityHandler {
      * @param posArray
      */
     public void createIfAbsent(InetAddress ip, String name, String[] posArray) {
+        long updateTime = System.currentTimeMillis();
         boolean contains = entityList.containsKey(name);
         if (contains) {
-            entityList.get(name).setCoordinates(posArray);
+            entityList.get(name).setCoordinates(posArray, updateTime);
         }
         else {
-            NetworkEntity n = new NetworkEntity(name, ip, posArray);
+            NetworkEntity n = new NetworkEntity(name, ip, posArray, updateTime);
             entityList.put(name, n);
         }
+    }
+
+    /**
+     * Checks timeout value of registered players. if the timeout value
+     * exceeds the max timeout value, then the player is removed from the
+     * entity list.
+     *
+     * @param currentTime
+     */
+    public void checkTimeout(long currentTime) {
+
+        Collection c = entityList.values();
+        Iterator it = c.iterator();
+
+        while (it.hasNext()) {
+            NetworkEntity n = (NetworkEntity) it.next();
+            long lastUpdateTime = n.getLastUpdateTime();
+
+            if ((currentTime - lastUpdateTime) > tmeoutValue) {
+                it.remove();
+                System.out.println("Removed " + n.getPlayerName());
+            }
+
+        }
+
+
     }
 
 }

@@ -13,7 +13,7 @@ public class NetworkEntity {
     private String name;
     private String[] posArray;
     private InetAddress ip;
-    private long timeout;
+    private long lastUpdateTime;
 
     /**
      * Constructor
@@ -22,10 +22,11 @@ public class NetworkEntity {
      * @param posY
      * @param playerName
      */
-    public NetworkEntity(String playerName, InetAddress ip, String[] posArray) {
+    public NetworkEntity(String playerName, InetAddress ip, String[] posArray, long updateTime) {
         this.posArray = posArray;
         this.name = playerName;
         this.ip = ip;
+        lastUpdateTime = updateTime;
     }
 
     /**
@@ -33,7 +34,7 @@ public class NetworkEntity {
      *
      * @return name
      */
-    public String getPlayerName() {
+    public synchronized String getPlayerName() {
         return name;
     }
 
@@ -42,17 +43,8 @@ public class NetworkEntity {
      *
      * @return timeout
      */
-    public long getTimeoutValue() {
-        return timeout;
-    }
-
-    /**
-     * Set timeout value
-     *
-     * @param timeout
-     */
-    public void setTimeoutValue(long timeout) {
-        this.timeout = timeout;
+    public synchronized long getLastUpdateTime() {
+        return lastUpdateTime;
     }
 
     /**
@@ -60,7 +52,7 @@ public class NetworkEntity {
      *
      * @return ip
      */
-    public InetAddress getAddress() {
+    public synchronized InetAddress getAddress() {
         return ip;
     }
 
@@ -69,8 +61,9 @@ public class NetworkEntity {
      *
      * @param posArray
      */
-    public void setCoordinates(String[] posArray) {
+    public synchronized void setCoordinates(String[] posArray, long updateTime) {
         this.posArray = posArray;
+        lastUpdateTime = updateTime;
     }
 
     /**
@@ -78,7 +71,7 @@ public class NetworkEntity {
      *
      * @return posArray
      */
-    public String[] getCoordinates() {
+    public synchronized String[] getCoordinates() {
         return posArray;
     }
 
@@ -87,7 +80,7 @@ public class NetworkEntity {
      *
      * @return playerState
      */
-    public String getPlayerState() {
+    public synchronized String getPlayerState() {
         String playerState = name + " " + posArray[0] + " " + posArray[1] + " ";
         return playerState;
     }

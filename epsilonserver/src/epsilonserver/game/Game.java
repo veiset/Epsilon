@@ -70,6 +70,8 @@ public class Game {
      */
     public void updateGame() {
 
+        lastUpdateTime = System.currentTimeMillis();
+        eHandler.checkTimeout(lastUpdateTime);
         netHandler.updateClients();
 
     }

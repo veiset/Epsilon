@@ -3,6 +3,8 @@ package epsilonserver.net;
 import epsilonserver.entity.EntityHandler;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.StringTokenizer;
 import java.util.concurrent.BlockingQueue;
 
@@ -35,6 +37,7 @@ public class PacketParser implements Runnable {
             try {
                 DatagramPacket packet = packetQueue.take();
                 String packetString = new String(packet.getData(), 0, packet.getLength());
+                String calculatedHash = "";
 
                 InetAddress ip = packet.getAddress();
 
@@ -44,8 +47,23 @@ public class PacketParser implements Runnable {
                 posArray[0] = s[1];
                 posArray[1] = s[2];
 
-                eHandler.createIfAbsent(ip, s[0], posArray);
+                String incomningHash = s[3];
 
+                try {
+                    String temp = s[0] + " " + s[1] + " " + s[2];
+                    MessageDigest hash = MessageDigest.getInstance("SHA");
+                    byte[] hashSum = hash.digest(temp.getBytes());
+                    calculatedHash = hashSum.toString();
+
+                }
+                catch (NoSuchAlgorithmException e) {
+                    System.out.println("Could not hash incoming message");
+                }
+
+
+                if (incomningHash.equals(calculatedHash)) {
+                    eHandler.createIfAbsent(ip, s[0], posArray);
+                }
             }
             catch (InterruptedException ie) {
                 System.out.println("Interrupt from queue");
