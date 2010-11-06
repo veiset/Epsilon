@@ -66,8 +66,6 @@ public class PacketParser implements Runnable {
 
                 if (calculatedHash.equals(incomingHashToken)) {
 
-                    System.out.println(strArray.length);
-                    System.out.println(packetString);
 
                     for (int i = 0; i < strArray.length-1; i += 3) {
                         String pname = strArray[i];

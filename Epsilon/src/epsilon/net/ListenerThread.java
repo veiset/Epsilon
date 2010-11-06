@@ -41,7 +41,6 @@ public class ListenerThread implements Runnable {
             try {
                 incomingPacket = new DatagramPacket(buf, buf.length);
                 socket.receive(incomingPacket);
-                System.out.println("Packet received from " + incomingPacket.getAddress());
                 packetQueue.put(incomingPacket);
             }
             catch (IOException e) {
