@@ -46,19 +46,26 @@ public class PacketParser implements Runnable {
                 String calculatedHash = "";
 
                 String[] strArray = packetString.split(" ");
-                String hashToken = strArray[strArray.length-1];
-                String modifiedPacketString = packetString.replace(" " + hashToken, "");
+                String incomingHashToken = strArray[strArray.length-1];
+                String modifiedPacketString = packetString.replace(" " + incomingHashToken, "");
 
                 try {
                     MessageDigest hash = MessageDigest.getInstance("SHA");
                     byte[] hashSum = hash.digest(modifiedPacketString.getBytes());
-                    calculatedHash = hashSum.toString();
+
+                    StringBuilder hexString = new StringBuilder();
+
+                    for (int i = 0; i < hashSum.length; i++) {
+                        hexString.append(Integer.toHexString(hashSum[i]));
+                    }
+
+                    calculatedHash = hexString.toString();
                 }
                 catch (NoSuchAlgorithmException e) {
                     System.out.println("could not hash incoming message");
                 }
 
-                if (calculatedHash.equals(hashToken)) {
+                if (calculatedHash.equals(incomingHashToken)) {
 
                     for (int i = 0; i < strArray.length-1; i += 3) {
                         String pname = strArray[i];

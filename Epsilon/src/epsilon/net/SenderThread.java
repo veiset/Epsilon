@@ -77,12 +77,17 @@ public class SenderThread implements Runnable {
             //System.out.println("\n" + "Sending string: " + playerPosString + "\n");
         }
 
-        buf = playerPosString.getBytes();
-
         try {
             MessageDigest hash = MessageDigest.getInstance("SHA");
-            byte[] hashsum = hash.digest(buf);
-            String hashString = hashsum.toString();
+            byte[] hashSum = hash.digest(playerPosString.getBytes());
+
+            StringBuilder hexString = new StringBuilder();
+
+            for (int i = 0; i < hashSum.length; i++) {
+                hexString.append(Integer.toHexString(hashSum[i]));
+            }
+
+            String hashString = hexString.toString();
             sendString = playerPosString + " " + hashString;
 
         }
@@ -91,8 +96,6 @@ public class SenderThread implements Runnable {
         }
 
         buf = sendString.getBytes();
-
-        System.out.println("Message added to send queue: " + sendString);
 
         DatagramPacket outgoingPacket =
                 new DatagramPacket(buf, buf.length, serverAddress, NetworkHandler.SERVER_PORT);
