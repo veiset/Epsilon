@@ -133,13 +133,19 @@ public abstract class Entity {
 
         double x = 0;
         double y = 0;
+        double px = 0;
+        double py = 0;
 
         if (toCheckAgainst instanceof MoveableEntity) {
             x = ((MoveableEntity)toCheckAgainst).getNewXPosition();
             y = ((MoveableEntity)toCheckAgainst).getNewYPosition();
+            px = ((MoveableEntity)toCheckAgainst).getXPosition();
+            py = ((MoveableEntity)toCheckAgainst).getYPosition();
         } else {
             x = toCheckAgainst.getXPosition();
             y = toCheckAgainst.getYPosition();
+            px = x;
+            py = y;
         }
 
         double left1, left2;
@@ -182,7 +188,7 @@ public abstract class Entity {
 
         for(HitBox h:this.getHitbox()) {
             for(HitBox k:toCheckAgainst.getHitbox()) {
-                temp = h.collidesWith(k, posX, posY, x, y);
+                temp = h.collidesWith(k, posX, posY, pposX, pposY, x, y, px, py);
                 if (temp.collided) {
                     c.collided = true;
 

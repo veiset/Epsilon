@@ -45,7 +45,7 @@ public class Sprite {
 
                 hitbox = new HitBox[]{new HitBox(0, 0, image[0].getWidth(null), image[0].getHeight(null))};
 
-                offset = calculateOffset(hitbox);
+                offset = (int)Math.round(calculateOffset(hitbox)*1.5);
 	}
 
 	/**

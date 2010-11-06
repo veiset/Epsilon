@@ -38,6 +38,8 @@ public class HitBox {
     /**
      * Checks if two hitboxes collides. It needs the position of it's own
      * entity and the position of the entity of the other hitbox
+     * Includes the previous position so that it can check for collisions
+     * thoughout the movement
      *
      * @param box the hitbox that should be checked for collision
      * @param ownPosX the X-Axis position of this hitbox's entity
@@ -46,7 +48,9 @@ public class HitBox {
      * @param otherPosY the Y-Axis position of the other hitbox's entity
      * @return a collision object with information about a collision
      */
-    public Collision collidesWith(HitBox box, double ownPosX, double ownPosY, double otherPosX, double otherPosY) {
+    public Collision collidesWith(HitBox box, double ownPosX, double ownPosY, 
+            double ownPPosX, double ownPPosY, double otherPosX, double otherPosY,
+            double otherPPosX, double otherPPosY) {
 
         Collision c = new Collision();
 
@@ -55,14 +59,37 @@ public class HitBox {
         double top1, top2;
         double bottom1, bottom2;
 
-        left1 = ownPosX+offsetX;
-        left2 = otherPosX + box.getOffsetX();
-        right1 = left1 + width;
-        right2 = left2 + box.getWidth();
-        top1 = ownPosY + offsetY;
-        top2 = otherPosY + box.getOffsetY();
-        bottom1 = top1 + height;
-        bottom2 = top2 + box.getHeight();
+        if (ownPosX > ownPPosX) {
+            left1 = ownPPosX + offsetX;
+            right1 = ownPosX + offsetX + width;
+        } else {
+            left1 = ownPosX + offsetX;
+            right1 = ownPPosX + offsetX + width;
+        }
+
+        if (otherPosX > otherPPosX) {
+            left2 = otherPPosX + box.getOffsetX();
+            right2 = otherPosX + box.getOffsetX() + box.getWidth();
+        } else {
+            left2 = otherPosX + box.getOffsetX();
+            right2 = otherPPosX + box.getOffsetX() + box.getWidth();
+        }
+
+        if (ownPosY > ownPPosY) {
+            top1 = ownPPosY + offsetY;
+            bottom1 = ownPosY + offsetY + height;
+        } else {
+            top1 = ownPosY + offsetY;
+            bottom1 = ownPPosY + offsetY + height;
+        }
+
+        if (otherPosY > otherPPosY) {
+            top2 = otherPPosY + box.getOffsetY();
+            bottom2 = otherPosY + box.getOffsetY() + box.getHeight();
+        } else {
+            top2 = otherPosY + box.getOffsetY();
+            bottom2 = otherPPosY + box.getOffsetY() + box.getHeight();
+        }
 
         if (bottom1 < top2) {
             return c;
