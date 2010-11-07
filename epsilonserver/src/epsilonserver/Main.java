@@ -4,9 +4,9 @@ import epsilonserver.game.ServerGUI;
 
 
 /**
- * Starting class for the Epsilon game, sets any environment variables
+ * Starting class for the Epsilon server, sets any environment variables
  *
- * @author Marius
+ * @author Magnus Mikalsen
  */
 public class Main {
 

@@ -3,8 +3,9 @@ package epsilonserver.entity;
 import java.net.InetAddress;
 
 /**
- * Network player
- * Modified by mm
+ * Network player class containing information about a player.
+ * 
+ * Modified by Magnus Mikalsen
  *
  * @author Marius
  */
@@ -18,9 +19,10 @@ public class NetworkEntity {
     /**
      * Constructor
      *
-     * @param posX
-     * @param posY
-     * @param playerName
+     * @param posX Players X position
+     * @param posY Players Y position
+     * @param playerName Player name
+     * @param updateTime Time of creation
      */
     public NetworkEntity(String playerName, InetAddress ip, String[] posArray, long updateTime) {
         this.posArray = posArray;
@@ -32,34 +34,35 @@ public class NetworkEntity {
     /**
      * Get player name
      *
-     * @return name
+     * @return name Player name
      */
     public synchronized String getPlayerName() {
         return name;
     }
 
     /**
-     * get timeout value
+     * Get the players last update time in milliseconds.
      *
-     * @return timeout
+     * @return lastUpdateTime Last time player was updated in milliseconds
      */
     public synchronized long getLastUpdateTime() {
         return lastUpdateTime;
     }
 
     /**
-     * Get players IP address
+     * Get players IP address.
      *
-     * @return ip
+     * @return ip Players IP address
      */
     public synchronized InetAddress getAddress() {
         return ip;
     }
 
     /**
-     * Set players coordinates
+     * Set new player coordinates and set new update time.
      *
-     * @param posArray
+     * @param posArray Player X and Y coordinates
+     * @param updateTime  Time of update in milliseconds
      */
     public synchronized void setCoordinates(String[] posArray, long updateTime) {
         this.posArray = posArray;
@@ -67,24 +70,22 @@ public class NetworkEntity {
     }
 
     /**
-     *  Get a array with player coordinates
+     * Get a array with player coordinates.
      *
-     * @return posArray
+     * @return posArray Player X and Y coordinates
      */
     public synchronized String[] getCoordinates() {
         return posArray;
     }
 
     /**
-     * Get players name and coordinates
+     * Get a string containing the players name, x and y coordinates
      *
-     * @return playerState
+     * @return playerState String with name, x and y coordinates
      */
     public synchronized String getPlayerState() {
         String playerState = name + " " + posArray[0] + " " + posArray[1] + " ";
         return playerState;
     }
-
-
 
 }

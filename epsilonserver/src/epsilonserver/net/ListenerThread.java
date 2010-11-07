@@ -9,30 +9,34 @@ import java.util.concurrent.BlockingQueue;
 /**
  * ListenerThread creates a thread that listens for incoming packets.
  * When a packet is received it is added to a packet queue.
- * @author mm
+ *
+ * @author Magnus Mikalsen
  */
 public class ListenerThread implements Runnable {
 
-    private BlockingQueue<DatagramPacket> packetQueue;
+    // Queue for incoming datagram packets
+    private BlockingQueue<DatagramPacket> incomingPacketQueue;
+
     private DatagramSocket socket;
     private boolean isRunning = true;
 
     /**
      * Constrctor
-     * @param socket
-     * @param packetQueue
+     *
+     * @param socket Datagram socket
+     * @param packetQueue Incoming packet queue
      */
-    public ListenerThread(DatagramSocket socket, BlockingQueue<DatagramPacket> packetQueue) {
-        this.packetQueue = packetQueue;
+    public ListenerThread(DatagramSocket socket, BlockingQueue<DatagramPacket> incomingPacketQueue) {
+        this.incomingPacketQueue = incomingPacketQueue;
         this.socket = socket;
     }
 
     /**
      * Thread that listens after incoming packets. If a packet is
-     * received it is added to the packet queue.
+     * received it is added to the incoming packet queue.
      */
     public void run() {
-        ServerGUI.getInstance().setLogMessage("Listener thread started");
+        ServerGUI.getInstance().setSystemMessage("Listener thread started");
 
         byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];
         DatagramPacket incomingPacket;
@@ -41,14 +45,13 @@ public class ListenerThread implements Runnable {
             try {
                 incomingPacket = new DatagramPacket(buf, buf.length);
                 socket.receive(incomingPacket);
-                System.out.println("Packet received from " + incomingPacket.getAddress());
-                packetQueue.put(incomingPacket);
+                incomingPacketQueue.put(incomingPacket);
             }
             catch (IOException e) {
-                System.out.println(e.getMessage());
+                ServerGUI.getInstance().setErrorMessage("Problem reading from socket");
             }
             catch (InterruptedException ie) {
-                System.out.println("Could not add packet to queue");
+                ServerGUI.getInstance().setErrorMessage("Could not add incoming packet to packet queue");
             }
         }
         

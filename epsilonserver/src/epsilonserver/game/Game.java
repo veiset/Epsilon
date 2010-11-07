@@ -8,7 +8,7 @@ import java.util.Timer;
  * The game class, coordinates the flow of information
  * between the different threads.
  *
- * Modified by mm
+ * Modified by Magnus Mikalsen
  *
  * @author Marius
  */
@@ -54,19 +54,19 @@ public class Game {
 
     }
 
-
     /**
      * Returns the single object of the game class
      *
-     * @return the single instance of this class
+     * @return game The single instance of this class
      */
     public static Game get() {
         return game;
     }
 
-
     /**
-     * Method used to update the game, mainly used by the updater task
+     * Method used to update the game, mainly used by the updater task.
+     * Sets a new lastUpdateTime, checks for timedout players and updates
+     * registered players.
      */
     public void updateGame() {
 

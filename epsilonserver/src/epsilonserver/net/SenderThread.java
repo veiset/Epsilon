@@ -11,10 +11,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.BlockingQueue;
 
 /**
- * SenderThread creates a thread that gets the registered players position
- * and sends it to the registered clients.
+ * SenderThread creates a thread for sending packets to client.
+ * Also includes functionality for creating datagram packets.
  *
- * @author mm
+ * @author Magnus Mikalsen
  */
 public class SenderThread implements Runnable {
 
@@ -22,12 +22,14 @@ public class SenderThread implements Runnable {
     private EntityHandler eHandler;
     private boolean isRunning = true;
 
+    // Outgoing packet queue
     private BlockingQueue<DatagramPacket> outgoingPacketQueue;
 
     /**
      * Constructor
      *
-     * @param socket
+     * @param socket Datagram socket
+     * @param outgoingPacketQueue Outgoing packet queue
      */
     public SenderThread(DatagramSocket socket, BlockingQueue<DatagramPacket> outgoingPacketQueue) {
         this.socket = socket;
@@ -36,16 +38,19 @@ public class SenderThread implements Runnable {
     }
 
     /**
-     * Thread that gets a packet from the outgoing packet queue and sends it 
+     * Thread that gets a packet from the outgoing packet queue and sends it.
      */
     public void run() {
 
-        ServerGUI.getInstance().setLogMessage("Sender thread started");
+        ServerGUI.getInstance().setSystemMessage("Sender thread started");
 
         while (isRunning) {
 
             try {
+                // Get packet from outgoing packet queue
                 DatagramPacket packet = outgoingPacketQueue.take();
+
+                // Sending packet
                 socket.send(packet);
             }
             catch (InterruptedException e) {
@@ -60,57 +65,69 @@ public class SenderThread implements Runnable {
     }
 
     /**
-     * Add packets to outgoing packet queue
+     * Get a array containing names of all registered players. When the array
+     * is iterated a packet is created for every player. The packet contains
+     * a game state message that contains names and positions of every registered 
+     * player except the player the packet is for, and a hash of the game state
+     * message. The purpose of the hash is to make certain that the message 
+     * is correct when received.
+     * For hashing the SHA algorithm is currently used.
      */
     public synchronized void addToSendQueue() {
         byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];
 
+        // get array of player names
         String[] nameArray = eHandler.getNameArray();
 
         for (int i = 0; i < nameArray.length; i++) {
 
+            // String added to packet
             String sendString = "";
+
+            // Game state message
             String gameStateString = "";
 
+            // Get game state message
             gameStateString = eHandler.getGameStateString(nameArray[i]);
 
+            // Check if game state message is empty
             if (!gameStateString.equals("")) {
 
                 try {
+                    // create a hash of the game state message using SHA algorithm
                     MessageDigest hash = MessageDigest.getInstance("SHA");
                     byte[] hashSum = hash.digest(gameStateString.getBytes());
-                    System.out.println(hashSum.length);
 
+                    // Create a hexadecimal representation of the hash
                     StringBuilder hexString = new StringBuilder();
-
                     for (int j = 0; j < hashSum.length; j++) {
                         hexString.append(Integer.toHexString(0xFF & hashSum[j]));
                     }
 
+                    // Add hash to end of game state string
                     String hashString = hexString.toString();
                     sendString = gameStateString + hashString;
-                    System.out.println("Added hash to outgoing message" + hashString);
                 }
                 catch (NoSuchAlgorithmException e) {
-                    System.out.println("Could not hash outgoing message");
+                    ServerGUI.getInstance().setErrorMessage("Could not find hashing algorithm in sender");
                 }
 
+                // Convert final game state message to bytes
                 buf = sendString.getBytes();
 
-                if(!sendString.equals("")) {
-                    System.out.println(sendString);
-                }
-
+                // Get players IP address
                 InetAddress ip = eHandler.getAddressByName(nameArray[i]);
 
+                // Create datagram packet
                 DatagramPacket outgoingPacket =
                         new DatagramPacket(buf, buf.length, ip, NetworkHandler.CLIENT_PORT);
 
                 try {
+                    // Add packet to outgoing packet queue
                     outgoingPacketQueue.put(outgoingPacket);
                 }
                 catch (InterruptedException e) {
-                    System.out.println("Could not add packet to outgoing packet queue");
+                    ServerGUI.getInstance().setErrorMessage("Could not add packet to ougoing packet queue");
                 }
             }
             

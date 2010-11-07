@@ -6,19 +6,21 @@ import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Test map containing a list of players
+ * Singleton for handling network players. Every network player is
+ * registered here in a concurrent hashmap.
  * 
- * @author mm
+ * @author Magnus Mikalsen
  */
 public class EntityHandler {
 
+    // Concurrent hashmap containing NetworkEntity objects. playername is used as key
     private ConcurrentHashMap<String, NetworkEntity> entityList;
 
     private long tmeoutValue = 5000;
 
     /**
      * Private constructor
-     * Initialize hashmap containing players
+     * Initialize concurrent hashmap containing players
      */
     private EntityHandler() {
         entityList = new ConcurrentHashMap<String, NetworkEntity>();
@@ -43,11 +45,11 @@ public class EntityHandler {
     }
 
     /**
-     * Get a string containing name and position from every
+     * Get a string containing name and position of every
      * registered player except the the one that has a given name
      * 
-     * @param name
-     * @return gs
+     * @param name Player name
+     * @return gameStateString Players name, X and Y coordinates
      */
     public String getGameStateString(String name) {
 
@@ -69,7 +71,7 @@ public class EntityHandler {
     /**
      * Get a array containing ip addresses of all registered players
      *
-     * @return adrArray
+     * @return adrArray Array of IP addresses
      */
     public InetAddress[] getAddressArray() {       
         InetAddress[] adrArray = new InetAddress[entityList.size()];
@@ -90,14 +92,19 @@ public class EntityHandler {
     /**
      * Get the address of a player with a spesified name
      *
-     * @param name
-     * @return address
+     * @param name Player name
+     * @return address Players IP address
      */
-    public  InetAddress getAddressByName(String name) {
+    public InetAddress getAddressByName(String name) {
         InetAddress address = entityList.get(name).getAddress();
         return address;
     }
 
+    /**
+     * Get a array containing names of registered players
+     *
+     * @return nameArray Array of player names
+     */
     public String[] getNameArray() {
         String[] nameArray = new String[entityList.size()];
         nameArray = (String[]) entityList.keySet().toArray(nameArray);
@@ -108,11 +115,11 @@ public class EntityHandler {
     /**
      * Check to se if the player exists in the entity list. if a player is found
      * then the new coordinates are set on the player. If no player is found
-     * then a new player object is created.
+     * then a new NetworkEntity object is created and added to player hashmap.
      *
-     * @param ip
-     * @param name
-     * @param posArray
+     * @param ip IP address of player
+     * @param name Player name
+     * @param posArray Players X and Y coordinates
      */
     public void createIfAbsent(InetAddress ip, String name, String[] posArray) {
         long updateTime = System.currentTimeMillis();
@@ -131,7 +138,7 @@ public class EntityHandler {
      * exceeds the max timeout value, then the player is removed from the
      * entity list.
      *
-     * @param currentTime
+     * @param currentTime Current system time in milliseconds
      */
     public void checkTimeout(long currentTime) {
 
@@ -146,9 +153,7 @@ public class EntityHandler {
                 it.remove();
                 System.out.println("Removed " + n.getPlayerName());
             }
-
         }
-
 
     }
 

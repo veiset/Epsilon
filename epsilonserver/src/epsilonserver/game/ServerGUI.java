@@ -25,8 +25,11 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.text.DefaultCaret;
 
 /**
- * Simple GUI class for the server
- * @author mm
+ * Singleton with a simple GUI for the server.
+ * Servers GUI contains a top menu, start and stop button
+ * and a log window.
+ *
+ * @author Magnus Mikalsen
  */
 public class ServerGUI extends JFrame {
 
@@ -34,24 +37,34 @@ public class ServerGUI extends JFrame {
     private JTextArea logBox = new JTextArea();
 
     /**
-     * Constructor
+     * Private Constructor
+     * Set look of application and initialize components.
      */
     private ServerGUI() {
         setLookAndFeel();
         initComponents();
     }
 
+    /**
+     * Inner class to create a instance of ServerGUI, which is
+     * loaded when SeverGUI.getInstance() method is called or
+     * when INSTANCE is accessed.
+     */
     private static class ServerGUIHolder {
         public static final ServerGUI INSTANCE = new ServerGUI();
     }
 
+    /**
+     * Get instance of ServerGUI.
+     *
+     * @return INSTANCE Instance of ServerGUI
+     */
     public static ServerGUI getInstance() {
         return ServerGUIHolder.INSTANCE;
     }
 
-
     /**
-     * Initialize GUI components
+     * Initialize GUI components.
      */
     private void initComponents() {
         Container contentpane = this.getContentPane();
@@ -69,11 +82,11 @@ public class ServerGUI extends JFrame {
         contentpane.add(mainPanel, BorderLayout.CENTER);
         pack();
 
-        setLogMessage("Server log: ");
+        logBox.append("SERVER LOG:" + "\n");
     }
 
     /**
-     * Add a server config panel
+     * Create a server configuration panel.
      */
     private JComponent makeConfigPanel() {
         JPanel configPanel = new JPanel(new BorderLayout());
@@ -119,7 +132,7 @@ public class ServerGUI extends JFrame {
     }
 
     /**
-     * Add a simple top menu
+     * Create a simple top menu.
      */
     private void makeMenu() {
         JMenuBar menubar = new JMenuBar();
@@ -149,16 +162,28 @@ public class ServerGUI extends JFrame {
     }
 
     /**
-     * Add a message to the text area
-     * @param message
+     * Add a system message to the log box.
+     *
+     * @param message System message
      */
-    public void setLogMessage(String message) {
-        logBox.append(message + "\n");
+    public void setSystemMessage(String message) {
+        logBox.append("SYSTEM:  " + message + "\n");
     }
 
     /**
-     * Set a preferred frame size
-     * @return Dimension
+     * Add a error message to the log box
+     *
+     * @param message Error message
+     */
+    public void setErrorMessage(String message) {
+        logBox.append("ERROR:  " + message + "\n");
+    }
+
+    /**
+     * Set a preferred window size for
+     * the application.
+     *
+     * @return Dimension Size of window
      */
     @Override
     public Dimension getPreferredSize() {
@@ -166,7 +191,7 @@ public class ServerGUI extends JFrame {
     }
 
     /**
-     * Set swing look and feel to Nimbus
+     * Set swing look and feel to Nimbus.
      */
     public void setLookAndFeel() {
         try {
@@ -178,7 +203,7 @@ public class ServerGUI extends JFrame {
             }
     	}
         catch(Exception e) {
-    		setLogMessage("Could not load nimbus look");
+    		setErrorMessage("Could not load nimbus look");
     	}
     }
 
