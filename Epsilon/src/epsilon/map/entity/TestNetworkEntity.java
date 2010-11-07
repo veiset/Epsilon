@@ -77,11 +77,6 @@ public class TestNetworkEntity extends TestPlayerEntity {
     }
 
     @Override
-    public Collision collision(Entity entity) {
-        return new Collision(); // yet to be implemented
-    }
-
-    @Override
     public void collided(Collision c) {
         //
     }

@@ -194,8 +194,6 @@ public class TestPlayerEntity extends MoveableEntity {
         if (c.collidedWith instanceof World || c.collidedWith instanceof TestNetworkEntity) {
 
             // overlap between the two entities in pixels
-            double dlx = c.deltaLeft;
-            double drx = c.deltaRight;
             double dty = c.deltaTop;
             double dby = c.deltaBottom;
 
