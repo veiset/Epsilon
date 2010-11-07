@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package epsilon.map.entity;
 
 import epsilon.game.Collision;
@@ -214,7 +209,9 @@ public class TestPlayerEntity extends MoveableEntity {
             } else if (c.crossedTop && posY > pposY ) {
                 newPosY -= dty;
                 posY = newPosY;
-                touchesGround = true;
+                if (c.collidedWith instanceof World) {
+                    touchesGround = true;
+                }
             } else if (c.crossedBottom && posY < pposY) {
                 newPosY = pposY;
             }

@@ -169,8 +169,6 @@ public class NetworkMap implements Map {
 
         worldstore.checkCollision(playerEntity);
 
-        Entity[] temp2 = renderableEntities.toArray(new Entity[renderableEntities.size()]);
-
         for (int i=0;i<temp.length;i++) {
             temp[i].move();
         }
