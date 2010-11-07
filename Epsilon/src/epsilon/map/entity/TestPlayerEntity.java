@@ -207,9 +207,7 @@ public class TestPlayerEntity extends MoveableEntity {
             } else if (c.crossedTop && posY > pposY ) {
                 newPosY -= dty;
                 posY = newPosY;
-                if (c.collidedWith instanceof World) {
-                    touchesGround = true;
-                }
+                touchesGround = true;
             } else if (c.crossedBottom && posY < pposY) {
                 newPosY = pposY;
             }
