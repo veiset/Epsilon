@@ -48,11 +48,11 @@ public class TestPlayerEntity extends MoveableEntity {
         this.name = name;
 
         // Create the different sprites used in this entity, and assign them hitboxes
-        HitBox[] hitbox = new HitBox[3];
+        HitBox[] hitbox = new HitBox[1];
 
-        hitbox[0] = new HitBox(37, 75, 20, 16);
-        hitbox[1] = new HitBox(45,46,5,29);
-        hitbox[2] = new HitBox(36,28,19,18);
+        hitbox[0] = new HitBox(37, 28, 20, 63);
+//        hitbox[1] = new HitBox(45,46,5,29);
+//        hitbox[2] = new HitBox(36,28,19,18);
 
         rightSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"}, false, hitbox);
         standSpriteRight = new Sprite(new String[]{"/pics/guy01.png"}, false, hitbox);

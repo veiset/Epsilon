@@ -1,26 +1,13 @@
 package epsilon.map.entity;
 
 import epsilon.game.Collision;
-import epsilon.game.Sprite;
 import epsilon.net.NetworkHandler;
-import java.awt.Graphics;
 
 /**
  *
  * @author Marius
  */
-public class TestNetworkEntity extends MoveableEntity {
-
-    // keeps track of when to change pictures in the sprite
-    protected int ticker;
-
-    // the name of the player
-    private String name;
-
-    // the different sprites this entity uses
-    protected Sprite rightSprite;
-    protected Sprite leftSprite;
-    protected boolean facingRight = true;
+public class TestNetworkEntity extends TestPlayerEntity {
 
     /**
      * Sets the name and position variables of the entity
@@ -31,24 +18,7 @@ public class TestNetworkEntity extends MoveableEntity {
      */
     public TestNetworkEntity(double posX, double posY, String playerName) {
 
-        super(posX, posY);
-        ticker = 0;
-
-        this.name = playerName;
-
-        // Create the different sprites used in this entity, and assign them hitboxes
-        HitBox[] hitbox = new HitBox[3];
-
-        hitbox[0] = new HitBox(37, 75, 17, 16);
-        hitbox[1] = new HitBox(45,46,5,29);
-        hitbox[2] = new HitBox(36,28,19,18);
-
-        String[] s = new String[]{"/pics/sheep_enemy.png"};
-
-        rightSprite = new Sprite(s, false, hitbox);
-        leftSprite = new Sprite(s, true, hitbox);
-
-        currentSprite = rightSprite;
+        super(posX, posY, playerName);
 
     }
 
@@ -58,7 +28,7 @@ public class TestNetworkEntity extends MoveableEntity {
         newPosX = posX;
         newPosY = posY;
 
-        double[] d = NetworkHandler.getInstance().getPlayerPositionByName(name);
+        double[] d = NetworkHandler.getInstance().getPlayerPositionByName(super.getName());
         newPosX = d[0];
         newPosY = d[1];
 
@@ -80,6 +50,21 @@ public class TestNetworkEntity extends MoveableEntity {
                 ticker = 0;
                 facingRight = false;
             }
+        } else {
+            if (currentSprite != standSpriteRight && currentSprite != standSpriteLeft) {
+                currentSprite.resetImage();
+                // if the guy was moving right, he should be face right when stopped
+                if (currentSprite == rightSprite) {
+                    currentSprite = standSpriteRight;
+                    standSpriteRight.resetImage();
+                    facingRight = true;
+                } else { // last moved left, animation should be inverted
+                    currentSprite = standSpriteLeft;
+                    standSpriteLeft.resetImage();
+                    facingRight = false;
+                }
+                ticker = 0;
+            }
         }
 
         // go to the next picture in the sprite if it is time
@@ -91,21 +76,6 @@ public class TestNetworkEntity extends MoveableEntity {
         }
     }
 
-    public boolean facingRight() {
-        return facingRight;
-    }
-
-    @Override
-    public double getXRenderPosition () {
-        return posX - 400 + currentSprite.getWidth()/2;
-    }
-
-    @Override
-    public double getYRenderPosition () {
-        //return posY - 300 + currentSprite.getHeight()/2;
-        return 0;
-    }
-
     @Override
     public Collision collision(Entity entity) {
         return new Collision(); // yet to be implemented
@@ -114,32 +84,6 @@ public class TestNetworkEntity extends MoveableEntity {
     @Override
     public void collided(Collision c) {
         //
-    }
-
-    @Override
-    public synchronized void renderHitBox(Graphics g, double x, double y) {
-
-        double posX = this.posX - x;
-        double posY = this.posY - y;
-
-        System.out.println("X: " + posX + " " + this.posX + " Y: " + posY + " " + this.posY);
-
-        g.drawRect((int)posX, (int)posY, this.getWidth(), this.getHeight());
-
-        HitBox[] hitbox = currentSprite.getHitBox();
-
-        for (int i=0;i<hitbox.length;i++) {
-            hitbox[i].draw(g, posX, posY);
-        }
-    }
-
-    /**
-     * Getter method for the name
-     *
-     * @return the name of the player
-     */
-    public String getName() {
-        return name;
     }
 
 }

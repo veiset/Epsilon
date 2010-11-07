@@ -121,7 +121,7 @@ public class NetworkMap implements Map {
             String s = NetworkHandler.getInstance().getNewPlayer();
             double[] d = NetworkHandler.getInstance().getPlayerPositionByName(s);
 
-            NetworkEntity n = new NetworkEntity(d[0], d[1], s);
+            TestNetworkEntity n = new TestNetworkEntity(d[0], d[1], s);
             renderableEntities.add(n);
             moveableEntities.add(n);
             entities.add(n);
