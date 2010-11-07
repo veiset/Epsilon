@@ -1,5 +1,6 @@
 package epsilonserver.entity;
 
+import epsilonserver.game.ServerGUI;
 import java.net.InetAddress;
 import java.util.Collection;
 import java.util.Iterator;
@@ -123,7 +124,10 @@ public class EntityHandler {
      */
     public void createIfAbsent(InetAddress ip, String name, String[] posArray) {
         long updateTime = System.currentTimeMillis();
+
+        // Check if player exists in entity list
         boolean contains = entityList.containsKey(name);
+        
         if (contains) {
             entityList.get(name).setCoordinates(posArray, updateTime);
         }
@@ -151,7 +155,7 @@ public class EntityHandler {
 
             if ((currentTime - lastUpdateTime) > tmeoutValue) {
                 it.remove();
-                System.out.println("Removed " + n.getPlayerName());
+                ServerGUI.getInstance().setSystemMessage("Player " + n.getPlayerName() + " has timed out");
             }
         }
 

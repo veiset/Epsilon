@@ -101,7 +101,6 @@ public class NetworkHandler {
         listener.stopListener();
         parser.stopParser();
         sender.stopSender();
-        socket.close();
         ServerGUI.getInstance().setSystemMessage("Server stopped");
     }
 

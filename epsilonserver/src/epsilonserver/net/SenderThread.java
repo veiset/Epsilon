@@ -57,7 +57,7 @@ public class SenderThread implements Runnable {
                 System.out.println("Could not get packet from outgoing packet queue");
             }
             catch (IOException e) {
-                System.out.println("Problem accessing socket");
+                System.out.println("Problem accessing socket in sender thread");
             }
 
         }
