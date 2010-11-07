@@ -31,7 +31,7 @@ public class NetworkMap implements Map {
     SoundPlayer soundtrack;
 
     // the entity of the player played on this computer
-    PlayerEntity playerEntity;
+    TestPlayerEntity playerEntity;
 
     // the background object that is displayed on the map
     Background bg;
@@ -51,7 +51,7 @@ public class NetworkMap implements Map {
 
         bg = new Background("/pics/bg3.png", 1.25);
 
-        playerEntity = new PlayerEntity(-70, 400, name);
+        playerEntity = new TestPlayerEntity(-70, 400, name);
 
         renderableEntities.add(playerEntity);
         moveableEntities.add(playerEntity);

@@ -30,7 +30,7 @@ public class TestMap implements Map {
     SoundPlayer soundtrack;
 
     // the entity of the player played on this computer. Used for calculating rendering positions
-    PlayerEntity playerEntity;
+    TestPlayerEntity playerEntity;
 
     // the background object used on this map
     Background bg;
@@ -51,7 +51,7 @@ public class TestMap implements Map {
 
         bg = new Background("/pics/bg3.png", 1.25);
 
-        PlayerEntity test = new PlayerEntity(-70, 400, "");
+        TestPlayerEntity test = new TestPlayerEntity(-70, 400, "");
         playerEntity = test;
 
         worldstore.add(new Floor_1(-500, 525));

@@ -14,9 +14,6 @@ public class TestNetworkEntity extends MoveableEntity {
     // keeps track of when to change pictures in the sprite
     protected int ticker;
 
-    // used for checking if the entity can jump
-    private boolean touchesGround;
-
     // the name of the player
     private String name;
 
@@ -24,7 +21,6 @@ public class TestNetworkEntity extends MoveableEntity {
     protected Sprite rightSprite;
     protected Sprite leftSprite;
     protected boolean facingRight = true;
-    private boolean isDead = false;
 
     /**
      * Sets the name and position variables of the entity
@@ -37,7 +33,6 @@ public class TestNetworkEntity extends MoveableEntity {
 
         super(posX, posY);
         ticker = 0;
-        touchesGround = false;
 
         this.name = playerName;
 

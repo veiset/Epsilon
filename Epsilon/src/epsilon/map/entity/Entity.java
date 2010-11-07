@@ -131,22 +131,27 @@ public abstract class Entity {
     public Collision collision(Entity toCheckAgainst) {
         Collision c = new Collision();
 
-        double x = 0;
-        double y = 0;
-        double px = 0;
-        double py = 0;
+        double x = toCheckAgainst.getXPosition();;
+        double y = toCheckAgainst.getYPosition();
+        double px = x;
+        double py = y;
+
+        double ox = this.posX, oy = this.posY, opx = ox, opy = oy;
 
         if (toCheckAgainst instanceof MoveableEntity) {
             x = ((MoveableEntity)toCheckAgainst).getNewXPosition();
             y = ((MoveableEntity)toCheckAgainst).getNewYPosition();
             px = ((MoveableEntity)toCheckAgainst).getXPosition();
             py = ((MoveableEntity)toCheckAgainst).getYPosition();
-        } else {
-            x = toCheckAgainst.getXPosition();
-            y = toCheckAgainst.getYPosition();
-            px = x;
-            py = y;
         }
+
+        if (this instanceof MoveableEntity) {
+            ox = ((MoveableEntity)this).getNewXPosition();
+            oy = ((MoveableEntity)this).getNewYPosition();
+            opx = this.posX;
+            opy = this.posY;
+        }
+
 
         double left1, left2;
         double right1, right2;
@@ -158,13 +163,13 @@ public abstract class Entity {
         // all offsets should come from the incomming object, and not
         // some magical numbers I made up.
 
-        left1 = this.posX;
+        left1 = ox;
         left2 = x;
-        right1 = this.posX + this.getWidth();
+        right1 = ox + this.getWidth();
         right2 = x + toCheckAgainst.getWidth();
-        top1 = this.posY;
+        top1 = oy;
         top2 = y;
-        bottom1 = this.posY + this.getHeight();
+        bottom1 = oy + this.getHeight();
         bottom2 = y + toCheckAgainst.getHeight();
 
         if (bottom1 < top2) {
@@ -188,7 +193,7 @@ public abstract class Entity {
 
         for(HitBox h:this.getHitbox()) {
             for(HitBox k:toCheckAgainst.getHitbox()) {
-                temp = h.collidesWith(k, posX, posY, pposX, pposY, x, y, px, py);
+                temp = h.collidesWith(k, ox, oy, opx, opy, x, y, px, py);
                 if (temp.collided) {
                     c.collided = true;
 
