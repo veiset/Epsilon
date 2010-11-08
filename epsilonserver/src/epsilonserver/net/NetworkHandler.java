@@ -75,13 +75,10 @@ public class NetworkHandler {
             InetAddress bindIP = getFirstNonLoopbackAddress(true, false);
 
             socket = new DatagramSocket(SERVER_PORT, bindIP);
-            ServerGUI.getInstance().setSystemMessage("Socket created on interface " + InetAddress.getLocalHost());
+            ServerGUI.getInstance().setSystemMessage("Socket created on interface " + bindIP);
         }
         catch (SocketException se) {
             ServerGUI.getInstance().setErrorMessage("Could not create socket");
-        }
-        catch (UnknownHostException ue) {
-            ServerGUI.getInstance().setErrorMessage("Problem with local IP address");
         }
 
         listener = new ListenerThread(socket, incomingPacketQueue);
@@ -113,6 +110,7 @@ public class NetworkHandler {
 
     /**
      * iterate through all addresses on host and return first non-loopback address.
+     * This is mainly for linux compatibility
      *
      * @param preferIpv4 Search for IPv4 address
      * @param preferIPv6 Search for IPv6 address

@@ -50,14 +50,14 @@ public class SenderThread implements Runnable {
                 // Get packet from outgoing packet queue
                 DatagramPacket packet = outgoingPacketQueue.take();
 
-                // Sending packet
+                // Send packet
                 socket.send(packet);
             }
             catch (InterruptedException e) {
-                System.out.println("Could not get packet from outgoing packet queue");
+                System.out.println("Problem accessing socket in sender thread");
             }
             catch (IOException e) {
-                System.out.println("Problem accessing socket in sender thread");
+                System.out.println("Could not get packet from outgoing packet queue");
             }
 
         }
@@ -109,7 +109,7 @@ public class SenderThread implements Runnable {
                     sendString = gameStateString + hashString;
                 }
                 catch (NoSuchAlgorithmException e) {
-                    ServerGUI.getInstance().setErrorMessage("Could not find hashing algorithm in sender");
+                    ServerGUI.getInstance().setErrorMessage("Could not find hashing algorithm in sender thread");
                 }
 
                 // Convert final game state message to bytes
