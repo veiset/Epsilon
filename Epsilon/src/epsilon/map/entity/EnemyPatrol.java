@@ -3,6 +3,7 @@ package epsilon.map.entity;
 import epsilon.game.Collision;
 import epsilon.game.Physics;
 import epsilon.game.Sprite;
+import java.awt.Graphics;
 
 /**
  * Artificial intelligence for a simple enemy-patrol. This enemy walks right
@@ -18,6 +19,9 @@ public class EnemyPatrol extends Enemy {
     private Sprite spriteFacingLeft;
     private Sprite spriteFacingRight;
     private boolean touchesGround;
+    private boolean isDead = false;
+    private int health = 4;
+    private int speed = 0;
 
     /**
      * EnemyPatrol with starting position, enemy walking 100 pixels to the left
@@ -29,7 +33,9 @@ public class EnemyPatrol extends Enemy {
     public EnemyPatrol(int posX, int posY) {
         super(posX, posY);
         HitBox[] hitbox = new HitBox[1];
-        hitbox[0] = new HitBox(0, 0, 100, 100);
+
+        hitbox[0] = new HitBox(10, 10, 80, 75);
+
         spriteFacingLeft = new Sprite(new String[]{"/pics/sheep_enemy.png"}, false, hitbox);
         spriteFacingRight = new Sprite(new String[]{"/pics/sheep_enemy.png"}, true, hitbox);
         currentSprite = spriteFacingRight;
@@ -49,7 +55,7 @@ public class EnemyPatrol extends Enemy {
             double dby = c.deltaBottom;
 
             // movement if this entity collides on the left side of something
-            if (c.crossedLeft && pposX < posX && dty > 8 && dby > 6) {
+            if (c.crossedLeft && pposX < posX && dty > 20 && dby > 20) {
                 facingRight = true;
             }
 
@@ -69,7 +75,13 @@ public class EnemyPatrol extends Enemy {
                 newPosY += dby;
             }
         } else if (c.collidedWith instanceof Shot) {
-            System.out.println(" You should be dead! ");
+            health -= 1;
+            if (health == 0) {
+                isDead = true;
+                System.out.println("Enemy down!");
+            } else {
+                speed += 1;
+            }
         }
     }
 
@@ -78,18 +90,20 @@ public class EnemyPatrol extends Enemy {
 
         // applying gravity!
 
-        if (posY < 600 && !touchesGround) {
+        if (!touchesGround) {
             double temp = Physics.calculateGravity(posY, pposY, 16);
             newPosY = posY - temp;
         }
 
-        // very basic AI
-        if (facingRight) {
-            newPosX = posX -1;
-            currentSprite = spriteFacingLeft;
-        } else if (!facingRight) {
-            newPosX = posX +1;
-            currentSprite = spriteFacingRight;
+        if (!isDead) {
+            // very basic AI
+            if (facingRight) {
+                newPosX = posX - (1+speed);
+                currentSprite = spriteFacingLeft;
+            } else if (!facingRight) {
+                newPosX = posX + (1+speed);
+                currentSprite = spriteFacingRight;
+            }
         }
     }
 
@@ -97,5 +111,23 @@ public class EnemyPatrol extends Enemy {
     public boolean facingRight() {
         return true;
     }
-    
+
+    @Override
+    public void renderHitBox(Graphics g, double x, double y) {
+
+        double posX = this.posX - x;
+        double posY = this.posY - y;
+
+        //g.drawRect((int)posX, (int)posY, this.getWidth(), this.getHeight());
+
+        HitBox[] hitbox = currentSprite.getHitBox();
+
+        for (int i = 0; i < hitbox.length; i++) {
+            hitbox[i].draw(g, posX, posY);
+        }
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
 }

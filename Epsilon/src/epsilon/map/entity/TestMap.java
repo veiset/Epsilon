@@ -1,5 +1,6 @@
 package epsilon.map.entity;
 
+import epsilon.game.Collision;
 import epsilon.game.Input;
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
@@ -24,19 +25,14 @@ public class TestMap implements Map {
     ArrayList<Entity> entities;
     ArrayList<Shot> shots;
     WorldStore worldstore;
-
     // the soundtrack that is played continuously while playing the map
     SoundPlayer soundtrack;
-
     // the entity of the player played on this computer. Used for calculating rendering positions
     TestPlayerEntity playerEntity;
-
     // the background object used on this map
     Background bg;
-
     // enemies
     Enemy enemy;
-
     private int shotCooldown = 0;
 
     /**
@@ -64,17 +60,19 @@ public class TestMap implements Map {
             temp[i].render(g, delta, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
             temp[i].renderHitBox(g, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
         }
+        enemy.renderHitBox(g, enemy.getXRenderPosition(), enemy.getYRenderPosition());
 
     }
 
     public void update() {
 
-        if (shotCooldown>0) {
+        // shots! refactor me!
+        if (shotCooldown > 0) {
             shotCooldown--;
         }
         if (Input.get().attack() && shotCooldown == 0) {
             //sound.close();
-            Shot shot = new Shot(playerEntity.getXPosition(),playerEntity.getYPosition(),playerEntity.facingRight());
+            Shot shot = new Shot(playerEntity.getXPosition(), playerEntity.getYPosition(), playerEntity.facingRight());
             moveableEntities.add(shot);
             renderableEntities.add(shot);
             shots.add(shot);
@@ -88,13 +86,22 @@ public class TestMap implements Map {
         // checking each shot if it has traveled its distance
         for (int i = 0; i < tempshot.length; i++) {
             Shot shot = tempshot[i];
-            if (shot.distanceDone()) {
+
+            Collision c = shot.collision(enemy);
+            if (c.collided) {
+                enemy.collided(c);
+                shots.remove(shot);
+                renderableEntities.remove(shot);
+                moveableEntities.remove(shot);
+            } else if (shot.distanceDone()) {
                 // removing the shot from the lists
                 shots.remove(shot);
                 renderableEntities.remove(shot);
                 moveableEntities.remove(shot);
             }
         }
+
+        // end of shot logic
 
         MoveableEntity[] temp = new MoveableEntity[moveableEntities.size()];
         moveableEntities.toArray(temp);
@@ -106,7 +113,7 @@ public class TestMap implements Map {
         worldstore.checkCollision(playerEntity);
         worldstore.checkCollision(enemy);
 
-        for (int i=0;i<temp.length;i++) {
+        for (int i = 0; i < temp.length; i++) {
             temp[i].move();
         }
     }
@@ -147,7 +154,7 @@ public class TestMap implements Map {
         TestPlayerEntity test = new TestPlayerEntity(-70, 400, "");
         playerEntity = test;
 
-        enemy = new EnemyPatrol(-300,100);
+        enemy = new EnemyPatrol(-300, 100);
         renderableEntities.add(enemy);
         moveableEntities.add(enemy);
         entities.add(enemy);
@@ -160,7 +167,7 @@ public class TestMap implements Map {
         String filename = "/sound/zabutom.lets.shooting.mp3";
         soundtrack = new SoundPlayer(filename);
         soundtrack.play();
-        
+
     }
 
     private void initialiseStatic() {
@@ -205,6 +212,4 @@ public class TestMap implements Map {
         worldstore.add(new Floor_1(500, 495));
 
     }
-
-
 }

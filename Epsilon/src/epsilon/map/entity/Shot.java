@@ -55,15 +55,7 @@ public class Shot extends MoveableEntity {
         g.drawRect((int) renderPosX, (int) renderPosY, this.getWidth(), this.getHeight());
     }
 
-    @Override
-    public Collision collision(Entity entity) {
-        return new Collision();
-    }
 
-    @Override
-    public void collided(Collision c) {
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
 
     @Override
     public void calculateMovement() {
@@ -88,4 +80,10 @@ public class Shot extends MoveableEntity {
     public boolean distanceDone() {
         return (distanceTravled > distanceMax);
     }
+
+    @Override
+    public void collided(Collision c) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

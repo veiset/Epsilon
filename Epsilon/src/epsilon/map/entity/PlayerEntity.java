@@ -192,7 +192,7 @@ public class PlayerEntity extends MoveableEntity {
     @Override
     public void collided(Collision c) {
 
-        if (c.collidedWith instanceof World || c.collidedWith instanceof NetworkEntity) {
+        if (c.collidedWith instanceof World || c.collidedWith instanceof NetworkEntity || c.collidedWith instanceof Enemy) {
 
             // overlap between the two entities in pixels
             double dlx = c.deltaLeft;
