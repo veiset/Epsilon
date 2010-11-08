@@ -89,8 +89,8 @@ public class PacketParser implements Runnable {
                 if (calculatedHash.equals(incomingHashToken)) {
 
                     // Names of players not in packet message
-                    HashSet<String> p = (HashSet<String>) playerStateList.keySet();
-                    HashSet<String> playersToRemove = (HashSet) p.clone();
+                    HashSet<String> playersToRemove = new HashSet<String>(playerStateList.keySet());
+                    playersToRemove = (HashSet<String>) playersToRemove.clone();
 
                     // Iterate through substrings in the packet message
                     for (int i = 0; i < strArray.length-1; i += 3) {
