@@ -4,6 +4,7 @@ import java.net.DatagramPacket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
@@ -88,7 +89,8 @@ public class PacketParser implements Runnable {
                 if (calculatedHash.equals(incomingHashToken)) {
 
                     // Names of players not in packet message
-                    Set playersToRemove = playerStateList.keySet();
+                    HashSet<String> p = (HashSet<String>) playerStateList.keySet();
+                    HashSet<String> playersToRemove = (HashSet) p.clone();
 
                     // Iterate through substrings in the packet message
                     for (int i = 0; i < strArray.length-1; i += 3) {
@@ -126,6 +128,8 @@ public class PacketParser implements Runnable {
                         }
 
                     }
+
+                    System.out.println(playersToRemove.size());
 
                     // Remove players we dident receive information about
                     Iterator it = playersToRemove.iterator();
