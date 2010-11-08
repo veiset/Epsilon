@@ -17,6 +17,7 @@ public class EnemyPatrol extends Enemy {
     private HitBox[] hitbox;
     private Sprite spriteFacingLeft;
     private Sprite spriteFacingRight;
+    private boolean touchesGround;
 
     /**
      * EnemyPatrol with starting position, enemy walking 100 pixels to the left
@@ -39,28 +40,55 @@ public class EnemyPatrol extends Enemy {
 
     @Override
     public void collided(Collision c) {
+        if (c.collidedWith instanceof World || c.collidedWith instanceof NetworkEntity || c.collidedWith instanceof PlayerEntity) {
+
+            // overlap between the two entities in pixels
+            double dlx = c.deltaLeft;
+            double drx = c.deltaRight;
+            double dty = c.deltaTop;
+            double dby = c.deltaBottom;
+
+            // movement if this entity collides on the left side of something
+            if (c.crossedLeft && pposX < posX && dty > 8 && dby > 6) {
+                facingRight = true;
+            }
+
+            // movement if this entity collides on the right side of something
+            if (c.crossedRight && pposX > posX && dty > 8 && dby > 6) {
+                facingRight = false;
+            }
+
+            // movement if it collides on the bottom of this entity
+            if (c.crossedTop && posY > pposY && (drx > 8 && dlx > 8)) {
+                newPosY -= dty;
+                touchesGround = true;
+            }
+
+            // movement if it collides on the top of this entity
+            if (c.crossedBottom && posY < pposY && (drx > 8 && dlx > 8)) {
+                newPosY += dby;
+            }
+        } else if (c.collidedWith instanceof Shot) {
+            System.out.println(" You should be dead! ");
+        }
     }
 
     @Override
     public void calculateMovement() {
 
         // applying gravity!
-        if (posY < 480) {
+
+        if (posY < 600 && !touchesGround) {
             double temp = Physics.calculateGravity(posY, pposY, 16);
             newPosY = posY - temp;
         }
 
         // very basic AI
-        if (facingRight && (posX < startXpos + 100)) {
-            newPosX = posX + 1;
-        } else if (facingRight) {
-            facingRight = false;
+        if (facingRight) {
+            newPosX = posX -1;
             currentSprite = spriteFacingLeft;
-        }
-        if (!facingRight && (posX > startXpos - 100)) {
-            newPosX = posX - 1;
         } else if (!facingRight) {
-            facingRight = true;
+            newPosX = posX +1;
             currentSprite = spriteFacingRight;
         }
     }
@@ -69,4 +97,5 @@ public class EnemyPatrol extends Enemy {
     public boolean facingRight() {
         return true;
     }
+    
 }

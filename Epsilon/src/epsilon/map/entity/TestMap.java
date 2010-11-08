@@ -34,6 +34,9 @@ public class TestMap implements Map {
     // the background object used on this map
     Background bg;
 
+    // enemies
+    Enemy enemy;
+
     private int shotCooldown = 0;
 
     /**
@@ -101,6 +104,7 @@ public class TestMap implements Map {
         }
 
         worldstore.checkCollision(playerEntity);
+        worldstore.checkCollision(enemy);
 
         for (int i=0;i<temp.length;i++) {
             temp[i].move();
@@ -143,7 +147,7 @@ public class TestMap implements Map {
         TestPlayerEntity test = new TestPlayerEntity(-70, 400, "");
         playerEntity = test;
 
-        Enemy enemy = new EnemyPatrol(-300,100);
+        enemy = new EnemyPatrol(-300,100);
         renderableEntities.add(enemy);
         moveableEntities.add(enemy);
         entities.add(enemy);
