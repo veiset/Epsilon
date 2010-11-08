@@ -25,9 +25,9 @@ public class NetworkHandler {
     public static final int CLIENT_PORT = 6002;
     public static final int BUFFER_SIZE = 256;
 
-    private PacketParser parser;
-    private ListenerThread listener;
-    private SenderThread sender;
+    private PacketParser parser = null;
+    private ListenerThread listener = null;
+    private SenderThread sender = null;
 
     // Incoming packet queue
     private BlockingQueue<DatagramPacket> incomingPacketQueue;
@@ -83,9 +83,11 @@ public class NetworkHandler {
             //se.printStackTrace();
         }
 
-        listener = new ListenerThread(socket, incomingPacketQueue);
-        parser = new PacketParser(incomingPacketQueue);
-        sender = new SenderThread(socket, outgoingPacketQueue);
+        if (listener == null && parser == null && sender == null) {
+            listener = new ListenerThread(socket, incomingPacketQueue);
+            parser = new PacketParser(incomingPacketQueue);
+            sender = new SenderThread(socket, outgoingPacketQueue);
+        }
 
         // start network threads
         new Thread(listener).start();
@@ -100,10 +102,7 @@ public class NetworkHandler {
         listener.stopListener();
         parser.stopParser();
         sender.stopSender();
-        if (socket.isClosed()) {
-            System.out.println("Socket is closed");
-            //socket = null;
-        }
+        socket.close();
         ServerGUI.getInstance().setSystemMessage("Server stopped");
     }
 

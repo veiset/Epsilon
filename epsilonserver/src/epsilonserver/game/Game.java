@@ -36,6 +36,15 @@ public class Game {
         // initialise LoopTimer
         lastUpdateTime = System.currentTimeMillis();
     }
+    
+   /**
+     * Returns the single object of the game class
+     *
+     * @return game The single instance of this class
+     */
+    public static Game get() {
+        return game;
+    }
 
     /**
      * Startup method. Starts the gameupdating
@@ -55,12 +64,12 @@ public class Game {
     }
 
     /**
-     * Returns the single object of the game class
-     *
-     * @return game The single instance of this class
+     * Stop the server and clear all players.
      */
-    public static Game get() {
-        return game;
+    public void stop() {
+        netHandler.stopServer();
+        eHandler.clearPlayers();
+        u.stopGameUpdater();
     }
 
     /**
@@ -74,14 +83,6 @@ public class Game {
         eHandler.checkTimeout(lastUpdateTime);
         netHandler.updateClients();
 
-    }
-
-    /**
-     * Stop the server and clear all players.
-     */
-    public void stop() {
-        netHandler.stopServer();
-        eHandler.clearPlayers();
     }
 
 }

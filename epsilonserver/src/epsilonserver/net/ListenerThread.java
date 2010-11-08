@@ -62,7 +62,6 @@ public class ListenerThread implements Runnable {
      */
     public void stopListener() {
         isRunning = false;
-        socket.close();
     }
 
 }
