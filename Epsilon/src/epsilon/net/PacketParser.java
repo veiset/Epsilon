@@ -101,10 +101,6 @@ public class PacketParser implements Runnable {
                         // this is jusst a redundant check
                         if (!pname.equals(this.name)) {
 
-                            // Remove player name from the list of
-                            // players to remove
-                            playersToRemove.remove(pname);
-
                             double[] posArray = new double[2];
                             try {
                                 posArray[0] = Double.valueOf(posX);
@@ -121,6 +117,12 @@ public class PacketParser implements Runnable {
 
                             // Add player name and state to player state list
                             playerStateList.put(pname, posArray);
+
+
+                            // Remove player name from the list of
+                            // players to remove
+                            playersToRemove.remove(pname);
+
                         }
 
                     }
