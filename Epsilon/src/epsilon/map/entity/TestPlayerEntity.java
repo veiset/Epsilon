@@ -30,6 +30,7 @@ public class TestPlayerEntity extends MoveableEntity {
     protected Sprite leftSprite;
     protected Sprite standSpriteLeft;
     protected boolean facingRight = true;
+
     private boolean isDead = false;
 
     /**
@@ -51,35 +52,11 @@ public class TestPlayerEntity extends MoveableEntity {
         HitBox[] hitbox = new HitBox[1];
 
         hitbox[0] = new HitBox(37, 28, 20, 63);
-//        hitbox[1] = new HitBox(45,46,5,29);
-//        hitbox[2] = new HitBox(36,28,19,18);
 
         rightSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"}, false, hitbox);
         standSpriteRight = new Sprite(new String[]{"/pics/guy01.png"}, false, hitbox);
         leftSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"},true, hitbox);
         standSpriteLeft = new Sprite(new String[]{"/pics/guy01.png"},true, hitbox);
-
-        currentSprite = standSpriteRight;
-    }
-
-    public TestPlayerEntity(double posX,double posY, String name, String[] pics) {
-        super(posX, posY);
-        ticker = 0;
-        touchesGround = false;
-
-        this.name = name;
-
-        // Create the different sprites used in this entity, and assign them hitboxes
-        HitBox[] hitbox = new HitBox[3];
-
-        hitbox[0] = new HitBox(37, 75, 17, 16);
-        hitbox[1] = new HitBox(45,46,5,29);
-        hitbox[2] = new HitBox(36,28,19,18);
-
-        rightSprite = new Sprite(pics, false, hitbox);
-        standSpriteRight = new Sprite(pics, false, hitbox);
-        leftSprite = new Sprite(pics,true, hitbox);
-        standSpriteLeft = new Sprite(pics,true, hitbox);
 
         currentSprite = standSpriteRight;
     }
@@ -212,7 +189,7 @@ public class TestPlayerEntity extends MoveableEntity {
                 newPosY = pposY;
             }
         } else if (c.collidedWith instanceof Shot) {
-            System.out.println(" You should be dead! ");
+            isDead = true;
         }
     }
 
@@ -235,6 +212,10 @@ public class TestPlayerEntity extends MoveableEntity {
         pposY = origPosY;
 
         isDead = false;
+    }
+
+    public boolean isDead() {
+         return isDead;
     }
 
 }

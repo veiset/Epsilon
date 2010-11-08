@@ -35,4 +35,6 @@ public interface Map {
      */
     public void resetPlayerPosition();
 
+    public void reset();
+
 }

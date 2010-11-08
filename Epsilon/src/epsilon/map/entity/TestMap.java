@@ -41,69 +41,10 @@ public class TestMap implements Map {
      */
     public TestMap() {
 
-        renderableEntities = new ArrayList<Entity>();
-        moveableEntities = new ArrayList<MoveableEntity>();
         entities = new ArrayList<Entity>();
-        shots = new ArrayList<Shot>();
 
-        worldstore = new WorldStore(50);
-
-        bg = new Background("/pics/bg3.png", 1.25);
-
-        TestPlayerEntity test = new TestPlayerEntity(-70, 400, "");
-        playerEntity = test;
-
-        worldstore.add(new Floor_1(-500, 525));
-        worldstore.add(new Floor_1(-500, 565));
-        worldstore.add(new Floor_1(-450, 565));
-        worldstore.add(new Floor_1(-400, 565));
-        worldstore.add(new Floor_1(-350, 565));
-        worldstore.add(new Floor_1(-300, 565));
-        worldstore.add(new Floor_1(-250, 565));
-        worldstore.add(new Floor_1(-200, 565));
-        worldstore.add(new Floor_1(-150, 565));
-        worldstore.add(new Floor_1(-100, 565));
-        worldstore.add(new Floor_1(-50, 565));
-        worldstore.add(new Floor_1(-50, 525));
-
-
-        worldstore.add(new Floor_1(1000, 565));
-        worldstore.add(new Floor_1(1050, 565));
-        worldstore.add(new Floor_1(1100, 565));
-        worldstore.add(new Floor_1(1150, 565));
-        worldstore.add(new Floor_1(1200, 565));
-        worldstore.add(new Floor_1(1250, 565));
-        worldstore.add(new Floor_1(1300, 565));
-        worldstore.add(new Floor_1(1350, 565));
-        worldstore.add(new Floor_1(1400, 565));
-        worldstore.add(new Floor_1(1450, 565));
-
-        worldstore.add(new Floor_1(80, 505));
-
-        worldstore.add(new Floor_1(250, 415));
-        worldstore.add(new Floor_1(300, 415));
-
-        worldstore.add(new Floor_1(500, 385));
-        worldstore.add(new Floor_1(550, 385));
-
-
-        worldstore.add(new Floor_1(350, 455));
-        worldstore.add(new Floor_1(500, 495));
-
-        Enemy enemy = new EnemyPatrol(-300,100);
-        renderableEntities.add(enemy);
-        moveableEntities.add(enemy);
-        entities.add(enemy);
-
-
-        renderableEntities.add(test);
-        moveableEntities.add(test);
-        entities.add(test);
-
-        // Test MP3 playing
-        String filename = "/sound/zabutom.lets.shooting.mp3";
-        soundtrack = new SoundPlayer(filename);
-        soundtrack.play();
+        initialiseStatic();
+        initialiseNonStatic();
 
     }
 
@@ -173,5 +114,93 @@ public class TestMap implements Map {
     public void resetPlayerPosition() {
         playerEntity.resetPosition();
     }
+
+    public void reset() {
+        soundtrack.close();
+        resetNonStatic();
+        initialiseNonStatic();
+    }
+
+    private void resetNonStatic() {
+        renderableEntities = null;
+        moveableEntities = null;
+        entities = null;
+        shots = null;
+
+        bg = null;
+        playerEntity = null;
+        soundtrack = null;
+    }
+
+    private void initialiseNonStatic() {
+
+        renderableEntities = new ArrayList<Entity>();
+        moveableEntities = new ArrayList<MoveableEntity>();
+        shots = new ArrayList<Shot>();
+
+        bg = new Background("/pics/bg3.png", 1.25);
+
+        TestPlayerEntity test = new TestPlayerEntity(-70, 400, "");
+        playerEntity = test;
+
+        Enemy enemy = new EnemyPatrol(-300,100);
+        renderableEntities.add(enemy);
+        moveableEntities.add(enemy);
+        entities.add(enemy);
+
+        renderableEntities.add(test);
+        moveableEntities.add(test);
+        entities.add(test);
+
+        // Test MP3 playing
+        String filename = "/sound/zabutom.lets.shooting.mp3";
+        soundtrack = new SoundPlayer(filename);
+        soundtrack.play();
+        
+    }
+
+    private void initialiseStatic() {
+
+        worldstore = new WorldStore(50);
+
+        worldstore.add(new Floor_1(-500, 525));
+        worldstore.add(new Floor_1(-500, 565));
+        worldstore.add(new Floor_1(-450, 565));
+        worldstore.add(new Floor_1(-400, 565));
+        worldstore.add(new Floor_1(-350, 565));
+        worldstore.add(new Floor_1(-300, 565));
+        worldstore.add(new Floor_1(-250, 565));
+        worldstore.add(new Floor_1(-200, 565));
+        worldstore.add(new Floor_1(-150, 565));
+        worldstore.add(new Floor_1(-100, 565));
+        worldstore.add(new Floor_1(-50, 565));
+        worldstore.add(new Floor_1(-50, 525));
+
+
+        worldstore.add(new Floor_1(1000, 565));
+        worldstore.add(new Floor_1(1050, 565));
+        worldstore.add(new Floor_1(1100, 565));
+        worldstore.add(new Floor_1(1150, 565));
+        worldstore.add(new Floor_1(1200, 565));
+        worldstore.add(new Floor_1(1250, 565));
+        worldstore.add(new Floor_1(1300, 565));
+        worldstore.add(new Floor_1(1350, 565));
+        worldstore.add(new Floor_1(1400, 565));
+        worldstore.add(new Floor_1(1450, 565));
+
+        worldstore.add(new Floor_1(80, 505));
+
+        worldstore.add(new Floor_1(250, 415));
+        worldstore.add(new Floor_1(300, 415));
+
+        worldstore.add(new Floor_1(500, 385));
+        worldstore.add(new Floor_1(550, 385));
+
+
+        worldstore.add(new Floor_1(350, 455));
+        worldstore.add(new Floor_1(500, 495));
+
+    }
+
 
 }

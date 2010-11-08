@@ -9,6 +9,8 @@ import epsilon.net.NetworkHandler;
  */
 public class TestNetworkEntity extends TestPlayerEntity {
 
+    private boolean exist = true;
+
     /**
      * Sets the name and position variables of the entity
      *
@@ -29,10 +31,12 @@ public class TestNetworkEntity extends TestPlayerEntity {
         newPosY = posY;
 
         double[] d = NetworkHandler.getInstance().getPlayerStateByName(super.getName());
+        if (d == null) {
+            exist = false;
+            return;
+        }
         newPosX = d[0];
         newPosY = d[1];
-
-        //System.out.println("posX: " + newPosX + " posY: " + newPosY);
 
         if (newPosX > posX) {
             if (currentSprite != rightSprite) {
@@ -79,6 +83,10 @@ public class TestNetworkEntity extends TestPlayerEntity {
     @Override
     public void collided(Collision c) {
         //
+    }
+
+    public boolean exists() {
+        return exist;
     }
 
 }

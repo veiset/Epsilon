@@ -367,4 +367,8 @@ public class WorldTestMap implements Map {
     public void resetPlayerPosition() {
         playerEntity.resetPosition();
     }
+
+    public void reset() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

@@ -209,12 +209,27 @@ public class Game extends Canvas {
         menu = false;
     }
 
+    /**
+     *
+     *
+     * @return
+     */
     public double[] getPlayerPosition() {
         return map.getPlayerPosition();
     }
 
+    /**
+     * 
+     */
     public void resetPlayerPosition() {
         map.resetPlayerPosition();
+    }
+
+    /**
+     * 
+     */
+    public void restart() {
+
     }
 
 }

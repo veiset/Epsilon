@@ -161,6 +161,13 @@ public class NetworkMap implements Map {
 
         for (int i = 0; i < temp.length; i++) {
             temp[i].calculateMovement();
+
+            if (temp[i] instanceof TestNetworkEntity && !((TestNetworkEntity)temp[i]).exists()) {
+                moveableEntities.remove(temp[i]);
+                renderableEntities.remove(temp[i]);
+                entities.remove(temp[i]);
+            }
+
             c = temp[i].collision(playerEntity);
             if (c.collided) {
                 playerEntity.collided(c);
@@ -183,6 +190,10 @@ public class NetworkMap implements Map {
 
     public void resetPlayerPosition() {
         playerEntity.resetPosition();
+    }
+
+    public void reset() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
