@@ -129,8 +129,6 @@ public class PacketParser implements Runnable {
 
                     }
 
-                    System.out.println(playersToRemove.size());
-
                     // Remove players we dident receive information about
                     Iterator it = playersToRemove.iterator();
                     while (it.hasNext()) {
