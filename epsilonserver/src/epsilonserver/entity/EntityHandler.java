@@ -134,6 +134,7 @@ public class EntityHandler {
         else {
             NetworkEntity n = new NetworkEntity(name, ip, posArray, updateTime);
             entityList.put(name, n);
+            ServerGUI.getInstance().setSystemMessage("Player " + name + " has connected");
         }
     }
 
@@ -159,6 +160,13 @@ public class EntityHandler {
             }
         }
 
+    }
+
+    /**
+     * Remove all network entites.
+     */
+    public void clearPlayers() {
+        entityList.clear();
     }
 
 }

@@ -54,7 +54,6 @@ public class ListenerThread implements Runnable {
                 ServerGUI.getInstance().setErrorMessage("Could not add incoming packet to packet queue");
             }
         }
-        socket.close();
         
     }
 
@@ -63,6 +62,7 @@ public class ListenerThread implements Runnable {
      */
     public void stopListener() {
         isRunning = false;
+        socket.close();
     }
 
 }

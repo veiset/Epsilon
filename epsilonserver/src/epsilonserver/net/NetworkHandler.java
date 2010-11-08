@@ -79,6 +79,8 @@ public class NetworkHandler {
         }
         catch (SocketException se) {
             ServerGUI.getInstance().setErrorMessage("Could not create socket");
+            System.out.println(se.getMessage());
+            //se.printStackTrace();
         }
 
         listener = new ListenerThread(socket, incomingPacketQueue);
@@ -98,6 +100,10 @@ public class NetworkHandler {
         listener.stopListener();
         parser.stopParser();
         sender.stopSender();
+        if (socket.isClosed()) {
+            System.out.println("Socket is closed");
+            //socket = null;
+        }
         ServerGUI.getInstance().setSystemMessage("Server stopped");
     }
 

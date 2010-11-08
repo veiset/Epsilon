@@ -90,45 +90,41 @@ public class SenderThread implements Runnable {
             // Get game state message
             gameStateString = eHandler.getGameStateString(nameArray[i]);
 
-            // Check if game state message is empty
-            if (!gameStateString.equals("")) {
+            try {
+                // create a hash of the game state message using SHA algorithm
+                MessageDigest hash = MessageDigest.getInstance("SHA");
+                byte[] hashSum = hash.digest(gameStateString.getBytes());
 
-                try {
-                    // create a hash of the game state message using SHA algorithm
-                    MessageDigest hash = MessageDigest.getInstance("SHA");
-                    byte[] hashSum = hash.digest(gameStateString.getBytes());
-
-                    // Create a hexadecimal representation of the hash
-                    StringBuilder hexString = new StringBuilder();
-                    for (int j = 0; j < hashSum.length; j++) {
-                        hexString.append(Integer.toHexString(0xFF & hashSum[j]));
-                    }
-
-                    // Add hash to end of game state string
-                    String hashString = hexString.toString();
-                    sendString = gameStateString + hashString;
-                }
-                catch (NoSuchAlgorithmException e) {
-                    ServerGUI.getInstance().setErrorMessage("Could not find hashing algorithm in sender thread");
+                // Create a hexadecimal representation of the hash
+                StringBuilder hexString = new StringBuilder();
+                for (int j = 0; j < hashSum.length; j++) {
+                    hexString.append(Integer.toHexString(0xFF & hashSum[j]));
                 }
 
-                // Convert final game state message to bytes
-                buf = sendString.getBytes();
+                // Add hash to end of game state string
+                String hashString = hexString.toString();
+                sendString = gameStateString + hashString;
+            }
+            catch (NoSuchAlgorithmException e) {
+                ServerGUI.getInstance().setErrorMessage("Could not find hashing algorithm in sender thread");
+            }
 
-                // Get players IP address
-                InetAddress ip = eHandler.getAddressByName(nameArray[i]);
+            // Convert final game state message to bytes
+            buf = sendString.getBytes();
 
-                // Create datagram packet
-                DatagramPacket outgoingPacket =
-                        new DatagramPacket(buf, buf.length, ip, NetworkHandler.CLIENT_PORT);
+            // Get players IP address
+            InetAddress ip = eHandler.getAddressByName(nameArray[i]);
 
-                try {
-                    // Add packet to outgoing packet queue
-                    outgoingPacketQueue.put(outgoingPacket);
-                }
-                catch (InterruptedException e) {
-                    ServerGUI.getInstance().setErrorMessage("Could not add packet to ougoing packet queue");
-                }
+            // Create datagram packet
+            DatagramPacket outgoingPacket =
+                    new DatagramPacket(buf, buf.length, ip, NetworkHandler.CLIENT_PORT);
+
+            try {
+                // Add packet to outgoing packet queue
+                outgoingPacketQueue.put(outgoingPacket);
+            }
+            catch (InterruptedException e) {
+                ServerGUI.getInstance().setErrorMessage("Could not add packet to ougoing packet queue");
             }
             
         }

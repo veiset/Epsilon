@@ -76,4 +76,12 @@ public class Game {
 
     }
 
+    /**
+     * Stop the server and clear all players.
+     */
+    public void stop() {
+        netHandler.stopServer();
+        eHandler.clearPlayers();
+    }
+
 }

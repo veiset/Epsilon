@@ -35,6 +35,8 @@ public class ServerGUI extends JFrame {
 
     private ServerGUI sgui = this;
     private JTextArea logBox = new JTextArea();
+    private boolean isStarted = false;
+    private Game g;
 
     /**
      * Private Constructor
@@ -101,9 +103,15 @@ public class ServerGUI extends JFrame {
 
         JButton startButton = new JButton("Start Server");
         startButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                Game g = Game.get();
-                g.start();
+            public void actionPerformed(ActionEvent e) {                
+                if (!isStarted) {
+                    Game g = Game.get();
+                    g.start();
+                    isStarted = true;
+                }
+                else {
+                    setSystemMessage("Server is already running");
+                }
             }
         });
         panel2.add(startButton);
@@ -111,7 +119,14 @@ public class ServerGUI extends JFrame {
         JButton stopButton = new JButton("Stop Server");
         stopButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                NetworkHandler.getInstance().stopServer();
+                if (isStarted) {
+                    Game g = Game.get();
+                    g.stop();
+                    isStarted = false;
+                }
+                else {
+                    setSystemMessage("Server is not running");
+                }
             }
         });
         panel2.add(stopButton);
