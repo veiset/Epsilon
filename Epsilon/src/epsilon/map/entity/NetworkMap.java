@@ -120,11 +120,12 @@ public class NetworkMap implements Map {
         while(NetworkHandler.getInstance().hasNewPlayers()) {
             String s = NetworkHandler.getInstance().getNewPlayer();
             double[] d = NetworkHandler.getInstance().getPlayerStateByName(s);
-
-            TestNetworkEntity n = new TestNetworkEntity(d[0], d[1], s);
-            renderableEntities.add(n);
-            moveableEntities.add(n);
-            entities.add(n);
+            if (d != null) {
+                TestNetworkEntity n = new TestNetworkEntity(d[0], d[1], s);
+                renderableEntities.add(n);
+                moveableEntities.add(n);
+                entities.add(n);
+            }
         }
 
         if (shotCooldown>0) {
