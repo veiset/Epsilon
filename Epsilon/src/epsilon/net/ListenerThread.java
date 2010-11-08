@@ -9,21 +9,24 @@ import java.util.concurrent.BlockingQueue;
  * ListenerThread creates a thread that listens for incoming packets.
  * When a packet is received it is added to a packet queue.
  *
- * @author mm
+ * @author Magnus Mikalsen
  */
 public class ListenerThread implements Runnable {
 
-    private BlockingQueue<DatagramPacket> packetQueue;
+    // Queue for incoming datagram packets
+    private BlockingQueue<DatagramPacket> incomingPacketQueue;
+    
     private DatagramSocket socket;
     private boolean isRunning = true;    
     
     /**
      * Constructor
-     * @param socket
-     * @param packetQueue
+     *
+     * @param socket Datagram socket
+     * @param packetQueue Incoming packet queue
      */
-    public ListenerThread(DatagramSocket socket, BlockingQueue<DatagramPacket> packetQueue) {
-        this.packetQueue = packetQueue;
+    public ListenerThread(DatagramSocket socket, BlockingQueue<DatagramPacket> incomingPacketQueue) {
+        this.incomingPacketQueue = incomingPacketQueue;
         this.socket = socket;    
     }
 
@@ -32,7 +35,6 @@ public class ListenerThread implements Runnable {
      * received it is added to the packet queue.
      */
     public void run() {
-        System.out.println("Listening thread started");
 
         byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];
         DatagramPacket incomingPacket;
@@ -41,13 +43,13 @@ public class ListenerThread implements Runnable {
             try {
                 incomingPacket = new DatagramPacket(buf, buf.length);
                 socket.receive(incomingPacket);
-                packetQueue.put(incomingPacket);
+                incomingPacketQueue.put(incomingPacket);
             }
             catch (IOException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Problem accessing socket in listener thread");
             }
             catch (InterruptedException ie) {
-                System.out.println("Could not add packet to queue");
+                System.out.println("Could not add packet to incoming packet queue");
             }
         }
         socket.close();

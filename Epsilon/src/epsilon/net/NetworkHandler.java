@@ -14,13 +14,13 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * NetworkHandler starts the network subsystem
- * This class uses Bill Pugh's singleton pattern
+ * Singleton for managing and interfacing with the network subsystem.
  *
- * @author mm
+ * @author Magnus Mikalsen
  */
 public class NetworkHandler {
 
+    // Constants
     public static final int SERVER_PORT = 6001;
     public static final int CLIENT_PORT = 6002;
     public static final int BUFFER_SIZE = 256;
@@ -29,20 +29,28 @@ public class NetworkHandler {
     private ListenerThread listener;
     private SenderThread sender;
 
+    // Incoming packet queue
     private BlockingQueue<DatagramPacket> incomingPacketQueue;
+
+    // Outgoing packet queue
     private BlockingQueue<DatagramPacket> outgoingPacketQueue;
-    private HashMap<String, double[]> playerPosList;
+
+    // List of player game states
+    private HashMap<String, double[]> playerStateList;
+
+    // List of players we havent received information about before
     private ArrayList<String> newPlayers;
 
     private DatagramSocket socket;
 
     /**
-     * Private constructor
+     * Private constructor.
+     * Initializes incoming and outgoing pakcet queues.
      */
     private NetworkHandler() {
         incomingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
         outgoingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
-        playerPosList = new HashMap<String, double[]>();
+        playerStateList = new HashMap<String, double[]>();
         newPlayers = new ArrayList<String>();
     }
 
@@ -56,7 +64,8 @@ public class NetworkHandler {
     }
 
     /**
-     * Get instance of NetworkHandler
+     * Get instance of NetworkHandler.
+     *
      * @return INSTANCE
      */
     public static NetworkHandler getInstance() {
@@ -64,15 +73,16 @@ public class NetworkHandler {
     }
 
     /**
-     * setup socket, networklistener and packetparser
+     * Setup socket, network listener and packet parser
      */
     public void connect(InetAddress serverAddress, String name) {
 
         try {
-
+            // Get local IP to bind socket to
             InetAddress bindIP = getFirstNonLoopbackAddress(true, false);
+
+            // Create socket on local interface
             socket = new DatagramSocket(CLIENT_PORT, bindIP);
-            System.out.println("Socket created on non-loopback interface " + bindIP);
         }
         catch (SocketException se) {
             System.out.println("Could not create socket");
@@ -80,9 +90,10 @@ public class NetworkHandler {
 
 
         listener = new ListenerThread(socket, incomingPacketQueue);
-        parser = new PacketParser(incomingPacketQueue, playerPosList, this, name);
+        parser = new PacketParser(incomingPacketQueue, playerStateList, this, name);
         sender = new SenderThread(socket, serverAddress, name, outgoingPacketQueue);
 
+        // Start network threads
         new Thread(listener).start();
         new Thread(parser).start();
         new Thread(sender).start();
@@ -90,7 +101,7 @@ public class NetworkHandler {
     }
 
     /**
-     * stop server threads and close socket
+     * Stop the server by stopping all network threads and closing socket.
      */
     public void disconnect() {
         listener.stopListener();
@@ -99,39 +110,27 @@ public class NetworkHandler {
     }
 
     /**
-     * Send player position to server
+     * Send player information to server.
      */
     public void sendPlayerAction() {
         sender.addToSendQueue();
     }
 
     /**
-     * TODO: handshake with server to establish a connection
-     * 
-     * @return handshake_result
+     * Get a network players game state by name.
+     *
+     * @param playerName Name of player
+     * @return playerPos Player game state
      */
-    public boolean handShake() {
-
-        boolean handshake_result = false;
-
-        return handshake_result;
+    public double[] getPlayerStateByName(String playerName) {
+        double[] playerState = playerStateList.get(playerName);
+        return playerState;
     }
 
     /**
-     * Get a networks players position by name
+     * Check if there are new players.
      *
-     * @param playerName
-     * @return playerPos
-     */
-    public double[] getPlayerPositionByName(String playerName) {
-        double[] playerPos = playerPosList.get(playerName);
-        return playerPos;
-    }
-
-    /**
-     * Check if there are new players
-     *
-     * @return hasNewPlayers
+     * @return hasNewPlayers True if there are new players, false otherwise
      */
     public boolean hasNewPlayers() {
         boolean newPlayerState = false;
@@ -144,9 +143,9 @@ public class NetworkHandler {
     }
 
     /**
-     * Get name of player added last to the new player list
+     * Get name of the last player addded to the new player list.
      * 
-     * @return newPlayer
+     * @return newPlayer Last player in the new player list
      */
     public synchronized String getNewPlayer() {
         int arraySize = newPlayers.size();
@@ -158,19 +157,20 @@ public class NetworkHandler {
     /**
      * Add a players name to the new players list
      *
-     * @param name
+     * @param name Player name
      */
     public synchronized void addNewPlayer(String playerName) {
        newPlayers.add(playerName);
     }
 
     /**
-     * 
+     * iterate through all addresses on host and return first non-loopback address.
+     * This is mainly for linux compatibility
      *
-     * @param preferIpv4
-     * @param preferIPv6
-     * @return
-     * @throws SocketException
+     * @param preferIpv4 Search for IPv4 address
+     * @param preferIPv6 Search for IPv6 address
+     * @return addr First non-loopback IP address found
+     * @throws SocketException No IP address found
      */
     private static InetAddress getFirstNonLoopbackAddress(boolean preferIpv4, boolean preferIPv6) throws SocketException {
         Enumeration en = NetworkInterface.getNetworkInterfaces();

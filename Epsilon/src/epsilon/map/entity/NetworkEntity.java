@@ -28,7 +28,7 @@ public class NetworkEntity extends PlayerEntity {
         newPosX = posX;
         newPosY = posY;
 
-        double[] d = NetworkHandler.getInstance().getPlayerPositionByName(super.getName());
+        double[] d = NetworkHandler.getInstance().getPlayerStateByName(super.getName());
         newPosX = d[0];
         newPosY = d[1];
 
