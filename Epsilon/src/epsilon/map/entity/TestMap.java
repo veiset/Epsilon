@@ -73,6 +73,7 @@ public class TestMap extends Map {
 
     @Override
     protected void initialiseNonStatic(String s) {
+        
         super.initialiseNonStatic(s);
 
         bg = new Background("/pics/bg3.png", 1.25);

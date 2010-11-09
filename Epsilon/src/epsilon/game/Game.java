@@ -3,7 +3,9 @@ package epsilon.game;
 import epsilon.menu.Menu;
 import epsilon.menu.StartupPage;
 import epsilon.map.Map;
+import epsilon.map.entity.NetworkMap;
 import epsilon.menu.DeathPage;
+import epsilon.menu.NetworkDeathPage;
 import java.awt.AlphaComposite;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -135,7 +137,11 @@ public class Game extends Canvas {
             lastUpdateTime = System.currentTimeMillis();
             map.update();
             if (map.isDead()) {
-                Menu.get().setMenu(new DeathPage());
+                if (map instanceof NetworkMap) {
+                    Menu.get().setMenu(new NetworkDeathPage());
+                } else {
+                    Menu.get().setMenu(new DeathPage());
+                }
                 menu = true;
             }
         } else if (menu) {

@@ -27,6 +27,7 @@ public class NetworkMap extends Map {
         super(name);
     }
 
+    @Override
     public void update() {
 
         if (playerEntity.isDead()) {
@@ -99,21 +100,21 @@ public class NetworkMap extends Map {
         }
 
         NetworkHandler.getInstance().sendPlayerAction();
-
     }
 
+    @Override
     public void reset() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void initialiseNonStatic(String s) {
+        
         super.initialiseNonStatic(s);
         renderableEntities = new ArrayList<Entity>();
         moveableEntities = new ArrayList<MoveableEntity>();
         entities = new ArrayList<Entity>();
         shots = new ArrayList<Shot>();
-        worldstore = new WorldStore(50);
 
         bg = new Background("/pics/bg3.png", 1.25);
 
@@ -129,44 +130,46 @@ public class NetworkMap extends Map {
     }
 
     @Override
-    public void initialiseStatic() {
+    protected void initialiseStatic() {
+
         super.initialiseStatic();
 
-        worldstore.add(new Floor(-500, 525));
-        worldstore.add(new Floor(-500, 565));
-        worldstore.add(new Floor(-450, 565));
-        worldstore.add(new Floor(-400, 565));
-        worldstore.add(new Floor(-350, 565));
-        worldstore.add(new Floor(-300, 565));
-        worldstore.add(new Floor(-250, 565));
-        worldstore.add(new Floor(-200, 565));
+        worldstore.add(new Floor_1(-500, 525));
+        worldstore.add(new Floor_1(-500, 565));
+        worldstore.add(new Floor_1(-450, 565));
+        worldstore.add(new Floor_1(-400, 565));
+        worldstore.add(new Floor_1(-350, 565));
+        worldstore.add(new Floor_1(-300, 565));
+        worldstore.add(new Floor_1(-250, 565));
+        worldstore.add(new Floor_1(-200, 565));
+        worldstore.add(new Floor_1(-150, 565));
+        worldstore.add(new Floor_1(-100, 565));
+        worldstore.add(new Floor_1(-50, 565));
+        worldstore.add(new Floor_1(-50, 525));
 
-        worldstore.add(new Floor(-150, 565));
-        worldstore.add(new Floor(-100, 565));
-        worldstore.add(new Floor(-50, 565));
-        worldstore.add(new Floor(-50, 525));
+        worldstore.add(new Floor_1(1000, 565));
+        worldstore.add(new Floor_1(1050, 565));
+        worldstore.add(new Floor_1(1100, 565));
+        worldstore.add(new Floor_1(1150, 565));
+        worldstore.add(new Floor_1(1200, 565));
+        worldstore.add(new Floor_1(1250, 565));
+        worldstore.add(new Floor_1(1300, 565));
+        worldstore.add(new Floor_1(1350, 565));
+        worldstore.add(new Floor_1(1400, 565));
+        worldstore.add(new Floor_1(1450, 565));
 
-        worldstore.add(new Floor(1000, 565));
-        worldstore.add(new Floor(1050, 565));
-        worldstore.add(new Floor(1100, 565));
-        worldstore.add(new Floor(1150, 565));
-        worldstore.add(new Floor(1200, 565));
-        worldstore.add(new Floor(1250, 565));
-        worldstore.add(new Floor(1300, 565));
-        worldstore.add(new Floor(1350, 565));
-        worldstore.add(new Floor(1400, 565));
-        worldstore.add(new Floor(1450, 565));
+        worldstore.add(new Floor_1(80, 505));
 
-        worldstore.add(new Floor(80, 505));
+        worldstore.add(new Floor_1(250, 415));
+        worldstore.add(new Floor_1(300, 415));
 
-        worldstore.add(new Floor(250, 415));
-        worldstore.add(new Floor(300, 415));
+        worldstore.add(new Floor_1(500, 385));
+        worldstore.add(new Floor_1(550, 385));
 
-        worldstore.add(new Floor(500, 385));
-        worldstore.add(new Floor(550, 385));
 
-        worldstore.add(new Floor(350, 455));
-        worldstore.add(new Floor(500, 495));
+        worldstore.add(new Floor_1(350, 455));
+        worldstore.add(new Floor_1(500, 495));
+
     }
 
 }

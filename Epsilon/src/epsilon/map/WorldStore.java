@@ -109,4 +109,8 @@ public class WorldStore {
 
     }
 
+    public int size() {
+        return map.size();
+    }
+
 }
