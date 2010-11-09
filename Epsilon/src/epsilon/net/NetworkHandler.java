@@ -1,11 +1,16 @@
 package epsilon.net;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -43,9 +48,11 @@ public class NetworkHandler {
 
     private DatagramSocket socket;
 
+    private boolean connectionEstablished = false;
+
     /**
      * Private constructor.
-     * Initializes incoming and outgoing pakcet queues.
+     * Initializes incoming and outgoing packet queues.
      */
     private NetworkHandler() {
         incomingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
@@ -83,37 +90,84 @@ public class NetworkHandler {
 
             // Create socket on local interface
             socket = new DatagramSocket(CLIENT_PORT, bindIP);
+
+            // Socket to establish connection
+            Socket connectionSocket = new Socket(serverAddress, SERVER_PORT);
+
+            // Input from socket
+            BufferedReader input = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+
+            // Output to socket
+            PrintWriter output = new PrintWriter(connectionSocket.getOutputStream(), true);
+
+            // Check if connection is established
+            if (connectionSocket.isConnected()) {
+                System.out.println("Connection established");
+
+                // Send client name to server
+                output.println(name);
+
+                // Get respons from server
+                String inputLine = input.readLine();
+
+                if (inputLine.equals("OK")) {
+                    // Respons indicates that the player was added to the server and
+                    // the network subsystem can start normally
+                    System.out.println("Got OK from server");
+
+                    listener = new ListenerThread(socket, incomingPacketQueue);
+                    parser = new PacketParser(incomingPacketQueue, playerStateList, this, name);
+                    sender = new SenderThread(socket, serverAddress, name, outgoingPacketQueue);
+
+                    // Start network threads
+                    new Thread(listener).start();
+                    new Thread(parser).start();
+                    new Thread(sender).start();
+
+                    connectionEstablished = true;
+                }
+                if (inputLine.equals("ERROR")) {
+                    System.out.println("Got ERROR from server");
+                    // Respons indicates that the player was already registered on the server
+
+                }
+            }
+            else {
+                System.out.println("Could not connect to server");
+            }
+            
+            // close input, output and the connection socket
+            input.close();
+            output.close();
+            connectionSocket.close();
+
         }
         catch (SocketException se) {
             System.out.println("Could not create socket");
         }
-
-
-        listener = new ListenerThread(socket, incomingPacketQueue);
-        parser = new PacketParser(incomingPacketQueue, playerStateList, this, name);
-        sender = new SenderThread(socket, serverAddress, name, outgoingPacketQueue);
-
-        // Start network threads
-        new Thread(listener).start();
-        new Thread(parser).start();
-        new Thread(sender).start();
-
+        catch (IOException e) {
+            System.out.println("Problem accessing connection socket");
+        }
     }
 
     /**
      * Stop the server by stopping all network threads and closing socket.
      */
     public void disconnect() {
-        listener.stopListener();
-        parser.stopParser();
-        sender.stopSender();
+        if (connectionEstablished) {
+            listener.stopListener();
+            parser.stopParser();
+            sender.stopSender();
+        }
     }
 
     /**
      * Send player information to server.
      */
     public void sendPlayerAction() {
-        sender.addToSendQueue();
+        if (connectionEstablished) {
+            sender.addToSendQueue();
+        }
     }
 
     /**
@@ -143,7 +197,7 @@ public class NetworkHandler {
     }
 
     /**
-     * Get name of the last player addded to the new player list.
+     * Get name of the last player added to the new player list.
      * 
      * @return newPlayer Last player in the new player list
      */
@@ -162,6 +216,7 @@ public class NetworkHandler {
     public synchronized void addNewPlayer(String playerName) {
        newPlayers.add(playerName);
     }
+
 
     /**
      * iterate through all addresses on host and return first non-loopback address.
