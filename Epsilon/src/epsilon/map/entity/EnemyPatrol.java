@@ -3,6 +3,7 @@ package epsilon.map.entity;
 import epsilon.game.Collision;
 import epsilon.game.Physics;
 import epsilon.game.Sprite;
+import epsilon.map.Map;
 import java.awt.Graphics;
 
 /**
@@ -15,7 +16,6 @@ public class EnemyPatrol extends Enemy {
 
     private int startXpos;
     private boolean facingRight;
-    private HitBox[] hitbox;
     private Sprite spriteFacingLeft;
     private Sprite spriteFacingRight;
     private boolean touchesGround;
@@ -30,8 +30,8 @@ public class EnemyPatrol extends Enemy {
      * @param posX enemy starting posX
      * @param posY enemy starting posY
      */
-    public EnemyPatrol(int posX, int posY) {
-        super(posX, posY);
+    public EnemyPatrol(int posX, int posY, Map m) {
+        super(posX, posY, m);
         HitBox[] hitbox = new HitBox[1];
 
         hitbox[0] = new HitBox(10, 10, 80, 75);

@@ -1,10 +1,5 @@
 package epsilon.map;
-
-import epsilon.game.Collision;
-import epsilon.map.entity.Enemy;
 import epsilon.map.entity.Entity;
-import epsilon.map.entity.MoveableEntity;
-import epsilon.map.entity.PlayerEntity;
 import epsilon.map.entity.Shot;
 import java.util.ArrayList;
 
@@ -17,27 +12,11 @@ public class ShotStore {
 
 
     private ArrayList<Shot> shots;
+    private Map m;
 
-    // referances to the list of renderable and movable entities.
-    private ArrayList<Entity> renderEntitiesRef;
-    private ArrayList<MoveableEntity> moveableEntitiesRef;
-
-    public ShotStore() {
+    public ShotStore(Map m) {
         shots = new ArrayList<Shot>();
-    }
-
-    /**
-     * Creating a shotstore
-     *
-     * @param renderableEntities referance to arraylist with renderable entities
-     * @param moveableEntities referance to arraylist with movable entities
-     */
-    public ShotStore(ArrayList<Entity> renderableEntities, ArrayList<MoveableEntity> moveableEntities) {
-        // copying the referances
-        renderEntitiesRef = renderableEntities;
-        moveableEntitiesRef = moveableEntities;
-
-        shots = new ArrayList<Shot>();
+        this.m = m;
     }
 
     /**
@@ -57,33 +36,7 @@ public class ShotStore {
             if (shot.distanceDone()) {
                 // removing the shot from the lists
                 shots.remove(shot);
-                moveableEntitiesRef.remove(shot);
-                renderEntitiesRef.remove(shot);
-            }
-        }
-    }
-
-    /**
-     * Checking if the shot has collided with a movableEntity.
-     *
-     * @param e MoveableEntity to check collision against.
-     */
-    public void checkCollided(MoveableEntity e) {
-
-        if (e instanceof Enemy || e instanceof PlayerEntity) {
-            Shot[] tempshot = new Shot[shots.size()];
-            shots.toArray(tempshot);
-
-            for (int i = 0; i < tempshot.length; i++) {
-                Shot shot = tempshot[i];
-                Collision c = shot.collision(e);
-
-                if (c.collided) {
-                    e.collided(c);
-                    shots.remove(shot);
-                    moveableEntitiesRef.remove(shot);
-                    renderEntitiesRef.remove(shot);
-                }
+                m.removeShot(shot);
             }
         }
     }
@@ -95,10 +48,9 @@ public class ShotStore {
      * @param yPos current player y position
      * @param facingRight true if player is facing right
      */
-    public void addShot(double xPos, double yPos, boolean facingRight) {
-        Shot shot = new Shot(xPos, yPos, facingRight);
+    public void addShot(double xPos, double yPos, boolean facingRight, Entity ent, Map m) {
+        Shot shot = new Shot(xPos, yPos, facingRight, ent, m);
         shots.add(shot);
-        moveableEntitiesRef.add(shot);
-        renderEntitiesRef.add(shot);
+        m.addShot(shot);
     }
 }

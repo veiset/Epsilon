@@ -1,6 +1,7 @@
 package epsilon.map.entity;
 
 import epsilon.game.Collision;
+import epsilon.map.Map;
 import java.awt.Graphics;
 
 /**
@@ -15,8 +16,8 @@ public abstract class Enemy extends MoveableEntity {
      * @param posX starting position X
      * @param posY starting position Y
      */
-    public Enemy(int posX, int posY) {
-        super(posX, posY);
+    public Enemy(int posX, int posY, Map m) {
+        super(posX, posY, m);
     }
 
     @Override
@@ -34,8 +35,4 @@ public abstract class Enemy extends MoveableEntity {
         }
     }
 
-    @Override
-    public Collision collision(Entity entity) {
-        return new Collision();
-    }
 }

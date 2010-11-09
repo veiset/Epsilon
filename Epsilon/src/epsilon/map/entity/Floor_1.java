@@ -1,6 +1,7 @@
 package epsilon.map.entity;
 
 import epsilon.game.Sprite;
+import epsilon.map.Map;
 
 /**
  *
@@ -14,8 +15,8 @@ public class Floor_1 extends World {
      * @param posX the top x-position of the floor object
      * @param posY the left y-position of the floor object
      */
-    public Floor_1(int posX, int posY) {
-        super(posX, posY);
+    public Floor_1(int posX, int posY, Map m) {
+        super(posX, posY, m);
         currentSprite = new Sprite(new String[]{"/pics/crate.png"});
     }
 }

@@ -4,6 +4,8 @@ import epsilon.game.Collision;
 import epsilon.game.Physics;
 import epsilon.game.Sprite;
 import epsilon.game.Input;
+import epsilon.map.Map;
+import epsilon.map.ShotStore;
 import java.awt.Graphics;
 
 /**
@@ -33,14 +35,17 @@ public class PlayerEntity extends MoveableEntity {
     protected boolean facingRight = true;
     private boolean isDead = false;
 
+    private ShotStore shots;
+    private int shotCooldown;
+
     /**
      * Constructor for the entity that initialises sprites
      *
      * @param posX The starting X position of the entity
      * @param posY The starting Y position of the entity
      */
-    public PlayerEntity(double posX,double posY, String name) {
-        super(posX, posY);
+    public PlayerEntity(double posX,double posY, String name, Map m) {
+        super(posX, posY, m);
         ticker = 0;
         touchesGround = false;
         origPosX = posX;
@@ -61,10 +66,13 @@ public class PlayerEntity extends MoveableEntity {
         standSpriteLeft = new Sprite(new String[]{"/pics/guy01.png"},true, hitbox);
 
         currentSprite = standSpriteRight;
+
+        shots = new ShotStore(mapReferance);
+        shotCooldown = 30;
     }
 
-    public PlayerEntity(double posX,double posY, String name, String[] pics) {
-        super(posX, posY);
+    public PlayerEntity(double posX,double posY, String name, String[] pics, Map m) {
+        super(posX, posY, m);
         ticker = 0;
         touchesGround = false;
 
@@ -135,7 +143,7 @@ public class PlayerEntity extends MoveableEntity {
             // checking if the player has falled down below the floor threshold.
             // If player posY is larger or equal to 598, the player dies.
             if (posY>=598) {
-                System.out.print("You are dead!");
+                System.out.println("You are dead!");
                 isDead = true;
             }
             // Handle falling
@@ -156,6 +164,17 @@ public class PlayerEntity extends MoveableEntity {
             }
 
             touchesGround = false;
+
+            // shots
+            if (shotCooldown > 0) {
+                shotCooldown--;
+            }
+            if (Input.get().attack() && shotCooldown == 0) {
+                //sound.close();
+                shots.addShot(posX, posY, facingRight, this, mapReferance);
+                shotCooldown += 30;
+            }
+            shots.update();
         }
     }
 

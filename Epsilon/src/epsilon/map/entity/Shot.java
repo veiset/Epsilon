@@ -3,6 +3,7 @@ package epsilon.map.entity;
 import epsilon.game.Collision;
 import epsilon.game.SoundPlayer;
 import epsilon.game.Sprite;
+import epsilon.map.Map;
 import java.awt.Graphics;
 
 /**
@@ -16,6 +17,7 @@ public class Shot extends MoveableEntity {
     private double distanceTravled = 0;
     private double distanceMax = 300;
     private int speed = 9;
+    private Entity shotBy;
 
     /**
      * Gunshot objects.
@@ -24,23 +26,24 @@ public class Shot extends MoveableEntity {
      * @param posY start position Y
      * @param headingRight what direction the object is heading
      */
-    public Shot(double posX, double posY, boolean headingRight) {
-        super(posX, posY);
+    public Shot(double posX, double posY, boolean headingRight, Entity shooter, Map m) {
+        super(posX, posY, m);
 
         HitBox[] h = new HitBox[1];
         h[0] = new HitBox(0, 0, 14, 5);
 
         // the initial position of the shot, in relation to the player that shot it.
         if (headingRight) {
-            newPosX += 80;
+            posX += 80;
             currentSprite = new Sprite(new String[]{"/pics/smallbullet.png"},false,h);
         } else {
-            newPosX += 15;
+            posX += 15;
             currentSprite = new Sprite(new String[]{"/pics/smallbullet.png"},true,h);
         }
         newPosY += 45;
         this.headingRight = headingRight;
 
+        shotBy = shooter;
 
         // gunfire
         new SoundPlayer("/sound/gunshot.mp3").play();
@@ -84,6 +87,16 @@ public class Shot extends MoveableEntity {
     @Override
     public void collided(Collision c) {
         // if collieded the dinstance is done, and the shot is removed
+        if (!shotBy.equals(c.collidedWith)) {
+            distanceTravled = distanceMax+1;
+        }
+    }
+
+    public Entity getShooter() {
+        return shotBy;
+    }
+
+    public void remove() {
         distanceTravled = distanceMax+1;
     }
 

@@ -1,6 +1,5 @@
 package epsilon.map.entity;
 
-import epsilon.game.Collision;
 import epsilon.game.Input;
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
@@ -29,19 +28,6 @@ public class TestMap extends Map {
     @Override
     public void update() {
 
-        // shots
-        if (shotCooldown > 0) {
-            shotCooldown--;
-        }
-        if (Input.get().attack() && shotCooldown == 0) {
-            //sound.close();
-            shots.addShot(playerEntity.getXPosition(), playerEntity.getYPosition(), playerEntity.facingRight());
-            shotCooldown += 30;
-        }
-
-        shots.checkCollided(enemy);
-
-
         super.update();
 
     }
@@ -53,10 +39,10 @@ public class TestMap extends Map {
 
         bg = new Background("/pics/bg3.png", 1.25);
 
-        TestPlayerEntity test = new TestPlayerEntity(-70, 400, "");
+        TestPlayerEntity test = new TestPlayerEntity(-70, 400, "", this);
         playerEntity = test;
 
-        enemy = new EnemyJumping(-300, 100);
+        enemy = new EnemyJumping(-300, 100, this);
         renderableEntities.add(enemy);
         moveableEntities.add(enemy);
         entities.add(enemy);
@@ -77,42 +63,41 @@ public class TestMap extends Map {
 
         super.initialiseStatic();
 
-        worldstore.add(new Floor_1(-500, 525));
-        worldstore.add(new Floor_1(-500, 565));
-        worldstore.add(new Floor_1(-450, 565));
-        worldstore.add(new Floor_1(-400, 565));
-        worldstore.add(new Floor_1(-350, 565));
-        worldstore.add(new Floor_1(-300, 565));
-        worldstore.add(new Floor_1(-250, 565));
-        worldstore.add(new Floor_1(-200, 565));
-        worldstore.add(new Floor_1(-150, 565));
-        worldstore.add(new Floor_1(-100, 565));
-        worldstore.add(new Floor_1(-50, 565));
-        worldstore.add(new Floor_1(-50, 525));
+         worldstore.add(new Floor_1(-500, 525, this));
+        worldstore.add(new Floor_1(-500, 565, this));
+        worldstore.add(new Floor_1(-450, 565, this));
+        worldstore.add(new Floor_1(-400, 565, this));
+        worldstore.add(new Floor_1(-350, 565, this));
+        worldstore.add(new Floor_1(-300, 565, this));
+        worldstore.add(new Floor_1(-250, 565, this));
+        worldstore.add(new Floor_1(-200, 565, this));
+        worldstore.add(new Floor_1(-150, 565, this));
+        worldstore.add(new Floor_1(-100, 565, this));
+        worldstore.add(new Floor_1(-50, 565, this));
+        worldstore.add(new Floor_1(-50, 525, this));
+
+        worldstore.add(new Floor_1(1000, 565, this));
+        worldstore.add(new Floor_1(1050, 565, this));
+        worldstore.add(new Floor_1(1100, 565, this));
+        worldstore.add(new Floor_1(1150, 565, this));
+        worldstore.add(new Floor_1(1200, 565, this));
+        worldstore.add(new Floor_1(1250, 565, this));
+        worldstore.add(new Floor_1(1300, 565, this));
+        worldstore.add(new Floor_1(1350, 565, this));
+        worldstore.add(new Floor_1(1400, 565, this));
+        worldstore.add(new Floor_1(1450, 565, this));
+
+        worldstore.add(new Floor_1(80, 505, this));
+
+        worldstore.add(new Floor_1(250, 415, this));
+        worldstore.add(new Floor_1(300, 415, this));
+
+        worldstore.add(new Floor_1(500, 385, this));
+        worldstore.add(new Floor_1(550, 385, this));
 
 
-        worldstore.add(new Floor_1(1000, 565));
-        worldstore.add(new Floor_1(1050, 565));
-        worldstore.add(new Floor_1(1100, 565));
-        worldstore.add(new Floor_1(1150, 565));
-        worldstore.add(new Floor_1(1200, 565));
-        worldstore.add(new Floor_1(1250, 565));
-        worldstore.add(new Floor_1(1300, 565));
-        worldstore.add(new Floor_1(1350, 565));
-        worldstore.add(new Floor_1(1400, 565));
-        worldstore.add(new Floor_1(1450, 565));
-
-        worldstore.add(new Floor_1(80, 505));
-
-        worldstore.add(new Floor_1(250, 415));
-        worldstore.add(new Floor_1(300, 415));
-
-        worldstore.add(new Floor_1(500, 385));
-        worldstore.add(new Floor_1(550, 385));
-
-
-        worldstore.add(new Floor_1(350, 455));
-        worldstore.add(new Floor_1(500, 495));
+        worldstore.add(new Floor_1(350, 455, this));
+        worldstore.add(new Floor_1(500, 495, this));
 
     }
 }

@@ -1,6 +1,7 @@
 package epsilon.map.entity;
 
 import epsilon.game.Collision;
+import epsilon.map.Map;
 import epsilon.net.NetworkHandler;
 
 /**
@@ -18,9 +19,9 @@ public class TestNetworkEntity extends TestPlayerEntity {
      * @param posY the Y-axis position of the entity
      * @param playerName the name of the entity
      */
-    public TestNetworkEntity(double posX, double posY, String playerName) {
+    public TestNetworkEntity(double posX, double posY, String playerName, Map m) {
 
-        super(posX, posY, playerName);
+        super(posX, posY, playerName, m);
 
     }
 

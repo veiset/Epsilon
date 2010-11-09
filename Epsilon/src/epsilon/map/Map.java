@@ -1,5 +1,6 @@
 package epsilon.map;
 
+import epsilon.game.Collision;
 import epsilon.game.SoundPlayer;
 import epsilon.map.entity.Entity;
 import epsilon.map.entity.MoveableEntity;
@@ -22,7 +23,6 @@ public abstract class Map {
     protected ArrayList<Entity> renderableEntities;
     protected ArrayList<MoveableEntity> moveableEntities;
     protected ArrayList<Entity> entities;
-    protected ShotStore shots;
     protected WorldStore worldstore;
 
     // the soundtrack that is played continuously while playing the map
@@ -66,18 +66,25 @@ public abstract class Map {
 
     /**
      * Moves the entities on the map
-     * 
      */
     public void update() {
-
-        shots.update();
 
         MoveableEntity[] temp = new MoveableEntity[moveableEntities.size()];
         moveableEntities.toArray(temp);
 
+        Collision c;
+
         for (int i = 0; i < temp.length; i++) {
             temp[i].calculateMovement();
             worldstore.checkCollision(temp[i]);
+            for (int j = 0; j < temp.length; j++) {
+                if (i != j) {
+                    c = temp[j].collision(temp[i]);
+                    if (c.collided) {
+                        temp[i].collided(c);
+                    }
+                }
+            }
         }
 
         for (int i = 0; i < temp.length; i++) {
@@ -123,7 +130,6 @@ public abstract class Map {
         entities = new ArrayList<Entity>();
         renderableEntities = new ArrayList<Entity>();
         moveableEntities = new ArrayList<MoveableEntity>();
-        shots = new ShotStore(renderableEntities,moveableEntities);
 
     }
 
@@ -137,11 +143,20 @@ public abstract class Map {
         renderableEntities = null;
         moveableEntities = null;
         entities = null;
-        shots = null;
 
         bg = null;
         playerEntity = null;
         soundtrack = null;
+    }
+
+    public void addShot(Shot s) {
+        renderableEntities.add(s);
+        moveableEntities.add(s);
+    }
+
+    public void removeShot(Shot s) {
+        renderableEntities.remove(s);
+        moveableEntities.remove(s);
     }
 
 }

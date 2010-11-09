@@ -1,5 +1,6 @@
 package epsilon.map.entity;
 
+import epsilon.map.Map;
 import epsilon.net.NetworkHandler;
 
 /**
@@ -16,9 +17,9 @@ public class NetworkEntity extends PlayerEntity {
      * @param posY the Y-axis position of the entity
      * @param playerName the name of the entity
      */
-    public NetworkEntity(double posX, double posY, String playerName) {
+    public NetworkEntity(double posX, double posY, String playerName, Map m) {
 
-        super(posX, posY, playerName, new String[]{"/pics/sheep_enemy.png"});
+        super(posX, posY, playerName, new String[]{"/pics/sheep_enemy.png"}, m);
 
     }
 

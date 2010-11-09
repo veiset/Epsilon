@@ -2,6 +2,7 @@ package epsilon.map.entity;
 
 import epsilon.game.Collision;
 import epsilon.game.Sprite;
+import epsilon.map.Map;
 import java.awt.Graphics;
 
 /**
@@ -22,17 +23,20 @@ public abstract class Entity {
     // the sprite that is currently rendered
     protected Sprite currentSprite;
 
+    protected Map mapReferance;
+
     /*
      * Constructur for the Entity class
      *
      * @param posX The initial x position of the entity
      * @param posY The initial y position of the entity
      */
-    public Entity (double posX,double posY) {
+    public Entity (double posX,double posY, Map m) {
         this.posX = posX;
         this.posY = posY;
         this.pposX = posX;
         this.pposY = posY;
+        mapReferance = m;
     }
 
     /*

@@ -4,6 +4,8 @@ import epsilon.game.Collision;
 import epsilon.game.Input;
 import epsilon.game.Physics;
 import epsilon.game.Sprite;
+import epsilon.map.Map;
+import epsilon.map.ShotStore;
 import java.awt.Graphics;
 
 /**
@@ -33,14 +35,17 @@ public class TestPlayerEntity extends MoveableEntity {
 
     private boolean isDead = false;
 
+    private ShotStore shots;
+    private int shotCooldown;
+
     /**
      * Constructor for the entity that initialises sprites
      *
      * @param posX The starting X position of the entity
      * @param posY The starting Y position of the entity
      */
-    public TestPlayerEntity(double posX,double posY, String name) {
-        super(posX, posY);
+    public TestPlayerEntity(double posX,double posY, String name, Map m) {
+        super(posX, posY, m);
         ticker = 0;
         touchesGround = false;
         origPosX = posX;
@@ -59,6 +64,9 @@ public class TestPlayerEntity extends MoveableEntity {
         standSpriteLeft = new Sprite(new String[]{"/pics/guy01.png"},true, hitbox);
 
         currentSprite = standSpriteRight;
+
+        shots = new ShotStore(mapReferance);
+        shotCooldown = 30;
     }
 
     @Override
@@ -105,6 +113,17 @@ public class TestPlayerEntity extends MoveableEntity {
                     }
                     ticker = 0;
                 }
+
+                // shots
+                if (shotCooldown > 0) {
+                    shotCooldown--;
+                }
+                if (Input.get().attack() && shotCooldown == 0) {
+                    //sound.close();
+                    shots.addShot(posX, posY, facingRight, this, mapReferance);
+                    shotCooldown += 30;
+                }
+                shots.update();
             }
 
 
@@ -188,7 +207,7 @@ public class TestPlayerEntity extends MoveableEntity {
             } else if (c.crossedBottom && posY < pposY) {
                 newPosY = pposY;
             }
-        } else if (c.collidedWith instanceof Shot) {
+        } else if (c.collidedWith instanceof Shot && ((Shot)c.collidedWith).getShooter() != this) {
             isDead = true;
         }
     }

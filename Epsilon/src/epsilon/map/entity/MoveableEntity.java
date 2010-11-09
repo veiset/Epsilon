@@ -1,6 +1,7 @@
 package epsilon.map.entity;
 
 import epsilon.game.Collision;
+import epsilon.map.Map;
 
 /**
  *
@@ -19,8 +20,8 @@ public abstract class MoveableEntity extends Entity {
     * @param posX The initial x position of the entity
     * @param posY The initial y position of the entity
     */
-    public MoveableEntity(double posX, double posY) {
-        super(posX , posY);
+    public MoveableEntity(double posX, double posY, Map m) {
+        super(posX , posY, m);
         this.newPosX = posX;
         this.newPosY = posY;
     }

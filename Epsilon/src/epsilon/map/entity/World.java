@@ -1,5 +1,6 @@
 package epsilon.map.entity;
 
+import epsilon.map.Map;
 import java.awt.Graphics;
 
 /**
@@ -17,8 +18,8 @@ public abstract class World extends Entity {
      * @param posX position X
      * @param posY position Y
      */
-    public World(int posX,int posY) {
-        super(posX,posY);
+    public World(int posX,int posY, Map m) {
+        super(posX,posY, m);
     }
 
     @Override

@@ -3,6 +3,7 @@ package epsilon.map.entity;
 import epsilon.game.Collision;
 import epsilon.game.Physics;
 import epsilon.game.Sprite;
+import epsilon.map.Map;
 import java.awt.Graphics;
 
 /**
@@ -30,8 +31,8 @@ public class EnemyJumping extends Enemy {
      * @param posX enemy starting posX
      * @param posY enemy starting posY
      */
-    public EnemyJumping(int posX, int posY) {
-        super(posX, posY);
+    public EnemyJumping(int posX, int posY, Map m) {
+        super(posX, posY, m);
         HitBox[] hitbox = new HitBox[1];
 
         hitbox[0] = new HitBox(10, 10, 80, 75);
@@ -46,7 +47,7 @@ public class EnemyJumping extends Enemy {
 
     @Override
     public void collided(Collision c) {
-        if (c.collidedWith instanceof World || c.collidedWith instanceof NetworkEntity || c.collidedWith instanceof PlayerEntity) {
+        if (c.collidedWith instanceof World || c.collidedWith instanceof NetworkEntity || c.collidedWith instanceof TestPlayerEntity) {
 
             // overlap between the two entities in pixels
             double dlx = c.deltaLeft;
@@ -75,6 +76,7 @@ public class EnemyJumping extends Enemy {
                 newPosY += dby;
             }
         } else if (c.collidedWith instanceof Shot) {
+            //(Shot)c.collidedWith).remove();
             health -= 1;
             if (health == 0) {
                 isDead = true;
