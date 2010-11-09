@@ -5,32 +5,14 @@ import epsilon.game.Input;
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
 import epsilon.map.Map;
-import epsilon.map.WorldStore;
-import java.awt.Graphics;
-import java.util.ArrayList;
 
 /**
  * Map made for testing purposes, now used as a single player map
  *
  * @author Marius
  */
-public class TestMap implements Map {
+public class TestMap extends Map {
 
-    /*
-     * The different lists used for storing entities
-     * There are a number of them to keep the iterating over lists to a minimum
-     */
-    ArrayList<Entity> renderableEntities;
-    ArrayList<MoveableEntity> moveableEntities;
-    ArrayList<Entity> entities;
-    ArrayList<Shot> shots;
-    WorldStore worldstore;
-    // the soundtrack that is played continuously while playing the map
-    SoundPlayer soundtrack;
-    // the entity of the player played on this computer. Used for calculating rendering positions
-    TestPlayerEntity playerEntity;
-    // the background object used on this map
-    Background bg;
     // enemies
     Enemy enemy;
     private int shotCooldown = 0;
@@ -38,30 +20,13 @@ public class TestMap implements Map {
     /**
      * Initialises all entities on the map, and all fields in the object
      */
-    public TestMap() {
+    public TestMap(String s) {
 
-        initialiseStatic();
-        initialiseNonStatic();
-
-    }
-
-    public void render(Graphics g, int delta) {
-
-        bg.render(g, playerEntity.getXPosition(), playerEntity.getYPosition());
-
-        worldstore.renderAll(g, delta, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
-
-        Entity[] temp = new Entity[renderableEntities.size()];
-        renderableEntities.toArray(temp);
-
-        for (int i = 0; i < temp.length; i++) {
-            temp[i].render(g, delta, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
-            temp[i].renderHitBox(g, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
-        }
-        enemy.renderHitBox(g, enemy.getXRenderPosition(), enemy.getYRenderPosition());
+        super("");
 
     }
 
+    @Override
     public void update() {
 
         // shots! refactor me!
@@ -99,54 +64,16 @@ public class TestMap implements Map {
             }
         }
 
+
         // end of shot logic
 
-        MoveableEntity[] temp = new MoveableEntity[moveableEntities.size()];
-        moveableEntities.toArray(temp);
+        super.update();
 
-        for (int i = 0; i < temp.length; i++) {
-            temp[i].calculateMovement();
-        }
-
-        worldstore.checkCollision(playerEntity);
-        worldstore.checkCollision(enemy);
-
-        for (int i = 0; i < temp.length; i++) {
-            temp[i].move();
-        }
     }
 
-    public double[] getPlayerPosition() {
-        return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition()};
-    }
-
-    public void resetPlayerPosition() {
-        playerEntity.resetPosition();
-    }
-
-    public void reset() {
-        soundtrack.close();
-        resetNonStatic();
-        initialiseNonStatic();
-    }
-
-    private void resetNonStatic() {
-        renderableEntities = null;
-        moveableEntities = null;
-        entities = null;
-        shots = null;
-
-        bg = null;
-        playerEntity = null;
-        soundtrack = null;
-    }
-
-    private void initialiseNonStatic() {
-
-        entities = new ArrayList<Entity>();
-        renderableEntities = new ArrayList<Entity>();
-        moveableEntities = new ArrayList<MoveableEntity>();
-        shots = new ArrayList<Shot>();
+    @Override
+    protected void initialiseNonStatic(String s) {
+        super.initialiseNonStatic(s);
 
         bg = new Background("/pics/bg3.png", 1.25);
 
@@ -169,9 +96,10 @@ public class TestMap implements Map {
 
     }
 
-    private void initialiseStatic() {
+    @Override
+    protected void initialiseStatic() {
 
-        worldstore = new WorldStore(50);
+        super.initialiseStatic();
 
         worldstore.add(new Floor_1(-500, 525));
         worldstore.add(new Floor_1(-500, 565));
@@ -211,10 +139,4 @@ public class TestMap implements Map {
         worldstore.add(new Floor_1(500, 495));
 
     }
-
-    public boolean isDead() {
-        return playerEntity.isDead();
-    }
-
-
 }

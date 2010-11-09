@@ -41,7 +41,7 @@ public abstract class MoveableEntity extends Entity {
      * Finalising movement after all calculations are done
      *
      */
-    protected void move() {
+    public void move() {
         this.pposX = this.posX;
         this.pposY = this.posY;
         this.posX = newPosX;

@@ -23,7 +23,7 @@ public class StartupPage extends MenuPage {
     @Override
     public void useSelected() {
         if (selected == 0) {
-            Game.get().setMap(new TestMap());
+            Game.get().setMap(new TestMap(""));
             Menu.get().setMenu(OptionPage.get());
             Game.get().menuDone();
         } else if (selected == 1) {

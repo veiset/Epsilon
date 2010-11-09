@@ -16,23 +16,8 @@ import java.util.ArrayList;
  *
  * @author Marius
  */
-public class WorldTestMap implements Map {
+public class WorldTestMap extends Map {
 
-    /*
-     * The different lists used for storing entities
-     * There are a number of them to keep the iterating over lists to a minimum
-     */
-    ArrayList<Entity> renderableEntities;
-    ArrayList<MoveableEntity> moveableEntities;
-    ArrayList<Entity> entities;
-    ArrayList<Shot> shots;
-    WorldStore worldstore;
-    // the soundtrack that is played continuously while playing the map
-    SoundPlayer soundtrack;
-    // the entity of the player played on this computer. Used for calculating rendering positions
-    PlayerEntity playerEntity;
-    // the background object used on this map
-    Background bg;
     private int shotCooldown = 0;
 
     /**
@@ -40,46 +25,11 @@ public class WorldTestMap implements Map {
      */
     public WorldTestMap() {
 
-        renderableEntities = new ArrayList<Entity>();
-        moveableEntities = new ArrayList<MoveableEntity>();
-        entities = new ArrayList<Entity>();
-        shots = new ArrayList<Shot>();
-        worldstore = new WorldStore(50);
-
-        bg = new Background("/pics/bg3.png", 1.25);
-
-        PlayerEntity test = new PlayerEntity(-70, 400, "");
-        playerEntity = test;
-
-        populateWorld();
-
-        renderableEntities.add(test);
-        moveableEntities.add(test);
-        entities.add(test);
-
-        // Test MP3 playing
-        String filename = "/sound/zabutom.lets.shooting.mp3";
-        soundtrack = new SoundPlayer(filename);
-        soundtrack.play();
+        super("");
 
     }
 
-    public void render(Graphics g, int delta) {
-
-        bg.render(g, playerEntity.getXPosition(), playerEntity.getYPosition());
-
-        worldstore.renderAll(g, delta, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
-
-        Entity[] temp = new Entity[renderableEntities.size()];
-        renderableEntities.toArray(temp);
-
-        for (int i = 0; i < temp.length; i++) {
-            temp[i].render(g, delta, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
-            temp[i].renderHitBox(g, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
-        }
-
-    }
-
+    @Override
     public void update() {
 
         if (shotCooldown > 0) {
@@ -109,22 +59,8 @@ public class WorldTestMap implements Map {
             }
         }
 
-        MoveableEntity[] temp = new MoveableEntity[moveableEntities.size()];
-        moveableEntities.toArray(temp);
+        super.update();
 
-        for (int i = 0; i < temp.length; i++) {
-            temp[i].calculateMovement();
-        }
-
-        worldstore.checkCollision(playerEntity);
-
-        for (int i = 0; i < temp.length; i++) {
-            temp[i].move();
-        }
-    }
-
-    public double[] getPlayerPosition() {
-        return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition()};
     }
 
     /**
@@ -364,15 +300,30 @@ public class WorldTestMap implements Map {
         worldstore.add(new Floor_1(3300,480));
     }
 
-    public void resetPlayerPosition() {
-        playerEntity.resetPosition();
+    @Override
+    public void initialiseNonStatic(String s) {
+        super.initialiseNonStatic(s);
+        
+        bg = new Background("/pics/bg3.png", 1.25);
+
+        TestPlayerEntity test = new TestPlayerEntity(-70, 400, "");
+        playerEntity = test;
+
+        populateWorld();
+
+        renderableEntities.add(test);
+        moveableEntities.add(test);
+        entities.add(test);
+
+        // Test MP3 playing
+        String filename = "/sound/zabutom.lets.shooting.mp3";
+        soundtrack = new SoundPlayer(filename);
+        soundtrack.play();
     }
 
-    public void reset() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public boolean isDead() {
-        return playerEntity.isDead();
+    @Override
+    public void initialiseStatic() {
+        super.initialiseStatic();
+        populateWorld();
     }
 }
