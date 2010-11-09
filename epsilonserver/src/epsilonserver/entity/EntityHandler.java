@@ -53,7 +53,6 @@ public class EntityHandler {
      * @return gameStateString Players name, X and Y coordinates
      */
     public String getGameStateString(String name) {
-
         String gameStateString = "";
 
         Collection c = entityList.values();
@@ -74,7 +73,7 @@ public class EntityHandler {
      *
      * @return adrArray Array of IP addresses
      */
-    public InetAddress[] getAddressArray() {       
+    public InetAddress[] getAddressArray() {
         InetAddress[] adrArray = new InetAddress[entityList.size()];
 
         Collection c = entityList.values();
@@ -91,7 +90,7 @@ public class EntityHandler {
     }
 
     /**
-     * Get the address of a player with a spesified name
+     * Get the address of a player with a specified name
      *
      * @param name Player name
      * @return address Players IP address
@@ -106,32 +105,30 @@ public class EntityHandler {
      *
      * @return nameArray Array of player names
      */
-    public String[] getNameArray() {
+    public synchronized String[] getNameArray() {
         String[] nameArray = new String[entityList.size()];
         nameArray = (String[]) entityList.keySet().toArray(nameArray);
         return nameArray;
-
     }
 
     /**
      *
-     *
+     *4
      * @param name
      * @param posArray
      */
     public void setPlayerState(String name, String[] posArray) {
         long updateTime = System.currentTimeMillis();
 
-        boolean contains = entityList.contains(name);
-
-        if (contains) {
+        NetworkEntity n = entityList.get(name);
+        if (n != null) {
             entityList.get(name).setCoordinates(posArray, updateTime);
         }
 
     }
 
     /**
-     * 
+     *
      *
      * @param name
      * @param ip
@@ -181,7 +178,7 @@ public class EntityHandler {
     }
 
     /**
-     * Remove all network entites.
+     * Remove all network entities.
      */
     public void clearPlayers() {
         entityList.clear();

@@ -44,8 +44,12 @@ public class NetworkEntity {
         this.ip = ip;
         lastUpdateTime = updateTime;
 
-        posArray[0] = "-200";
-        posArray[1] = "-800";
+        String[] p = new String[2];
+
+        p[0] = "-200";
+        p[1] = "-800";
+
+        posArray = p;
     }
 
     /**

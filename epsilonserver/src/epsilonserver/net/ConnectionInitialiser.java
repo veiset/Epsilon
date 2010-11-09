@@ -1,6 +1,7 @@
 package epsilonserver.net;
 
 import epsilonserver.entity.EntityHandler;
+import epsilonserver.game.ServerGUI;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -21,6 +22,8 @@ public class ConnectionInitialiser implements Runnable {
     }
 
     public void run() {
+
+        ServerGUI.getInstance().setSystemMessage("Connection initialiser started");
 
         while (listening) {
 
