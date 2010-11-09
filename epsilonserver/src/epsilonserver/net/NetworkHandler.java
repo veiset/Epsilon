@@ -29,7 +29,7 @@ public class NetworkHandler {
     private PacketParser parser = null;
     private ListenerThread listener = null;
     private SenderThread sender = null;
-    private ConnectionInitializer connectionInit = null;
+    private ConnectionInitialiser connectionInit = null;
 
     // Incoming packet queue
     private BlockingQueue<DatagramPacket> incomingPacketQueue;
@@ -94,7 +94,7 @@ public class NetworkHandler {
         }
 
         if (listener == null && parser == null && sender == null && connectionInit == null) {
-            connectionInit = new ConnectionInitializer(connectionSocket);
+            connectionInit = new ConnectionInitialiser(connectionSocket);
             listener = new ListenerThread(socket, incomingPacketQueue);
             parser = new PacketParser(incomingPacketQueue);
             sender = new SenderThread(socket, outgoingPacketQueue);
