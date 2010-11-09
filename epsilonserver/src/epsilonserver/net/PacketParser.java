@@ -47,9 +47,6 @@ public class PacketParser implements Runnable {
                 // Get message from packet
                 String packetString = new String(packet.getData(), 0, packet.getLength());
 
-                // Get clients IP address from packet
-                InetAddress ip = packet.getAddress();
-
                 // Split message into words
                 String[] strArray = packetString.split(" ");
 
@@ -86,8 +83,8 @@ public class PacketParser implements Runnable {
 
                     // Check if hash is correct
                     if (calculatedHash.equals(incomningHash)) {
-                        // Create or update player if hash is correct
-                        eHandler.createIfAbsent(ip, strArray[0], posArray);
+                        // Update player if hash is correct
+                        eHandler.setPlayerState(strArray[0], posArray);
                     }
                 }
             }

@@ -114,28 +114,46 @@ public class EntityHandler {
     }
 
     /**
-     * Check to se if the player exists in the entity list. if a player is found
-     * then the new coordinates are set on the player. If no player is found
-     * then a new NetworkEntity object is created and added to player hashmap.
      *
-     * @param ip IP address of player
-     * @param name Player name
-     * @param posArray Players X and Y coordinates
+     *
+     * @param name
+     * @param posArray
      */
-    public void createIfAbsent(InetAddress ip, String name, String[] posArray) {
+    public void setPlayerState(String name, String[] posArray) {
         long updateTime = System.currentTimeMillis();
 
-        // Check if player exists in entity list
-        boolean contains = entityList.containsKey(name);
-        
+        boolean contains = entityList.contains(name);
+
         if (contains) {
             entityList.get(name).setCoordinates(posArray, updateTime);
         }
-        else {
-            NetworkEntity n = new NetworkEntity(name, ip, posArray, updateTime);
+
+    }
+
+    /**
+     * 
+     *
+     * @param name
+     * @param ip
+     * @return
+     */
+    public synchronized boolean createIfAbsent(String name, InetAddress ip) {
+        long updateTime = System.currentTimeMillis();
+
+        boolean playerAdded;
+        boolean contains = entityList.containsKey(name);
+
+        if (!contains) {
+            NetworkEntity n = new NetworkEntity(name, ip, updateTime);
             entityList.put(name, n);
             ServerGUI.getInstance().setSystemMessage("Player " + name + " has connected");
+            playerAdded = true;
         }
+        else {
+            playerAdded = false;
+        }
+
+        return playerAdded;
     }
 
     /**

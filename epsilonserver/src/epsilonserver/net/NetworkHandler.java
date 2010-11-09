@@ -1,12 +1,14 @@
 package epsilonserver.net;
 
 import epsilonserver.game.ServerGUI;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.ServerSocket;
 import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.concurrent.BlockingQueue;
@@ -27,14 +29,19 @@ public class NetworkHandler {
     private PacketParser parser = null;
     private ListenerThread listener = null;
     private SenderThread sender = null;
+    private ConnectionInitializer connectionInit = null;
 
     // Incoming packet queue
     private BlockingQueue<DatagramPacket> incomingPacketQueue;
 
     // Outgoing packet queue
     private BlockingQueue<DatagramPacket> outgoingPacketQueue;
-    
+
+    // UDP socket
     private DatagramSocket socket;
+
+    // TCP socket
+    private ServerSocket connectionSocket;
 
     /**
      * Private constructor.
@@ -74,6 +81,7 @@ public class NetworkHandler {
             InetAddress bindIP = getFirstNonLoopbackAddress(true, false);
 
             socket = new DatagramSocket(SERVER_PORT, bindIP);
+            connectionSocket = new ServerSocket(SERVER_PORT);
             ServerGUI.getInstance().setSystemMessage("Socket created on interface " + bindIP);
         }
         catch (SocketException se) {
@@ -81,14 +89,20 @@ public class NetworkHandler {
             System.out.println(se.getMessage());
             //se.printStackTrace();
         }
+        catch (IOException e) {
+        
+        }
 
-        if (listener == null && parser == null && sender == null) {
+        if (listener == null && parser == null && sender == null && connectionInit == null) {
+            connectionInit = new ConnectionInitializer(connectionSocket);
             listener = new ListenerThread(socket, incomingPacketQueue);
             parser = new PacketParser(incomingPacketQueue);
             sender = new SenderThread(socket, outgoingPacketQueue);
+
         }
 
         // start network threads
+        new Thread(connectionInit).start();
         new Thread(listener).start();
         new Thread(parser).start();
         new Thread(sender).start();

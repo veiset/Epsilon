@@ -23,12 +23,29 @@ public class NetworkEntity {
      * @param posY Players Y position
      * @param playerName Player name
      * @param updateTime Time of creation
+     * @param ip Players IP address
      */
     public NetworkEntity(String playerName, InetAddress ip, String[] posArray, long updateTime) {
         this.posArray = posArray;
         this.name = playerName;
         this.ip = ip;
         lastUpdateTime = updateTime;
+    }
+
+    /**
+     * Constructor
+     *
+     * @param playerName Player name
+     * @param ip Players IP address
+     * @param updateTime Time of creation
+     */
+    public NetworkEntity(String playerName, InetAddress ip, long updateTime) {
+        name = playerName;
+        this.ip = ip;
+        lastUpdateTime = updateTime;
+
+        posArray[0] = "-200";
+        posArray[1] = "-800";
     }
 
     /**
