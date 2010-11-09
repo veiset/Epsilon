@@ -56,7 +56,7 @@ public class TestMap extends Map {
         TestPlayerEntity test = new TestPlayerEntity(-70, 400, "");
         playerEntity = test;
 
-        enemy = new EnemyPatrol(-300, 100);
+        enemy = new EnemyJumping(-300, 100);
         renderableEntities.add(enemy);
         moveableEntities.add(enemy);
         entities.add(enemy);

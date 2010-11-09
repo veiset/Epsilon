@@ -11,7 +11,7 @@ import java.awt.Graphics;
  *
  * @author vz
  */
-public class EnemyPatrol extends Enemy {
+public class EnemyJumping extends Enemy {
 
     private int startXpos;
     private boolean facingRight;
@@ -30,7 +30,7 @@ public class EnemyPatrol extends Enemy {
      * @param posX enemy starting posX
      * @param posY enemy starting posY
      */
-    public EnemyPatrol(int posX, int posY) {
+    public EnemyJumping(int posX, int posY) {
         super(posX, posY);
         HitBox[] hitbox = new HitBox[1];
 
@@ -89,27 +89,21 @@ public class EnemyPatrol extends Enemy {
     public void calculateMovement() {
 
         // applying gravity!
-
-        if (!touchesGround) {
-            double temp = Physics.calculateGravity(posY, pposY, 16);
-            newPosY = posY - temp;
-        }
-
         if (!isDead) {
-            // very basic AI
-            if (facingRight) {
-                newPosX = posX - (1+speed);
-                currentSprite = spriteFacingLeft;
-            } else if (!facingRight) {
-                newPosX = posX + (1+speed);
-                currentSprite = spriteFacingRight;
+            if (!touchesGround) {
+                double temp = Physics.calculateGravity(posY, pposY, 16);
+                newPosY = posY - temp;
+            } else if (touchesGround) {
+                newPosY -= (6+speed);
+                touchesGround = false;
             }
         }
+
     }
 
     @Override
     public boolean facingRight() {
-        return facingRight;
+        return true;
     }
 
     public void setDead(boolean dead) {
