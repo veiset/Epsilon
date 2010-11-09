@@ -3,6 +3,7 @@ package epsilon.game;
 import epsilon.menu.Menu;
 import epsilon.menu.StartupPage;
 import epsilon.map.Map;
+import epsilon.menu.DeathPage;
 import java.awt.AlphaComposite;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -133,6 +134,10 @@ public class Game extends Canvas {
         if (!menu && map != null) {
             lastUpdateTime = System.currentTimeMillis();
             map.update();
+            if (map.isDead()) {
+                Menu.get().setMenu(new DeathPage());
+                menu = true;
+            }
         } else if (menu) {
             Menu.get().update();
         }
@@ -229,7 +234,7 @@ public class Game extends Canvas {
      * 
      */
     public void restart() {
-
+        map.reset();
     }
 
 }

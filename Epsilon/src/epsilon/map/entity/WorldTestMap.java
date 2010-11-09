@@ -371,4 +371,8 @@ public class WorldTestMap implements Map {
     public void reset() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public boolean isDead() {
+        return playerEntity.isDead();
+    }
 }

@@ -37,4 +37,6 @@ public interface Map {
 
     public void reset();
 
+    public boolean isDead();
+
 }

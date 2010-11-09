@@ -40,8 +40,6 @@ public class TestMap implements Map {
      */
     public TestMap() {
 
-        entities = new ArrayList<Entity>();
-
         initialiseStatic();
         initialiseNonStatic();
 
@@ -145,6 +143,7 @@ public class TestMap implements Map {
 
     private void initialiseNonStatic() {
 
+        entities = new ArrayList<Entity>();
         renderableEntities = new ArrayList<Entity>();
         moveableEntities = new ArrayList<MoveableEntity>();
         shots = new ArrayList<Shot>();
@@ -212,4 +211,10 @@ public class TestMap implements Map {
         worldstore.add(new Floor_1(500, 495));
 
     }
+
+    public boolean isDead() {
+        return playerEntity.isDead();
+    }
+
+
 }

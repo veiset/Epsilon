@@ -245,4 +245,8 @@ public class PlayerEntity extends MoveableEntity {
 
         isDead = false;
     }
+
+    public boolean isDead() {
+        return true;
+    }
 }

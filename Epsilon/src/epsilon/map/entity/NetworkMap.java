@@ -1,11 +1,14 @@
 package epsilon.map.entity;
 
 import epsilon.game.Collision;
+import epsilon.game.Game;
 import epsilon.game.Input;
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
 import epsilon.map.Map;
 import epsilon.map.WorldStore;
+import epsilon.menu.DeathPage;
+import epsilon.menu.Menu;
 import epsilon.net.NetworkHandler;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -117,9 +120,14 @@ public class NetworkMap implements Map {
 
     public void update() {
 
+        if (playerEntity.isDead()) {
+            Menu.get().setMenu(new DeathPage());
+        }
+
         while(NetworkHandler.getInstance().hasNewPlayers()) {
             String s = NetworkHandler.getInstance().getNewPlayer();
             double[] d = NetworkHandler.getInstance().getPlayerStateByName(s);
+
             if (d != null) {
                 TestNetworkEntity n = new TestNetworkEntity(d[0], d[1], s);
                 renderableEntities.add(n);
@@ -195,6 +203,10 @@ public class NetworkMap implements Map {
 
     public void reset() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean isDead() {
+        return playerEntity.isDead();
     }
 
 }

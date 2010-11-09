@@ -15,7 +15,9 @@ public class DeathPage extends MenuPage {
     @Override
     public void useSelected() {
         if (selected == 0) {
-            
+            Game.get().restart();
+            Menu.get().setMenu(OptionPage.get());
+            Game.get().menuDone();
         } else if (selected == 1) {
             Game.get().quit();
         }
