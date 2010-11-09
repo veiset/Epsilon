@@ -34,8 +34,6 @@ public abstract class Map {
     // the background object that is displayed on the map
     protected Background bg;
 
-    protected int shotCooldown = 0;
-
 
     public Map(String s) {
 

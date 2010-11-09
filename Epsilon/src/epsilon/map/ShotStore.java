@@ -9,12 +9,16 @@ import epsilon.map.entity.Shot;
 import java.util.ArrayList;
 
 /**
+ * Class for managing shot objects.
  *
  * @author vz
  */
 public class ShotStore {
 
+
     private ArrayList<Shot> shots;
+
+    // referances to the list of renderable and movable entities.
     private ArrayList<Entity> renderEntitiesRef;
     private ArrayList<MoveableEntity> moveableEntitiesRef;
 
@@ -22,12 +26,24 @@ public class ShotStore {
         shots = new ArrayList<Shot>();
     }
 
+    /**
+     * Creating a shotstore
+     *
+     * @param renderableEntities referance to arraylist with renderable entities
+     * @param moveableEntities referance to arraylist with movable entities
+     */
     public ShotStore(ArrayList<Entity> renderableEntities, ArrayList<MoveableEntity> moveableEntities) {
+        // copying the referances
         renderEntitiesRef = renderableEntities;
         moveableEntitiesRef = moveableEntities;
+
         shots = new ArrayList<Shot>();
     }
 
+    /**
+     * Updating the shots, checking if any shot has traveled their maximum
+     * dinstance.
+     */
     public void update() {
 
         // creating temp array to avoid unexpected behaviour when removing elements
@@ -47,6 +63,11 @@ public class ShotStore {
         }
     }
 
+    /**
+     * Checking if the shot has collided with a movableEntity.
+     *
+     * @param e MoveableEntity to check collision against.
+     */
     public void checkCollided(MoveableEntity e) {
 
         if (e instanceof Enemy || e instanceof PlayerEntity) {
@@ -67,6 +88,13 @@ public class ShotStore {
         }
     }
 
+    /**
+     * Create a new shot
+     *
+     * @param xPos current player x position
+     * @param yPos current player y position
+     * @param facingRight true if player is facing right
+     */
     public void addShot(double xPos, double yPos, boolean facingRight) {
         Shot shot = new Shot(xPos, yPos, facingRight);
         shots.add(shot);

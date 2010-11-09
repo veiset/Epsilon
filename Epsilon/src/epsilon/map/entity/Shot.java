@@ -83,6 +83,8 @@ public class Shot extends MoveableEntity {
 
     @Override
     public void collided(Collision c) {
+        // if collieded the dinstance is done, and the shot is removed
+        distanceTravled = distanceMax+1;
     }
 
 }
