@@ -4,6 +4,7 @@ import epsilon.game.Collision;
 import epsilon.game.Physics;
 import epsilon.game.Sprite;
 import epsilon.map.Map;
+import epsilon.map.ShotStore;
 import java.awt.Graphics;
 
 /**
@@ -22,6 +23,8 @@ public class EnemyPatrol extends Enemy {
     private boolean isDead = false;
     private int health = 4;
     private int speed = 0;
+    private int shotCooldown = 120;
+    private ShotStore shots;
 
     /**
      * EnemyPatrol with starting position, enemy walking 100 pixels to the left
@@ -42,11 +45,13 @@ public class EnemyPatrol extends Enemy {
         startXpos = posX;
         facingRight = true;
 
+        shots = new ShotStore(mapReferance);
+
     }
 
     @Override
     public void collided(Collision c) {
-        if (c.collidedWith instanceof World || c.collidedWith instanceof NetworkEntity || c.collidedWith instanceof PlayerEntity) {
+        if (c.collidedWith instanceof World || c.collidedWith instanceof NetworkEntity || c.collidedWith instanceof TestPlayerEntity) {
 
             // overlap between the two entities in pixels
             double dlx = c.deltaLeft;
@@ -56,12 +61,12 @@ public class EnemyPatrol extends Enemy {
 
             // movement if this entity collides on the left side of something
             if (c.crossedLeft && pposX < posX && dty > 20 && dby > 20) {
-                facingRight = true;
+                facingRight = false;
             }
 
             // movement if this entity collides on the right side of something
             if (c.crossedRight && pposX > posX && dty > 8 && dby > 6) {
-                facingRight = false;
+                facingRight = true;
             }
 
             // movement if it collides on the bottom of this entity
@@ -74,7 +79,7 @@ public class EnemyPatrol extends Enemy {
             if (c.crossedBottom && posY < pposY && (drx > 8 && dlx > 8)) {
                 newPosY += dby;
             }
-        } else if (c.collidedWith instanceof Shot) {
+        } else if (c.collidedWith instanceof Shot && ((Shot) c.collidedWith).getShooter() != this) {
             health -= 1;
             if (health == 0) {
                 isDead = true;
@@ -97,13 +102,34 @@ public class EnemyPatrol extends Enemy {
 
         if (!isDead) {
             // very basic AI
-            if (facingRight) {
-                newPosX = posX - (1+speed);
+            if (!facingRight) {
+                newPosX = posX - (1 + speed);
                 currentSprite = spriteFacingLeft;
-            } else if (!facingRight) {
-                newPosX = posX + (1+speed);
+            } else if (facingRight) {
+                newPosX = posX + (1 + speed);
                 currentSprite = spriteFacingRight;
             }
+
+            double[] playerPos = mapReferance.getPlayerPosition();
+            int playerPosX = (int) (playerPos[0] - posX);
+
+
+            // shots
+            if (shotCooldown > 0) {
+                shotCooldown--;
+            }
+            if (shotCooldown == 0) {
+                //sound.close();
+
+                // only shoot if player is infront of line of sight!
+                if (facingRight && playerPosX > 0 && playerPosX < 300
+                        || !facingRight && playerPosX < 0 && playerPosX > -300) {
+                    
+                    shots.addShot(posX, posY, facingRight, this, mapReferance);
+                    shotCooldown += 120;
+                }
+            }
+            shots.update();
         }
     }
 

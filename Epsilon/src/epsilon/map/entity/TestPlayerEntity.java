@@ -187,7 +187,7 @@ public class TestPlayerEntity extends MoveableEntity {
     @Override
     public void collided(Collision c) {
 
-        if (c.collidedWith instanceof World || c.collidedWith instanceof TestNetworkEntity) {
+        if (c.collidedWith instanceof World || c.collidedWith instanceof TestNetworkEntity || c.collidedWith instanceof Enemy) {
 
             // overlap between the two entities in pixels
             double dty = c.deltaTop;

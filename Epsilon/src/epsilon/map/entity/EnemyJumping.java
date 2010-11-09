@@ -4,6 +4,7 @@ import epsilon.game.Collision;
 import epsilon.game.Physics;
 import epsilon.game.Sprite;
 import epsilon.map.Map;
+import epsilon.map.ShotStore;
 import java.awt.Graphics;
 
 /**
@@ -23,6 +24,8 @@ public class EnemyJumping extends Enemy {
     private boolean isDead = false;
     private int health = 4;
     private int speed = 0;
+    private ShotStore shots;
+    private int shotCooldown = 120;
 
     /**
      * EnemyPatrol with starting position, enemy walking 100 pixels to the left
@@ -42,6 +45,8 @@ public class EnemyJumping extends Enemy {
         currentSprite = spriteFacingRight;
         startXpos = posX;
         facingRight = true;
+
+        shots = new ShotStore(mapReferance);
 
     }
 
@@ -75,7 +80,7 @@ public class EnemyJumping extends Enemy {
             if (c.crossedBottom && posY < pposY && (drx > 8 && dlx > 8)) {
                 newPosY += dby;
             }
-        } else if (c.collidedWith instanceof Shot) {
+        } else if (c.collidedWith instanceof Shot && ((Shot) c.collidedWith).getShooter() != this) {
             //(Shot)c.collidedWith).remove();
             health -= 1;
             if (health == 0) {
@@ -85,6 +90,7 @@ public class EnemyJumping extends Enemy {
                 speed += 1;
             }
         }
+
     }
 
     @Override
@@ -96,11 +102,29 @@ public class EnemyJumping extends Enemy {
                 double temp = Physics.calculateGravity(posY, pposY, 16);
                 newPosY = posY - temp;
             } else if (touchesGround) {
-                newPosY -= (6+speed);
+                newPosY -= (6 + speed);
                 touchesGround = false;
             }
-        }
+            // shots
 
+            double[] playerPos = mapReferance.getPlayerPosition();
+            int playerPosX = (int) (playerPos[0] - posX);
+
+
+            if (shotCooldown > 0) {
+                shotCooldown--;
+            }
+            if (shotCooldown == 0) {
+                //sound.close();
+                // only shoot if player is infront of line of sight!
+                if (facingRight && playerPosX > 0 && playerPosX < 300
+                        || !facingRight && playerPosX < 0 && playerPosX > -300) {
+                    shots.addShot(posX, posY, facingRight, this, mapReferance);
+                    shotCooldown += 120;
+                }
+            }
+            shots.update();
+        }
     }
 
     @Override
