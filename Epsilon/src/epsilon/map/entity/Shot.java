@@ -83,7 +83,6 @@ public class Shot extends MoveableEntity {
 
     @Override
     public void collided(Collision c) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
