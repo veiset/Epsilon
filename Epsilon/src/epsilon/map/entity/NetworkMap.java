@@ -46,31 +46,14 @@ public class NetworkMap extends Map {
             }
         }
 
-        if (shotCooldown>0) {
+        // shots
+        if (shotCooldown > 0) {
             shotCooldown--;
         }
         if (Input.get().attack() && shotCooldown == 0) {
             //sound.close();
-            Shot shot = new Shot(playerEntity.getXPosition(),playerEntity.getYPosition(),playerEntity.facingRight());
-            moveableEntities.add(shot);
-            renderableEntities.add(shot);
-            shots.add(shot);
+            shots.addShot(playerEntity.getXPosition(), playerEntity.getYPosition(), playerEntity.facingRight());
             shotCooldown += 30;
-        }
-
-        // creating temp array to avoid unexpected behaviour when removing elements
-        Shot[] tempshot = new Shot[shots.size()];
-        shots.toArray(tempshot);
-
-        // checking each shot if it has traveled its distance
-        for (int i = 0; i < tempshot.length; i++) {
-            Shot shot = tempshot[i];
-            if (shot.distanceDone()) {
-                // removing the shot from the lists
-                shots.remove(shot);
-                renderableEntities.remove(shot);
-                moveableEntities.remove(shot);
-            }
         }
 
         MoveableEntity[] temp = new MoveableEntity[moveableEntities.size()];
@@ -114,7 +97,6 @@ public class NetworkMap extends Map {
         renderableEntities = new ArrayList<Entity>();
         moveableEntities = new ArrayList<MoveableEntity>();
         entities = new ArrayList<Entity>();
-        shots = new ArrayList<Shot>();
 
         bg = new Background("/pics/bg3.png", 1.25);
 

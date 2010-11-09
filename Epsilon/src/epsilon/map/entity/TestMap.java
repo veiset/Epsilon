@@ -14,7 +14,7 @@ import epsilon.map.Map;
 public class TestMap extends Map {
 
     // enemies
-    Enemy enemy;
+    private Enemy enemy;
     private int shotCooldown = 0;
 
     /**
@@ -29,43 +29,18 @@ public class TestMap extends Map {
     @Override
     public void update() {
 
-        // shots! refactor me!
+        // shots
         if (shotCooldown > 0) {
             shotCooldown--;
         }
         if (Input.get().attack() && shotCooldown == 0) {
             //sound.close();
-            Shot shot = new Shot(playerEntity.getXPosition(), playerEntity.getYPosition(), playerEntity.facingRight());
-            moveableEntities.add(shot);
-            renderableEntities.add(shot);
-            shots.add(shot);
+            shots.addShot(playerEntity.getXPosition(), playerEntity.getYPosition(), playerEntity.facingRight());
             shotCooldown += 30;
         }
 
-        // creating temp array to avoid unexpected behaviour when removing elements
-        Shot[] tempshot = new Shot[shots.size()];
-        shots.toArray(tempshot);
+        shots.checkCollided(enemy);
 
-        // checking each shot if it has traveled its distance
-        for (int i = 0; i < tempshot.length; i++) {
-            Shot shot = tempshot[i];
-
-            Collision c = shot.collision(enemy);
-            if (c.collided) {
-                enemy.collided(c);
-                shots.remove(shot);
-                renderableEntities.remove(shot);
-                moveableEntities.remove(shot);
-            } else if (shot.distanceDone()) {
-                // removing the shot from the lists
-                shots.remove(shot);
-                renderableEntities.remove(shot);
-                moveableEntities.remove(shot);
-            }
-        }
-
-
-        // end of shot logic
 
         super.update();
 

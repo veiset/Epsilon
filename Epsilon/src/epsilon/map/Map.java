@@ -22,7 +22,7 @@ public abstract class Map {
     protected ArrayList<Entity> renderableEntities;
     protected ArrayList<MoveableEntity> moveableEntities;
     protected ArrayList<Entity> entities;
-    protected ArrayList<Shot> shots;
+    protected ShotStore shots;
     protected WorldStore worldstore;
 
     // the soundtrack that is played continuously while playing the map
@@ -33,6 +33,9 @@ public abstract class Map {
 
     // the background object that is displayed on the map
     protected Background bg;
+
+    protected int shotCooldown = 0;
+
 
     public Map(String s) {
 
@@ -68,6 +71,8 @@ public abstract class Map {
      * 
      */
     public void update() {
+
+        shots.update();
 
         MoveableEntity[] temp = new MoveableEntity[moveableEntities.size()];
         moveableEntities.toArray(temp);
@@ -120,7 +125,7 @@ public abstract class Map {
         entities = new ArrayList<Entity>();
         renderableEntities = new ArrayList<Entity>();
         moveableEntities = new ArrayList<MoveableEntity>();
-        shots = new ArrayList<Shot>();
+        shots = new ShotStore(renderableEntities,moveableEntities);
 
     }
 
