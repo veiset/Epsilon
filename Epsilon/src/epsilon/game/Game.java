@@ -186,12 +186,18 @@ public class Game extends Canvas {
             Menu.get().render(g);
         }
 
+        Font f = getStandardFont();
+        g.setFont(f.deriveFont(f.getSize2D()*0.75f));
+        FontMetrics fm = g.getFontMetrics();
+
         if (fps != 0) {
-            Font f = getStandardFont();
-            g.setFont(f.deriveFont(f.getSize2D()*0.75f));
             g.setColor(Color.BLACK);
-            FontMetrics fm = g.getFontMetrics();
-            g.drawString("FPS: " + fps, 800-10-fm.stringWidth("FPS: " + fps), fm.getHeight());
+            g.drawString("FPS: " + fps, 800-5-fm.stringWidth("FPS: " + fps), fm.getHeight()+3);
+        }
+
+        if (map != null) {
+            g.setColor(Color.RED);
+            g.drawString("Health: " + map.getPlayerHp(), 5, fm.getHeight()+3);
         }
 
 	// finally, we've completed drawing so clear up the graphics

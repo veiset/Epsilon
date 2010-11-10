@@ -259,4 +259,8 @@ public class TestPlayerEntity extends MoveableEntity {
     protected void updateShots() {
         shots.update();
     }
+
+    public int getHp() {
+        return hp;
+    }
 }

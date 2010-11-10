@@ -159,4 +159,8 @@ public abstract class Map {
         moveableEntities.remove(s);
     }
 
+    public int getPlayerHp() {
+        return playerEntity.getHp();
+    }
+
 }
