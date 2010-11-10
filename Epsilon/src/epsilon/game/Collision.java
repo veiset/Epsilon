@@ -18,42 +18,57 @@ public class Collision {
     public boolean collided;
 
     /**
-     * true if the Entity the collidingEntity collided with crossed the left
+     * True if the Entity the collidingEntity collided with crossed the left
      * side of the collidingEntity
      */
     public boolean crossedLeft;
 
     /**
-     * true if the Entity the collidingEntity collided with crossed the right
+     * True if the Entity the collidingEntity collided with crossed the right
      * side of the collidingEntity
      */
     public boolean crossedRight;
 
     /**
-     * true if the Entity the collidingEntity collided with crossed the top
+     * True if the Entity the collidingEntity collided with crossed the top
      * of the collidingEntity
      */
     public boolean crossedTop;
 
     /**
-     * true if the Entity the collidingEntity collided with crossed the top
+     * True if the Entity the collidingEntity collided with crossed the top
      * of the collidingEntity
      */
     public boolean crossedBottom;
 
     /**
-     * The entity that was creating the collision object
+     * The entity that created the collision object
      */
     public Entity collidingEntity;
 
     /**
-     * The entity that was
+     * The entity that was collided with
      */
     public Entity collidedWith;
 
+    /**
+     * The overlap on the left side of the colliding entity
+     */
     public double deltaLeft;
+
+    /**
+     * The overlap on the right side of the colliding entity
+     */
     public double deltaRight;
+
+    /**
+     * The overlap on the top of the colliding entity
+     */
     public double deltaTop;
+
+    /**
+     * The overlap on the bottom of the colliding entity
+     */
     public double deltaBottom;
 
     /**

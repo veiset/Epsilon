@@ -1,6 +1,7 @@
 package epsilon.game;
 
 /**
+ * Physics class for the game epsilon
  *
  * @author Marius
  */

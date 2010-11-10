@@ -75,13 +75,53 @@ public class Input implements MouseListener, KeyListener {
     }
 
     // Unused eventhandlers
+    /**
+     * Unused eventhandler
+     *
+     * @param e
+     */
     public void mouseClicked(MouseEvent e) {}
+
+    /**
+     * Unused eventhandler
+     *
+     * @param e
+     */
     public void mousePressed(MouseEvent e) {}
+
+    /**
+     * Unused eventhandler
+     *
+     * @param e
+     */
     public void mouseReleased(MouseEvent e) {}
+
+    /**
+     * Unused eventhandler
+     *
+     * @param e
+     */
     public void mouseEntered(MouseEvent e) {}
+
+    /**
+     * Unused eventhandler
+     *
+     * @param e
+     */
     public void mouseExited(MouseEvent e) {}
+
+    /**
+     * Unused eventhandler
+     *
+     * @param e
+     */
     public void keyTyped(KeyEvent e) {}
 
+    /**
+     * Eventhandler used for handeling keyboard input
+     *
+     * @param e the eventhandler opbect
+     */
     public void keyPressed(KeyEvent e) {
         if (typing) {
             if (e.getKeyCode() == menuChoiceButton) {
@@ -125,7 +165,12 @@ public class Input implements MouseListener, KeyListener {
             }
         }
     }
-    
+
+    /**
+     * Eventhandler used for handeling keyboard input
+     *
+     * @param e the eventhandler object
+     */
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == attackButton) {
             attack = false;

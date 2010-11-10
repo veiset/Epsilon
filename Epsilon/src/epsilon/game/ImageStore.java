@@ -27,7 +27,9 @@ public class ImageStore {
     private HashMap<String,Image> images;
     private HashMap<String,Image> flippedImages;
 
-    /** Constructor */
+    /** 
+     * Constructor
+     */
     private ImageStore () {
         images = new HashMap<String,Image>();
         flippedImages = new HashMap<String, Image>();

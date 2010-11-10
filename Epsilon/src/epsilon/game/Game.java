@@ -160,6 +160,7 @@ public class Game extends Canvas {
      * game hasn't been updated
      *
      * @param delta time in milliseconds since last update
+     * @param fps the current fps, used for rendering the fps to the HUD
      */
     public void renderGraphics(long delta, int fps) {
 
@@ -240,28 +241,35 @@ public class Game extends Canvas {
     }
 
     /**
+     * Returns the current state of the player
+     * The first double of the array is the x position, the second is the y position
+     * and the third is the tick when the player last shot.
      *
-     *
-     * @return
+     * @return a double array containing the current state of the player
      */
     public double[] getPlayerState() {
         return map.getPlayerState();
     }
 
     /**
-     * 
+     * Resets the player position on the map
      */
     public void resetPlayerPosition() {
         map.resetPlayerPosition();
     }
 
     /**
-     * 
+     * Restarts the map from scratch. Doesn't work well on multiplayer maps
      */
     public void restart() {
         map.reset();
     }
 
+    /**
+     * Method used for getting the standard font used on the menu and HUD
+     *
+     * @return the Standard font in normal size
+     */
     public static Font getStandardFont() {
         return Menu.get().getFont();
     }

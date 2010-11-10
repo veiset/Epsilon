@@ -10,35 +10,73 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 /**
- * An interface describing the methods that need to be in a map
+ * An abstract handling the basic methods that need to be in a map
+ * The methods initialiseStatic and initialiseNonStatic should be overriden
+ * and start with a call to super, so that all the fields are initialised
  *
  * @author Marius
  */
 public abstract class Map {
 
-    /*
-     * The different lists used for storing entities
-     * There are a number of them to keep the iterating over lists to a minimum
+    /**
+     * ArrayList containing all the renderable enteties on the map
      */
     protected ArrayList<Entity> renderableEntities;
+
+    /**
+     * ArrayList containing all the moveableEntities on the map
+     * All enteties that is added here must extend the MoveableEntity class
+     *
+     * @see epsilon.map.entity.MoveableEntity
+     */
     protected ArrayList<MoveableEntity> moveableEntities;
+
+    /**
+     * Complete list off all the Entity objects on the map
+     *
+     * @see epsilon.map.entity.Entity
+     */
     protected ArrayList<Entity> entities;
+
+    /**
+     * List used for storing objects of the Class world
+     *
+     * @see epsilon.map.WorldStore
+     * @see epsilon.map.entity.World
+     */
     protected WorldStore worldstore;
 
-    // the soundtrack that is played continuously while playing the map
+    /**
+     * the soundtrack that is played continuously while playing the map
+     *
+     * @see epsilon.game.SoundPlayer
+     */
     protected SoundPlayer soundtrack;
 
-    // the entity of the player played on this computer
+    /**
+     * the entity of the player played on this computer
+     *
+     * @see epsilon.map.entity.PlayerEntity
+     */
     protected TestPlayerEntity playerEntity;
 
-    // the background object that is displayed on the map
+    /**
+     * the background object that is displayed on the map
+     *
+     * @see epsilon.map.Background
+     */
     protected Background bg;
 
 
-    public Map(String s) {
+    /**
+     * Constructor for the class map.
+     *
+     * @param name the name of the player playing the map
+     */
+    public Map(String name) {
 
         initialiseStatic();
-        initialiseNonStatic(s);
+        initialiseNonStatic(name);
 
     }
 
@@ -103,12 +141,15 @@ public abstract class Map {
     }
 
     /**
-     * 
+     * Resets the player position to the spawn position
      */
     public void resetPlayerPosition() {
         playerEntity.resetPosition();
     }
 
+    /**
+     * Resets the map to start values, including player, enemies etc
+     */
     public synchronized void reset() {
 
         soundtrack.close();
@@ -118,6 +159,11 @@ public abstract class Map {
         
     }
 
+    /**
+     * Checks if the player is dead
+     *
+     * @return true if the player is dead
+     */
     public boolean isDead() {
         if (playerEntity  != null) {
             return playerEntity.isDead();
@@ -125,20 +171,27 @@ public abstract class Map {
         return false;
     }
 
-    protected void initialiseNonStatic(String s) {
-
+    /**
+     * Initialises the nonStatic entities on the map
+     *
+     * @param name the name of the player currently on the map
+     */
+    protected void initialiseNonStatic(String name) {
         entities = new ArrayList<Entity>();
         renderableEntities = new ArrayList<Entity>();
         moveableEntities = new ArrayList<MoveableEntity>();
-
     }
 
-    protected void initialiseStatic() {
-        
+    /**
+     * Initialises the static entities on the map
+     */
+    protected void initialiseStatic() {    
         worldstore = new WorldStore(50);
-
     }
 
+    /**
+     * Resets the non static entities on the map
+     */
     protected void resetNonStatic() {
         renderableEntities = null;
         moveableEntities = null;
@@ -149,16 +202,33 @@ public abstract class Map {
         soundtrack = null;
     }
 
-    public synchronized void addShot(Shot s) {
-        renderableEntities.add(s);
-        moveableEntities.add(s);
+    /**
+     * Adds a new shot to the map, should probably be renamed
+     *
+     * @param shot the Shot object that should be added to the map
+     * @see epsilon.map.entity.Shot
+     */
+    public synchronized void addShot(Shot shot) {
+        renderableEntities.add(shot);
+        moveableEntities.add(shot);
     }
 
-    public synchronized void removeShot(Shot s) {
-        renderableEntities.remove(s);
-        moveableEntities.remove(s);
+    /**
+     * Removes a specific Shot object from the map
+     *
+     * @param shot the Shot object to be removed
+     * @see epsilon.map.entity.Shot
+     */
+    public synchronized void removeShot(Shot shot) {
+        renderableEntities.remove(shot);
+        moveableEntities.remove(shot);
     }
 
+    /**
+     * Returns the Health Points of the current PlayerEntity
+     *
+     * @return the current HP as an int
+     */
     public int getPlayerHp() {
         return playerEntity.getHp();
     }

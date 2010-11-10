@@ -109,6 +109,11 @@ public class WorldStore {
 
     }
 
+    /**
+     * Returns the amount of World objects, currently stored in this store.
+     *
+     * @return the amount of World objects currently stored
+     */
     public int size() {
         return map.size();
     }
