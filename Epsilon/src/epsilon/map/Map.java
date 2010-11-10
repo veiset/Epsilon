@@ -48,7 +48,7 @@ public abstract class Map {
      * @param g the graphics object things should be rendered to.
      * @param delta where you are between gameupdates. Makes sure you move smoothly
      */
-    public void render(Graphics g, int delta) {
+    public synchronized void render(Graphics g, int delta) {
 
         bg.render(g, playerEntity.getXPosition(), playerEntity.getYPosition());
 
@@ -59,7 +59,7 @@ public abstract class Map {
 
         for (int i = 0; i < temp.length; i++) {
             temp[i].render(g, delta, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
-            temp[i].renderHitBox(g, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
+            //temp[i].renderHitBox(g, playerEntity.getXRenderPosition(), playerEntity.getYRenderPosition());
         }
 
     }
@@ -149,12 +149,12 @@ public abstract class Map {
         soundtrack = null;
     }
 
-    public void addShot(Shot s) {
+    public synchronized void addShot(Shot s) {
         renderableEntities.add(s);
         moveableEntities.add(s);
     }
 
-    public void removeShot(Shot s) {
+    public synchronized void removeShot(Shot s) {
         renderableEntities.remove(s);
         moveableEntities.remove(s);
     }

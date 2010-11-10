@@ -36,7 +36,8 @@ public class TestPlayerEntity extends MoveableEntity {
     private boolean isDead = false;
 
     private ShotStore shots;
-    private int shotCooldown;
+    private int shotTimer;
+    private int lastShot;
 
     /**
      * Constructor for the entity that initialises sprites
@@ -66,7 +67,8 @@ public class TestPlayerEntity extends MoveableEntity {
         currentSprite = standSpriteRight;
 
         shots = new ShotStore(mapReferance);
-        shotCooldown = 30;
+        lastShot = 0;
+        shotTimer = 0;
     }
 
     @Override
@@ -75,6 +77,8 @@ public class TestPlayerEntity extends MoveableEntity {
         // handle input, and chose the right sprite for the job
         newPosX = posX;
         newPosY = posY;
+
+        shotTimer++;
 
         // checking if the player is dead
         if (!isDead) {
@@ -115,13 +119,10 @@ public class TestPlayerEntity extends MoveableEntity {
                 }
 
                 // shots
-                if (shotCooldown > 0) {
-                    shotCooldown--;
-                }
-                if (Input.get().attack() && shotCooldown == 0) {
+                if (Input.get().attack() && shotTimer - lastShot > 30) {
                     //sound.close();
                     shots.addShot(posX, posY, facingRight, this, mapReferance);
-                    shotCooldown += 30;
+                    lastShot = shotTimer;
                 }
                 shots.update();
             }
@@ -235,6 +236,10 @@ public class TestPlayerEntity extends MoveableEntity {
 
     public boolean isDead() {
          return isDead;
+    }
+
+    public int lastShot() {
+        return lastShot;
     }
 
 }

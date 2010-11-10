@@ -156,7 +156,7 @@ public class Game extends Canvas {
      *
      * @param delta time in milliseconds since last update
      */
-    public void renderGraphics(long delta) {
+    public void renderGraphics(long delta, int FPS) {
 
         // Get hold of a graphics context for the accelerated
 	// surface and blank it out
@@ -176,7 +176,7 @@ public class Game extends Canvas {
 
         if (menu) {
             g.setColor(Color.BLACK);
-            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,(float)0.3));
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,(float)0.6));
             g.fillRect(0, 0, 800, 600);
             Menu.get().render(g);
         }

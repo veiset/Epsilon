@@ -1,7 +1,6 @@
 package epsilon.map.entity;
 
 import epsilon.game.Collision;
-import epsilon.game.Input;
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
 import epsilon.map.Map;
@@ -141,6 +140,12 @@ public class NetworkMap extends Map {
         worldstore.add(new Floor_1(350, 455, this));
         worldstore.add(new Floor_1(500, 495, this));
 
+    }
+
+    @Override
+    public double[] getPlayerPosition() {
+        //return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition(), playerEntity.lastShot()};
+        return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition()};
     }
 
 }

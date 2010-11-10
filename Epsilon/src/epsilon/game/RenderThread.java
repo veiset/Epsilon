@@ -23,6 +23,8 @@ public class RenderThread extends Thread {
     // turns on and off FPS calculation
     private boolean calcFPS = true;
 
+    private int fps;
+
 
     /**
      * Constructor of the render thread, intialises all the variables needed for controlling it.
@@ -35,9 +37,10 @@ public class RenderThread extends Thread {
         game = g;
         lastLoopTime = System.currentTimeMillis();
         rendering = true;
-        g.renderGraphics(0);
+        g.renderGraphics(0, 0);
         currentIt = 0;
         totalTime = 0;
+        fps = 0;
         
     }
 
@@ -49,7 +52,7 @@ public class RenderThread extends Thread {
         while (rendering) {
             long delta = System.currentTimeMillis() - lastLoopTime;
             lastLoopTime = System.currentTimeMillis();
-            game.renderGraphics(delta);
+            game.renderGraphics(delta, fps);
             if(calcFPS){calcFPS(delta);}
             try { Thread.sleep(1); } catch (Exception e) {}
         }
@@ -66,8 +69,8 @@ public class RenderThread extends Thread {
             currentIt++;
         } else {
             float t = ((float)totalTime)/1000;
-            float fps = 100 / t;
-            System.out.println("FPS: " + fps);
+            fps = Math.round( 100 / t );
+            //System.out.println("FPS: " + fps);
             totalTime = delta;
             currentIt = 1;
         }
