@@ -23,6 +23,9 @@ public class NetworkEntity {
     // Last time player state was updated
     private long lastUpdateTime;
 
+    // Color of player model
+    private String color;
+
     /**
      * Constructor
      *
@@ -30,10 +33,11 @@ public class NetworkEntity {
      * @param ip Players IP address
      * @param updateTime Time of creation
      */
-    public NetworkEntity(String playerName, InetAddress ip, long updateTime) {
+    public NetworkEntity(String playerName, InetAddress ip, long updateTime, String color) {
         name = playerName;
         this.ip = ip;
         lastUpdateTime = updateTime;
+        this.color = color;
 
         // Set a default starting position outside of the screen
         String[] p = new String[3];
@@ -71,6 +75,16 @@ public class NetworkEntity {
     }
 
     /**
+     * Get string that says what color the player was using
+     * for the player model
+     *
+     * @return color Players model color
+     */
+    public String getColor() {
+        return color;
+    }
+
+    /**
      * Set new player coordinates and set new update time.
      *
      * @param actionArray Players recent actions
@@ -87,7 +101,8 @@ public class NetworkEntity {
      * @return playerState String with name, position and shot information
      */
     public synchronized String getPlayerState() {
-        String playerState = name + " " + actionArray[0] + " " + actionArray[1] + " " + actionArray[2] + " ";
+        String playerState = name + " " + actionArray[0] 
+                + " " + actionArray[1] + " " + actionArray[2] + " " + color + " ";
         return playerState;
     }
 

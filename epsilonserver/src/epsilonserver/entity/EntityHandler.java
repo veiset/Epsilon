@@ -2,8 +2,10 @@ package epsilonserver.entity;
 
 import epsilonserver.game.ServerGUI;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -20,12 +22,25 @@ public class EntityHandler {
     // Time before we kick the player
     private long tmeoutValue = 5000;
 
+    private ArrayList<String> colorList;
+
+    private Random random;
+
     /**
      * Private constructor
      * Initialize concurrent hashmap containing players
      */
     private EntityHandler() {
         entityList = new ConcurrentHashMap<String, NetworkEntity>();
+
+        // Create a list of colors
+        colorList = new ArrayList<String>();
+        
+        // Add colors to the list
+        setColors();
+
+        // Create random number generator
+        random = new Random();
     }
 
     /**
@@ -44,6 +59,30 @@ public class EntityHandler {
      */
     public static EntityHandler getInstance() {
         return EntityHandlerHolder.INSTANCE;
+    }
+
+    /**
+     * Add colors to the player color list
+     */
+    private void setColors() {
+        colorList.clear();
+
+        colorList.add("RED");
+        colorList.add("BLUE");
+        colorList.add("PINK");
+        colorList.add("GREEN");
+        colorList.add("BLACK");
+    }
+
+    /**
+     * Get color bound to a specific player
+     *
+     * @param name Name of player
+     * @return color Players color
+     */
+    public String getColorByName(String name) {
+        String color = entityList.get(name).getColor();
+        return color;
     }
 
     /**
@@ -141,10 +180,18 @@ public class EntityHandler {
         boolean playerAdded;
         boolean contains = entityList.containsKey(name);
 
-        if (!contains) {
-            NetworkEntity n = new NetworkEntity(name, ip, updateTime);
+        if (!contains && !colorList.isEmpty()) {
+
+            // Pick a random color from colorlist
+            // and remove the color
+            int length = colorList.size();
+            int colorIdx = random.nextInt(length-1);
+            String color = colorList.get(colorIdx);
+            colorList.remove(colorIdx);
+
+            NetworkEntity n = new NetworkEntity(name, ip, updateTime, color);
             entityList.put(name, n);
-            ServerGUI.getInstance().setSystemMessage("Player " + name + " has connected");
+            ServerGUI.getInstance().setSystemMessage("Player " + name + " has connected and is " + color);
             playerAdded = true;
         }
         else {
@@ -171,7 +218,13 @@ public class EntityHandler {
             long lastUpdateTime = n.getLastUpdateTime();
 
             if ((currentTime - lastUpdateTime) > tmeoutValue) {
+                // Get the color the player was using and
+                // put it back in the colorlist
+                String color = n.getColor();
+                colorList.add(color);
+                colorList.trimToSize();
                 it.remove();
+
                 ServerGUI.getInstance().setSystemMessage("Player " + n.getPlayerName() + " has timed out");
             }
         }
@@ -183,6 +236,7 @@ public class EntityHandler {
      */
     public void clearPlayers() {
         entityList.clear();
+        setColors();
     }
 
 }
