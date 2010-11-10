@@ -16,25 +16,19 @@ public class TestPlayerEntity extends MoveableEntity {
 
     // keeps track of when to change pictures in the sprite
     protected int ticker;
-
     // used for checking if the entity can jump
     private boolean touchesGround;
-
     // the name of the player
     private String name;
-
     private double origPosX;
     private double origPosY;
-
     // the different sprites this entity uses
     protected Sprite rightSprite;
     protected Sprite standSpriteRight;
     protected Sprite leftSprite;
     protected Sprite standSpriteLeft;
     protected boolean facingRight = true;
-
     private boolean isDead = false;
-
     private ShotStore shots;
     private int shotTimer;
     private int lastShot;
@@ -45,7 +39,7 @@ public class TestPlayerEntity extends MoveableEntity {
      * @param posX The starting X position of the entity
      * @param posY The starting Y position of the entity
      */
-    public TestPlayerEntity(double posX,double posY, String name, Map m) {
+    public TestPlayerEntity(double posX, double posY, String name, Map m) {
         super(posX, posY, m);
         ticker = 0;
         touchesGround = false;
@@ -59,10 +53,10 @@ public class TestPlayerEntity extends MoveableEntity {
 
         hitbox[0] = new HitBox(37, 28, 20, 63);
 
-        rightSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"}, false, hitbox);
+        rightSprite = new Sprite(new String[]{"/pics/guy01.png", "/pics/guy02.png", "/pics/guy03.png", "/pics/guy04.png", "/pics/guy05.png"}, false, hitbox);
         standSpriteRight = new Sprite(new String[]{"/pics/guy01.png"}, false, hitbox);
-        leftSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"},true, hitbox);
-        standSpriteLeft = new Sprite(new String[]{"/pics/guy01.png"},true, hitbox);
+        leftSprite = new Sprite(new String[]{"/pics/guy01.png", "/pics/guy02.png", "/pics/guy03.png", "/pics/guy04.png", "/pics/guy05.png"}, true, hitbox);
+        standSpriteLeft = new Sprite(new String[]{"/pics/guy01.png"}, true, hitbox);
 
         currentSprite = standSpriteRight;
 
@@ -82,7 +76,7 @@ public class TestPlayerEntity extends MoveableEntity {
 
         // checking if the player is dead
         if (!isDead) {
-            if(Input.get().right() && !Input.get().left()) {
+            if (Input.get().right() && !Input.get().left()) {
                 if (currentSprite != rightSprite) {
                     newPosX += (currentSprite.getOffset());
                     currentSprite.resetImage();
@@ -122,22 +116,20 @@ public class TestPlayerEntity extends MoveableEntity {
             // shots
             if (Input.get().attack() && shotTimer - lastShot > 30) {
                 //sound.close();
-                shots.addShot(posX, posY, facingRight, this, mapReferance);
-                lastShot = shotTimer;
+                addShot(0);
             }
             shots.update();
 
 
             // checking if the player has falled down below the floor threshold.
             // If player posY is larger or equal to 598, the player dies.
-            if (posY>=598) {
+            if (posY >= 598) {
                 System.out.print("You are dead!");
                 isDead = true;
-            }
-            // Handle falling
-            else if (posY<600 && !touchesGround) {
+            } // Handle falling
+            else if (posY < 600 && !touchesGround) {
                 double temp = Physics.calculateGravity(posY, pposY, 16);
-                newPosY = posY-temp;
+                newPosY = posY - temp;
             } else if (Input.get().jump()) {
                 // if it touches the ground, jump!
                 newPosY -= 7;
@@ -160,12 +152,12 @@ public class TestPlayerEntity extends MoveableEntity {
     }
 
     @Override
-    public double getXRenderPosition () {
-        return posX - 400 + currentSprite.getWidth()/2;
+    public double getXRenderPosition() {
+        return posX - 400 + currentSprite.getWidth() / 2;
     }
 
     @Override
-    public double getYRenderPosition () {
+    public double getYRenderPosition() {
         //return posY - 300 + currentSprite.getHeight()/2;
         return 0;
     }
@@ -176,11 +168,11 @@ public class TestPlayerEntity extends MoveableEntity {
         double posX = this.posX - x;
         double posY = this.posY - y;
 
-        g.drawRect((int)posX, (int)posY, this.getWidth(), this.getHeight());
+        g.drawRect((int) posX, (int) posY, this.getWidth(), this.getHeight());
 
         HitBox[] hitbox = currentSprite.getHitBox();
 
-        for (int i=0;i<hitbox.length;i++) {
+        for (int i = 0; i < hitbox.length; i++) {
             hitbox[i].draw(g, posX, posY);
         }
     }
@@ -201,14 +193,14 @@ public class TestPlayerEntity extends MoveableEntity {
             } else if (c.crossedRight && pposX > posX && dty > 8 && dby > 6) {
                 newPosX = pposX;
                 c = c.collidingEntity.collision(this);
-            } else if (c.crossedTop && posY > pposY ) {
+            } else if (c.crossedTop && posY > pposY) {
                 newPosY -= dty;
                 posY = newPosY;
                 touchesGround = true;
             } else if (c.crossedBottom && posY < pposY) {
                 newPosY = pposY;
             }
-        } else if (c.collidedWith instanceof Shot && ((Shot)c.collidedWith).getShooter() != this) {
+        } else if (c.collidedWith instanceof Shot && ((Shot) c.collidedWith).getShooter() != this) {
             isDead = true;
         }
     }
@@ -235,7 +227,7 @@ public class TestPlayerEntity extends MoveableEntity {
     }
 
     public boolean isDead() {
-         return isDead;
+        return isDead;
     }
 
     public int lastShot() {
@@ -243,12 +235,16 @@ public class TestPlayerEntity extends MoveableEntity {
     }
 
     protected void addShot(int lastShot) {
-        shots.addShot(posX, posX, facingRight, this, mapReferance);
+        if (facingRight) {
+            shots.addShot(posX + 75, posY + 45, facingRight, this, mapReferance);
+        } else {
+            shots.addShot(posX + 15, posY + 45, facingRight, this, mapReferance);
+
+        }
         if (lastShot != 0) {
             this.lastShot = lastShot;
         } else {
             this.lastShot = shotTimer;
         }
     }
-
 }

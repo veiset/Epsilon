@@ -34,13 +34,10 @@ public class Shot extends MoveableEntity {
 
         // the initial position of the shot, in relation to the player that shot it.
         if (headingRight) {
-            posX += 80;
             currentSprite = new Sprite(new String[]{"/pics/smallbullet.png"},false,h);
         } else {
-            posX += 15;
             currentSprite = new Sprite(new String[]{"/pics/smallbullet.png"},true,h);
         }
-        newPosY += 45;
         this.headingRight = headingRight;
 
         shotBy = shooter;
