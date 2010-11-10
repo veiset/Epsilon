@@ -67,6 +67,7 @@ public class TestPlayerEntity extends MoveableEntity {
         shots = new ShotStore(mapReferance);
         lastShot = 0;
         shotTimer = 0;
+        hp = 100;
     }
 
     @Override
@@ -230,6 +231,7 @@ public class TestPlayerEntity extends MoveableEntity {
         pposY = origPosY;
 
         isDead = false;
+        hp = 100;
     }
 
     public boolean isDead() {
