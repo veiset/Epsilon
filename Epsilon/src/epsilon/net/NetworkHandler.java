@@ -80,7 +80,15 @@ public class NetworkHandler {
     }
 
     /**
-     * Setup socket, network listener and packet parser
+     * Connect to the server by first establishing a TCP connection to give
+     * server the player name. If name is available then the server sends a
+     * OK message and a UDP connection can start. If the player name is taken
+     * then we cast an exception so that a error message can be displayed.
+     *
+     * @param serverAddress IP address to server
+     * @param name Local players name
+     * @throws IOException Problem accessing socket
+     * @throws Exception Error from server
      */
     public void connect(InetAddress serverAddress, String name) throws IOException, Exception {
 
@@ -126,6 +134,7 @@ public class NetworkHandler {
 
                 connectionEstablished = true;
 
+                // close connection input, output and connection socket
                 input.close();
                 output.close();
                 connectionSocket.close();

@@ -93,20 +93,23 @@ public class PacketParser implements Runnable {
                     playersToRemove = (HashSet<String>) playersToRemove.clone();
 
                     // Iterate through substrings in the packet message
-                    for (int i = 0; i < strArray.length-1; i += 3) {
+                    for (int i = 0; i < strArray.length-1; i += 4) {
                         String pname = strArray[i];
                         String posX = strArray[i+1];
                         String posY = strArray[i+2];
+                        String shotTicker = strArray[i+3];
 
                         // Check if name in packet message matches local player name
                         // We dont want info about the local player
                         // this is jusst a redundant check
                         if (!pname.equals(this.name)) {
 
-                            double[] posArray = new double[2];
+                            double[] actionArray = new double[3];
                             try {
-                                posArray[0] = Double.valueOf(posX);
-                                posArray[1] = Double.valueOf(posY);
+                                actionArray[0] = Double.valueOf(posX);
+                                actionArray[1] = Double.valueOf(posY);
+                                actionArray[2] = Double.valueOf(shotTicker);
+
                             }
                             catch (NumberFormatException e) {
                                 System.out.println("Cant convert x or y coordinates to double"); 
@@ -118,7 +121,7 @@ public class PacketParser implements Runnable {
                             }
 
                             // Add player name and state to player state list
-                            playerStateList.put(pname, posArray);
+                            playerStateList.put(pname, actionArray);
 
 
                             // Remove player name from the list of
