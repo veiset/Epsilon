@@ -57,6 +57,8 @@ public class PacketParser implements Runnable {
                 // Get message from packet
                 String packetString = new String(packet.getData(), 0, packet.getLength());
 
+                System.out.println(packetString);
+
                 // Split message into words
                 String[] strArray = packetString.split(" ");
 
@@ -93,11 +95,12 @@ public class PacketParser implements Runnable {
                     playersToRemove = (HashSet<String>) playersToRemove.clone();
 
                     // Iterate through substrings in the packet message
-                    for (int i = 0; i < strArray.length-1; i += 4) {
+                    for (int i = 0; i < strArray.length-1; i += 5) {
                         String pname = strArray[i];
                         String posX = strArray[i+1];
                         String posY = strArray[i+2];
                         String shotTicker = strArray[i+3];
+                        String color = strArray[i+4];
 
                         // Check if name in packet message matches local player name
                         // We dont want info about the local player

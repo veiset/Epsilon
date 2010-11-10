@@ -117,6 +117,10 @@ public class NetworkHandler {
                 // the network subsystem can start normally
                 System.out.println("Got OK from server");
 
+                String color = input.readLine();
+
+                System.out.println(color);
+
                 // Get local IP to bind socket to
                 InetAddress bindIP = getFirstNonLoopbackAddress(true, false);
 
