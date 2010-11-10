@@ -82,72 +82,63 @@ public class NetworkHandler {
     /**
      * Setup socket, network listener and packet parser
      */
-    public void connect(InetAddress serverAddress, String name) {
+    public void connect(InetAddress serverAddress, String name) throws IOException, Exception {
 
-        try {
-            // Get local IP to bind socket to
-            InetAddress bindIP = getFirstNonLoopbackAddress(true, false);
+        // Get local IP to bind socket to
+        InetAddress bindIP = getFirstNonLoopbackAddress(true, false);
 
-            // Create socket on local interface
-            socket = new DatagramSocket(CLIENT_PORT, bindIP);
+        // Create socket on local interface
+        socket = new DatagramSocket(CLIENT_PORT, bindIP);
 
-            // Socket to establish connection
-            Socket connectionSocket = new Socket(serverAddress, SERVER_PORT);
+        // Socket to establish connection
+        Socket connectionSocket = new Socket(serverAddress, SERVER_PORT);
 
-            // Input from socket
-            BufferedReader input = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+        // Input from socket
+        BufferedReader input = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
 
-            // Output to socket
-            PrintWriter output = new PrintWriter(connectionSocket.getOutputStream(), true);
+        // Output to socket
+        PrintWriter output = new PrintWriter(connectionSocket.getOutputStream(), true);
 
-            // Check if connection is established
-            if (connectionSocket.isConnected()) {
-                System.out.println("Connection established");
+        // Check if connection is established
+        if (connectionSocket.isConnected()) {
+            System.out.println("Connection established");
 
-                // Send client name to server
-                output.println(name);
+            // Send client name to server
+            output.println(name);
 
-                // Get respons from server
-                String inputLine = input.readLine();
+            // Get respons from server
+            String inputLine = input.readLine();
 
-                if (inputLine.equals("OK")) {
-                    // Respons indicates that the player was added to the server and
-                    // the network subsystem can start normally
-                    System.out.println("Got OK from server");
+            if (inputLine.equals("OK")) {
+                // Respons indicates that the player was added to the server and
+                // the network subsystem can start normally
+                System.out.println("Got OK from server");
 
-                    listener = new ListenerThread(socket, incomingPacketQueue);
-                    parser = new PacketParser(incomingPacketQueue, playerStateList, this, name);
-                    sender = new SenderThread(socket, serverAddress, name, outgoingPacketQueue);
+                listener = new ListenerThread(socket, incomingPacketQueue);
+                parser = new PacketParser(incomingPacketQueue, playerStateList, this, name);
+                sender = new SenderThread(socket, serverAddress, name, outgoingPacketQueue);
 
-                    // Start network threads
-                    new Thread(listener).start();
-                    new Thread(parser).start();
-                    new Thread(sender).start();
+                // Start network threads
+                new Thread(listener).start();
+                new Thread(parser).start();
+                new Thread(sender).start();
 
-                    connectionEstablished = true;
-                }
-                if (inputLine.equals("ERROR")) {
-                    System.out.println("Got ERROR from server");
-                    // Respons indicates that the player was already registered on the server
-
-                }
+                connectionEstablished = true;
             }
-            else {
-                System.out.println("Could not connect to server");
+            if (inputLine.equals("ERROR")) {
+                // Respons indicates that the player was already registered on the server
+                throw new Exception("Player name is already in use");
             }
+        }
+        else {
+            System.out.println("Could not connect to server");
+        }
             
-            // close input, output and the connection socket
-            input.close();
-            output.close();
-            connectionSocket.close();
+        // close input, output and the connection socket
+        input.close();
+        output.close();
+        connectionSocket.close();
 
-        }
-        catch (SocketException se) {
-            System.out.println("Could not create socket");
-        }
-        catch (IOException e) {
-            System.out.println("Problem accessing connection socket");
-        }
     }
 
     /**
