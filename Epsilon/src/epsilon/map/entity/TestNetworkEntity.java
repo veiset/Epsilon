@@ -41,6 +41,8 @@ public class TestNetworkEntity extends TestPlayerEntity {
             addShot((int)d[2]);
         }
 
+        super.updateShots();
+
         newPosX = d[0];
         newPosY = d[1];
 

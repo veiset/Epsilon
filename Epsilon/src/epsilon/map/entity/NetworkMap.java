@@ -196,7 +196,11 @@ public class NetworkMap extends Map {
 
     @Override
     public double[] getPlayerState() {
-        return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition(), playerEntity.lastShot()};
+        if (!playerEntity.isDead()) {
+            return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition(), playerEntity.lastShot()};
+        } else {
+            return new double[]{playerEntity.getXPosition(), -200000, playerEntity.lastShot()};
+        }
     }
 
 }

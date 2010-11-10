@@ -28,10 +28,14 @@ public class TestPlayerEntity extends MoveableEntity {
     protected Sprite leftSprite;
     protected Sprite standSpriteLeft;
     protected boolean facingRight = true;
+    
     private boolean isDead = false;
+
     private ShotStore shots;
     private int shotTimer;
     private int lastShot;
+
+    private int hp;
 
     /**
      * Constructor for the entity that initialises sprites
@@ -118,13 +122,12 @@ public class TestPlayerEntity extends MoveableEntity {
                 //sound.close();
                 addShot(0);
             }
-            shots.update();
+            updateShots();
 
 
             // checking if the player has falled down below the floor threshold.
             // If player posY is larger or equal to 598, the player dies.
             if (posY >= 598) {
-                System.out.print("You are dead!");
                 isDead = true;
             } // Handle falling
             else if (posY < 600 && !touchesGround) {
@@ -201,7 +204,10 @@ public class TestPlayerEntity extends MoveableEntity {
                 newPosY = pposY;
             }
         } else if (c.collidedWith instanceof Shot && ((Shot) c.collidedWith).getShooter() != this) {
-            isDead = true;
+            hp -= 20;
+            if (hp <= 0) {
+                isDead = true;
+            }
         }
     }
 
@@ -246,5 +252,9 @@ public class TestPlayerEntity extends MoveableEntity {
         } else {
             this.lastShot = shotTimer;
         }
+    }
+
+    protected void updateShots() {
+        shots.update();
     }
 }
