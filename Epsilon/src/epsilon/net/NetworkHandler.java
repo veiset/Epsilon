@@ -84,23 +84,18 @@ public class NetworkHandler {
      */
     public void connect(InetAddress serverAddress, String name) throws IOException, Exception {
 
-        // Get local IP to bind socket to
-        InetAddress bindIP = getFirstNonLoopbackAddress(true, false);
-
-        // Create socket on local interface
-        socket = new DatagramSocket(CLIENT_PORT, bindIP);
-
         // Socket to establish connection
         Socket connectionSocket = new Socket(serverAddress, SERVER_PORT);
 
-        // Input from socket
-        BufferedReader input = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-
-        // Output to socket
-        PrintWriter output = new PrintWriter(connectionSocket.getOutputStream(), true);
-
         // Check if connection is established
-        if (connectionSocket.isConnected()) {
+        if (connectionSocket != null && connectionSocket.isConnected()) {
+
+            // Input from socket
+            BufferedReader input = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+
+            // Output to socket
+            PrintWriter output = new PrintWriter(connectionSocket.getOutputStream(), true);
+
             System.out.println("Connection established");
 
             // Send client name to server
@@ -114,6 +109,12 @@ public class NetworkHandler {
                 // the network subsystem can start normally
                 System.out.println("Got OK from server");
 
+                // Get local IP to bind socket to
+                InetAddress bindIP = getFirstNonLoopbackAddress(true, false);
+
+                // Create socket on local interface
+                socket = new DatagramSocket(CLIENT_PORT, bindIP);
+
                 listener = new ListenerThread(socket, incomingPacketQueue);
                 parser = new PacketParser(incomingPacketQueue, playerStateList, this, name);
                 sender = new SenderThread(socket, serverAddress, name, outgoingPacketQueue);
@@ -124,6 +125,10 @@ public class NetworkHandler {
                 new Thread(sender).start();
 
                 connectionEstablished = true;
+
+                input.close();
+                output.close();
+                connectionSocket.close();
             }
             if (inputLine.equals("ERROR")) {
                 // Respons indicates that the player was already registered on the server
@@ -133,11 +138,6 @@ public class NetworkHandler {
         else {
             System.out.println("Could not connect to server");
         }
-            
-        // close input, output and the connection socket
-        input.close();
-        output.close();
-        connectionSocket.close();
 
     }
 
