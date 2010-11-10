@@ -36,6 +36,11 @@ public class TestNetworkEntity extends TestPlayerEntity {
             exist = false;
             return;
         }
+
+        if (lastShot() < d[2]) {
+            addShot((int)d[2]);
+        }
+
         newPosX = d[0];
         newPosY = d[1];
 

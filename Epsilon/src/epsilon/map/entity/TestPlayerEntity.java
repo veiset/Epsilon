@@ -117,15 +117,15 @@ public class TestPlayerEntity extends MoveableEntity {
                     }
                     ticker = 0;
                 }
-
-                // shots
-                if (Input.get().attack() && shotTimer - lastShot > 30) {
-                    //sound.close();
-                    shots.addShot(posX, posY, facingRight, this, mapReferance);
-                    lastShot = shotTimer;
-                }
-                shots.update();
             }
+
+            // shots
+            if (Input.get().attack() && shotTimer - lastShot > 30) {
+                //sound.close();
+                shots.addShot(posX, posY, facingRight, this, mapReferance);
+                lastShot = shotTimer;
+            }
+            shots.update();
 
 
             // checking if the player has falled down below the floor threshold.
@@ -240,6 +240,15 @@ public class TestPlayerEntity extends MoveableEntity {
 
     public int lastShot() {
         return lastShot;
+    }
+
+    protected void addShot(int lastShot) {
+        shots.addShot(posX, posX, facingRight, this, mapReferance);
+        if (lastShot != 0) {
+            this.lastShot = lastShot;
+        } else {
+            this.lastShot = shotTimer;
+        }
     }
 
 }
