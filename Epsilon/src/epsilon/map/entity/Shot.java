@@ -15,7 +15,7 @@ public class Shot extends MoveableEntity {
 
     private boolean headingRight = false;
     private double distanceTravled = 0;
-    private double distanceMax = 300;
+    private double distanceMax = 600;
     private int speed = 9;
     private Entity shotBy;
 
