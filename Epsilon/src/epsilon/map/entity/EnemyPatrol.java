@@ -123,8 +123,8 @@ public class EnemyPatrol extends Enemy {
                 // only shoot if player is infront of line of sight!
                 if (facingRight && playerPosX > 0 && playerPosX < 300
                         || !facingRight && playerPosX < 0 && playerPosX > -300) {
-                    
-                    shots.addShot(posX, posY, facingRight, this, mapReferance);
+
+                    addshot();
                     shotCooldown += 120;
                 }
             }
@@ -139,5 +139,14 @@ public class EnemyPatrol extends Enemy {
 
     public void setDead(boolean dead) {
         isDead = dead;
+    }
+
+    private void addshot() {
+        if (facingRight) {
+            shots.addShot(posX + 75, posY + 45, facingRight, this, mapReferance);
+        } else {
+            shots.addShot(posX + 15, posY + 45, facingRight, this, mapReferance);
+
+        }
     }
 }
