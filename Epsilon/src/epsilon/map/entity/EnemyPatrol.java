@@ -109,7 +109,7 @@ public class EnemyPatrol extends Enemy {
                 currentSprite = spriteFacingRight;
             }
 
-            double[] playerPos = mapReferance.getPlayerPosition();
+            double[] playerPos = mapReferance.getPlayerState();
             int playerPosX = (int) (playerPos[0] - posX);
 
 

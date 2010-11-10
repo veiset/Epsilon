@@ -143,9 +143,9 @@ public class NetworkMap extends Map {
     }
 
     @Override
-    public double[] getPlayerPosition() {
-        //return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition(), playerEntity.lastShot()};
-        return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition()};
+    public double[] getPlayerState() {
+        return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition(), playerEntity.lastShot()};
+        //return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition()};
     }
 
 }

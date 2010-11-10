@@ -98,7 +98,7 @@ public abstract class Map {
      *
      * @return a double array with a length of two, containing the x and y position
      */
-    public double[] getPlayerPosition() {
+    public double[] getPlayerState() {
         return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition()};
     }
 

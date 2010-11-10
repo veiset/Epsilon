@@ -76,7 +76,7 @@ public class SenderThread implements Runnable {
         byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];
 
         // Get local players last actions
-        double[] posArray = game.getPlayerPosition();
+        double[] posArray = game.getPlayerState();
 
         // Create state message
         String playerStateString = clientName + " " + posArray[0] + " " + posArray[1];

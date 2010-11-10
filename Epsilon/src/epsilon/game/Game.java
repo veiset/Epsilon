@@ -235,8 +235,8 @@ public class Game extends Canvas {
      *
      * @return
      */
-    public double[] getPlayerPosition() {
-        return map.getPlayerPosition();
+    public double[] getPlayerState() {
+        return map.getPlayerState();
     }
 
     /**
