@@ -3,7 +3,6 @@ package epsilonserver.net;
 import epsilonserver.entity.EntityHandler;
 import epsilonserver.game.ServerGUI;
 import java.net.DatagramPacket;
-import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.BlockingQueue;
@@ -20,22 +19,24 @@ public class PacketParser implements Runnable {
     private BlockingQueue<DatagramPacket> incomingPacketQueue;
 
     private EntityHandler eHandler;
-    private boolean isRunning = true;
+    private boolean isRunning;
 
     /**
      * Constructor
      *
      * @param incomingPacketQueue Queue for incoming packets
      */
-    public PacketParser(BlockingQueue<DatagramPacket> incomingPacketQueue) {
+    public PacketParser(BlockingQueue<DatagramPacket> incomingPacketQueue, EntityHandler eHandler) {
         this.incomingPacketQueue = incomingPacketQueue;
-        eHandler = EntityHandler.getInstance();
+        this.eHandler = eHandler;
     }
 
     /**
      * Parse incoming packets from clients
      */
     public void run() {
+
+        isRunning = true;
 
         ServerGUI.getInstance().setSystemMessage("Parser thread started");
 
@@ -53,7 +54,7 @@ public class PacketParser implements Runnable {
                 // message should be 4 words
                 if (strArray.length == 5) {
 
-                    // Get X and Y coordinates from message
+                    // Get x, y coordinates and shot information from message
                     String[] actionArray = new String[3];
                     actionArray[0] = strArray[1];
                     actionArray[1] = strArray[2];

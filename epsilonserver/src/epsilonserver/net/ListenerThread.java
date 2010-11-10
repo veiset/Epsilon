@@ -18,7 +18,7 @@ public class ListenerThread implements Runnable {
     private BlockingQueue<DatagramPacket> incomingPacketQueue;
 
     private DatagramSocket socket;
-    private boolean isRunning = true;
+    private boolean isRunning;
 
     /**
      * Constrctor
@@ -36,6 +36,9 @@ public class ListenerThread implements Runnable {
      * received it is added to the incoming packet queue.
      */
     public void run() {
+
+        isRunning = true;
+
         ServerGUI.getInstance().setSystemMessage("Listener thread started");
 
         byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];
@@ -48,7 +51,8 @@ public class ListenerThread implements Runnable {
                 incomingPacketQueue.put(incomingPacket);
             }
             catch (IOException e) {
-                ServerGUI.getInstance().setErrorMessage("Problem accessing socket in listener thread");
+                // This exception is thrown when the socket is closed
+                //ServerGUI.getInstance().setErrorMessage("Problem accessing socket in listener thread");
             }
             catch (InterruptedException ie) {
                 ServerGUI.getInstance().setErrorMessage("Could not add incoming packet to packet queue");

@@ -17,6 +17,7 @@ public class EntityHandler {
     // Concurrent hashmap containing NetworkEntity objects. playername is used as key
     private ConcurrentHashMap<String, NetworkEntity> entityList;
 
+    // Time before we kick the player
     private long tmeoutValue = 5000;
 
     /**
@@ -39,7 +40,7 @@ public class EntityHandler {
     /**
      * Get instance of EntityHandler
      *
-     * @return INSTANCE
+     * @return INSTANCE Instance of EntityHandler
      */
     public static EntityHandler getInstance() {
         return EntityHandlerHolder.INSTANCE;
@@ -47,10 +48,10 @@ public class EntityHandler {
 
     /**
      * Get a string containing name and position of every
-     * registered player except the the one that has a given name
+     * registered player except the the one that has a given name.
      * 
      * @param name Player name
-     * @return gameStateString Players name, X and Y coordinates
+     * @return gameStateString Player state information
      */
     public String getGameStateString(String name) {
         String gameStateString = "";
@@ -69,7 +70,7 @@ public class EntityHandler {
     }
 
     /**
-     * Get a array containing ip addresses of all registered players
+     * Get a array containing ip addresses of all registered players.
      *
      * @return adrArray Array of IP addresses
      */
@@ -90,7 +91,7 @@ public class EntityHandler {
     }
 
     /**
-     * Get the address of a player with a specified name
+     * Get the address of a player with a specified name.
      *
      * @param name Player name
      * @return address Players IP address
@@ -101,7 +102,7 @@ public class EntityHandler {
     }
 
     /**
-     * Get a array containing names of registered players
+     * Get a array containing names of registered players.
      *
      * @return nameArray Array of player names
      */
@@ -112,27 +113,27 @@ public class EntityHandler {
     }
 
     /**
+     * Set a new game state on a player
      *
-     *4
-     * @param name
-     * @param posArray
+     * @param name Name of player
+     * @param actionArray Player action
      */
-    public void setPlayerState(String name, String[] posArray) {
+    public void setPlayerState(String name, String[] actionArray) {
         long updateTime = System.currentTimeMillis();
 
         NetworkEntity n = entityList.get(name);
         if (n != null) {
-            entityList.get(name).setPlayerAction(posArray, updateTime);
+            entityList.get(name).setPlayerAction(actionArray, updateTime);
         }
-
+        
     }
 
     /**
+     * Create a new player if not already created.
      *
-     *
-     * @param name
-     * @param ip
-     * @return
+     * @param name Name of player
+     * @param ip Players IP address
+     * @return playerAdded If player was added or not
      */
     public synchronized boolean createIfAbsent(String name, InetAddress ip) {
         long updateTime = System.currentTimeMillis();

@@ -26,22 +26,6 @@ public class NetworkEntity {
     /**
      * Constructor
      *
-     * @param posX Players X position
-     * @param posY Players Y position
-     * @param playerName Player name
-     * @param updateTime Time of creation
-     * @param ip Players IP address
-     */
-    public NetworkEntity(String playerName, InetAddress ip, String[] actionArray, long updateTime) {
-        this.actionArray = actionArray;
-        this.name = playerName;
-        this.ip = ip;
-        lastUpdateTime = updateTime;
-    }
-
-    /**
-     * Constructor
-     *
      * @param playerName Player name
      * @param ip Players IP address
      * @param updateTime Time of creation
@@ -51,9 +35,8 @@ public class NetworkEntity {
         this.ip = ip;
         lastUpdateTime = updateTime;
 
-        String[] p = new String[3];
-
         // Set a default starting position outside of the screen
+        String[] p = new String[3];
         p[0] = "-200";
         p[1] = "-800";
         p[2] = "0";
@@ -90,7 +73,7 @@ public class NetworkEntity {
     /**
      * Set new player coordinates and set new update time.
      *
-     * @param posArray Player X and Y coordinates
+     * @param actionArray Players recent actions
      * @param updateTime  Time of update in milliseconds
      */
     public synchronized void setPlayerAction(String[] actionArray, long updateTime) {
@@ -99,9 +82,9 @@ public class NetworkEntity {
     }
 
     /**
-     * Get a string containing the players name, x and y coordinates
+     * Get a string containing the player name, positions and shot information
      *
-     * @return playerState String with name, x and y coordinates
+     * @return playerState String with name, position and shot information
      */
     public synchronized String getPlayerState() {
         String playerState = name + " " + actionArray[0] + " " + actionArray[1] + " " + actionArray[2] + " ";

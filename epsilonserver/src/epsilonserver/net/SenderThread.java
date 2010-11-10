@@ -20,7 +20,7 @@ public class SenderThread implements Runnable {
 
     private DatagramSocket socket;
     private EntityHandler eHandler;
-    private boolean isRunning = true;
+    private boolean isRunning;
 
     // Outgoing packet queue
     private BlockingQueue<DatagramPacket> outgoingPacketQueue;
@@ -30,17 +30,20 @@ public class SenderThread implements Runnable {
      *
      * @param socket Datagram socket
      * @param outgoingPacketQueue Outgoing packet queue
+     * @param eHandler Reference to EntityHandler
      */
-    public SenderThread(DatagramSocket socket, BlockingQueue<DatagramPacket> outgoingPacketQueue) {
+    public SenderThread(DatagramSocket socket, BlockingQueue<DatagramPacket> outgoingPacketQueue, EntityHandler eHandler) {
         this.socket = socket;
         this.outgoingPacketQueue = outgoingPacketQueue;
-        eHandler = EntityHandler.getInstance();
+        this.eHandler = eHandler;
     }
 
     /**
      * Thread that gets a packet from the outgoing packet queue and sends it.
      */
     public void run() {
+
+        isRunning = true;
 
         ServerGUI.getInstance().setSystemMessage("Sender thread started");
 
@@ -54,10 +57,10 @@ public class SenderThread implements Runnable {
                 socket.send(packet);
             }
             catch (InterruptedException e) {
-                System.out.println("Problem accessing socket in sender thread");
+                ServerGUI.getInstance().setErrorMessage("Problem accessing socket in sider thread");
             }
             catch (IOException e) {
-                System.out.println("Could not get packet from outgoing packet queue");
+                ServerGUI.getInstance().setErrorMessage("Could not get packet from outgoing packet queue");
             }
 
         }
@@ -67,7 +70,7 @@ public class SenderThread implements Runnable {
     /**
      * Get a array containing names of all registered players. When the array
      * is iterated a packet is created for every player. The packet contains
-     * a game state message that contains names and positions of every registered 
+     * a game state message that contains names, positions and shot information about every registered
      * player except the player the packet is for, and a hash of the game state
      * message. The purpose of the hash is to make certain that the message 
      * is correct when received.
@@ -136,6 +139,5 @@ public class SenderThread implements Runnable {
     public void stopSender() {
         isRunning = false;
     }
-
 
 }

@@ -1,5 +1,6 @@
 package epsilonserver.net;
 
+import epsilonserver.entity.EntityHandler;
 import epsilonserver.game.ServerGUI;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -7,6 +8,7 @@ import java.net.DatagramSocket;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.SocketException;
@@ -43,6 +45,8 @@ public class NetworkHandler {
     // TCP socket
     private ServerSocket connectionSocket;
 
+    private EntityHandler eHandler;
+
     /**
      * Private constructor.
      * Initializes incoming and outgoing pakcet queues.
@@ -50,6 +54,8 @@ public class NetworkHandler {
     private NetworkHandler() {
         incomingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
         outgoingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
+        eHandler = EntityHandler.getInstance();
+
     }
 
     /**
@@ -80,26 +86,27 @@ public class NetworkHandler {
             // get local ip to bind socket to
             InetAddress bindIP = getFirstNonLoopbackAddress(true, false);
 
-            socket = new DatagramSocket(SERVER_PORT, bindIP);
+            // Create a new UDP socket
+            socket = new DatagramSocket(null);
+            socket.setReuseAddress(true);
+            socket.bind(new InetSocketAddress(bindIP, SERVER_PORT));
+
+            // Create a new TCP socket
             connectionSocket = new ServerSocket(SERVER_PORT);
+            
             ServerGUI.getInstance().setSystemMessage("Socket created on interface " + bindIP);
         }
         catch (SocketException se) {
-            ServerGUI.getInstance().setErrorMessage("Could not create socket");
-            System.out.println(se.getMessage());
-            //se.printStackTrace();
+            ServerGUI.getInstance().setErrorMessage("Could not create UDP socket");
         }
         catch (IOException e) {
-        
+            ServerGUI.getInstance().setErrorMessage("Could not create TCP socket");
         }
 
-        if (listener == null && parser == null && sender == null && connectionInit == null) {
-            connectionInit = new ConnectionInitialiser(connectionSocket);
-            listener = new ListenerThread(socket, incomingPacketQueue);
-            parser = new PacketParser(incomingPacketQueue);
-            sender = new SenderThread(socket, outgoingPacketQueue);
-
-        }
+        connectionInit = new ConnectionInitialiser(connectionSocket, eHandler);
+        listener = new ListenerThread(socket, incomingPacketQueue);
+        parser = new PacketParser(incomingPacketQueue, eHandler);
+        sender = new SenderThread(socket, outgoingPacketQueue, eHandler);
 
         // start network threads
         new Thread(connectionInit).start();
@@ -112,10 +119,30 @@ public class NetworkHandler {
      * Stop the server by stopping all network threads and closing socket.
      */
     public void stopServer() {
+
+        // Stop threads
+        connectionInit.stopConnection();
         listener.stopListener();
         parser.stopParser();
         sender.stopSender();
-        socket.close();
+
+        // Close sockets
+        try {
+            connectionSocket.close();
+            socket.close();
+        }
+        catch (IOException e) {
+            ServerGUI.getInstance().setErrorMessage("Could not close sockets");
+        }
+
+        // Remove all references
+        socket = null;
+        connectionSocket = null;
+        connectionInit = null;
+        listener = null;
+        parser = null;
+        sender = null;
+
         ServerGUI.getInstance().setSystemMessage("Server stopped");
     }
 
@@ -127,7 +154,7 @@ public class NetworkHandler {
     }
 
     /**
-     * iterate through all addresses on host and return first non-loopback address.
+     * Iterate through all addresses on host and return first non-loopback address.
      * This is mainly for linux compatibility
      *
      * @param preferIpv4 Search for IPv4 address

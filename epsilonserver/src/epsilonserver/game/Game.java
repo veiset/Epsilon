@@ -52,7 +52,6 @@ public class Game {
     public void start() {
 
         eHandler = EntityHandler.getInstance();
-
         netHandler = NetworkHandler.getInstance();
         netHandler.startServer();
 
@@ -79,8 +78,13 @@ public class Game {
      */
     public void updateGame() {
 
+        // Get system time
         lastUpdateTime = System.currentTimeMillis();
+
+        // Remove timed out players
         eHandler.checkTimeout(lastUpdateTime);
+
+        // Update registered players
         netHandler.updateClients();
 
     }
