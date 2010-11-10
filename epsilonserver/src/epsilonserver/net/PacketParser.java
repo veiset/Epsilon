@@ -51,21 +51,22 @@ public class PacketParser implements Runnable {
                 String[] strArray = packetString.split(" ");
 
                 // message should be 4 words
-                if (strArray.length == 4) {
+                if (strArray.length == 5) {
 
                     // Get X and Y coordinates from message
-                    String[] posArray = new String[2];
-                    posArray[0] = strArray[1];
-                    posArray[1] = strArray[2];
+                    String[] actionArray = new String[3];
+                    actionArray[0] = strArray[1];
+                    actionArray[1] = strArray[2];
+                    actionArray[2] = strArray[3];
 
                     // Get hash from incoming message
-                    String incomningHash = strArray[3];
+                    String incomningHash = strArray[4];
                     
                     String calculatedHash = "";
 
                     try {
                         // Calculate a hash of incoming message
-                        String temp = strArray[0] + " " + strArray[1] + " " + strArray[2];
+                        String temp = strArray[0] + " " + strArray[1] + " " + strArray[2] + " " + strArray[3];
                         MessageDigest hash = MessageDigest.getInstance("SHA");
                         byte[] hashSum = hash.digest(temp.getBytes());
 
@@ -84,7 +85,7 @@ public class PacketParser implements Runnable {
                     // Check if hash is correct
                     if (calculatedHash.equals(incomningHash)) {
                         // Update player if hash is correct
-                        eHandler.setPlayerState(strArray[0], posArray);
+                        eHandler.setPlayerState(strArray[0], actionArray);
                     }
                 }
             }

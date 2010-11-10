@@ -11,9 +11,16 @@ import java.net.InetAddress;
  */
 public class NetworkEntity {
 
+    // Players name
     private String name;
-    private String[] posArray;
+
+    // Array containing players recent actions
+    private String[] actionArray;
+
+    // Players IP address
     private InetAddress ip;
+
+    // Last time player state was updated
     private long lastUpdateTime;
 
     /**
@@ -25,8 +32,8 @@ public class NetworkEntity {
      * @param updateTime Time of creation
      * @param ip Players IP address
      */
-    public NetworkEntity(String playerName, InetAddress ip, String[] posArray, long updateTime) {
-        this.posArray = posArray;
+    public NetworkEntity(String playerName, InetAddress ip, String[] actionArray, long updateTime) {
+        this.actionArray = actionArray;
         this.name = playerName;
         this.ip = ip;
         lastUpdateTime = updateTime;
@@ -44,12 +51,13 @@ public class NetworkEntity {
         this.ip = ip;
         lastUpdateTime = updateTime;
 
-        String[] p = new String[2];
+        String[] p = new String[3];
 
+        // Set a default starting position outside of the screen
         p[0] = "-200";
         p[1] = "-800";
-
-        posArray = p;
+        p[2] = "0";
+        actionArray = p;
     }
 
     /**
@@ -85,18 +93,9 @@ public class NetworkEntity {
      * @param posArray Player X and Y coordinates
      * @param updateTime  Time of update in milliseconds
      */
-    public synchronized void setCoordinates(String[] posArray, long updateTime) {
-        this.posArray = posArray;
+    public synchronized void setPlayerAction(String[] actionArray, long updateTime) {
+        this.actionArray = actionArray;
         lastUpdateTime = updateTime;
-    }
-
-    /**
-     * Get a array with player coordinates.
-     *
-     * @return posArray Player X and Y coordinates
-     */
-    public synchronized String[] getCoordinates() {
-        return posArray;
     }
 
     /**
@@ -105,7 +104,7 @@ public class NetworkEntity {
      * @return playerState String with name, x and y coordinates
      */
     public synchronized String getPlayerState() {
-        String playerState = name + " " + posArray[0] + " " + posArray[1] + " ";
+        String playerState = name + " " + actionArray[0] + " " + actionArray[1] + " " + actionArray[2] + " ";
         return playerState;
     }
 

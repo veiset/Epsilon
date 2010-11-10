@@ -122,7 +122,7 @@ public class EntityHandler {
 
         NetworkEntity n = entityList.get(name);
         if (n != null) {
-            entityList.get(name).setCoordinates(posArray, updateTime);
+            entityList.get(name).setPlayerAction(posArray, updateTime);
         }
 
     }
