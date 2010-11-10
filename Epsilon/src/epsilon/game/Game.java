@@ -11,6 +11,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.util.Timer;
@@ -184,7 +185,10 @@ public class Game extends Canvas {
 
         if (fps != 0) {
             Font f = getStandardFont();
-            
+            g.setFont(f.deriveFont(f.getSize2D()*0.75f));
+            g.setColor(Color.BLACK);
+            FontMetrics fm = g.getFontMetrics();
+            g.drawString("FPS: " + fps, 800-10-fm.stringWidth("FPS: " + fps), fm.getHeight());
         }
 
 	// finally, we've completed drawing so clear up the graphics

@@ -109,7 +109,7 @@ public abstract class Map {
         playerEntity.resetPosition();
     }
 
-    public void reset() {
+    public synchronized void reset() {
 
         soundtrack.close();
         String s = playerEntity.getName();

@@ -61,6 +61,7 @@ public class NetworkPage extends MenuPage {
                     Game.get().menuDone();
                 } catch (IOException e) {
                     errorMessage = "Could not connect to Server";
+                    e.printStackTrace();
                 } catch (Exception e) {
                     errorMessage = e.getMessage();
                 }
