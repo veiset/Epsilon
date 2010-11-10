@@ -5,11 +5,10 @@ import epsilon.game.Physics;
 import epsilon.game.Sprite;
 import epsilon.map.Map;
 import epsilon.map.ShotStore;
-import java.awt.Graphics;
 
 /**
- * Artificial intelligence for a simple enemy-patrol. This enemy walks right
- * and left, and thats about it.
+ * Artificial intelligence for a simple enemy. The enemy is jumping up and down
+ * and only shoots if the player is infront of the enemy.
  *
  * @author vz
  */

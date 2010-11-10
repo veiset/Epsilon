@@ -1,6 +1,5 @@
 package epsilon.map.entity;
 
-import epsilon.game.Collision;
 import epsilon.map.Map;
 import java.awt.Graphics;
 
