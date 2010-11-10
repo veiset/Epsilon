@@ -16,8 +16,6 @@ import java.util.ArrayList;
  */
 public class NetworkMap extends Map {
 
-    private int shotCooldown = 0;
-
     /**
      * Initialises all entities on the map, and all fields in the object
      */
@@ -60,9 +58,13 @@ public class NetworkMap extends Map {
                 entities.remove(temp[i]);
             }
 
-            c = temp[i].collision(playerEntity);
-            if (c.collided) {
-                playerEntity.collided(c);
+            for (int j = 0; j < temp.length; j++) {
+                if (i != j) {
+                    c = temp[j].collision(temp[i]);
+                    if (c.collided) {
+                        temp[i].collided(c);
+                    }
+                }
             }
         }
 
@@ -71,6 +73,56 @@ public class NetworkMap extends Map {
         }
 
         NetworkHandler.getInstance().sendPlayerAction();
+    }
+
+    public void updateWhileMenu() {
+
+        while(NetworkHandler.getInstance().hasNewPlayers()) {
+            String s = NetworkHandler.getInstance().getNewPlayer();
+            double[] d = NetworkHandler.getInstance().getPlayerStateByName(s);
+
+            if (d != null) {
+                TestNetworkEntity n = new TestNetworkEntity(d[0], d[1], s, this);
+                renderableEntities.add(n);
+                moveableEntities.add(n);
+                entities.add(n);
+            }
+        }
+
+        MoveableEntity[] temp = new MoveableEntity[moveableEntities.size()];
+        moveableEntities.toArray(temp);
+
+        Collision c;
+
+        for (int i = 0; i < temp.length; i++) {
+            if (temp[i] != playerEntity) {
+                temp[i].calculateMovement();
+
+                worldstore.checkCollision(temp[i]);
+
+                if (temp[i] instanceof TestNetworkEntity && !((TestNetworkEntity)temp[i]).exists()) {
+                    moveableEntities.remove(temp[i]);
+                    renderableEntities.remove(temp[i]);
+                    entities.remove(temp[i]);
+                }
+
+                for (int j = 0; j < temp.length; j++) {
+                    if (i != j) {
+                        c = temp[j].collision(temp[i]);
+                        if (c.collided) {
+                            temp[i].collided(c);
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int i=0;i<temp.length;i++) {
+            temp[i].move();
+        }
+
+        NetworkHandler.getInstance().sendPlayerAction();
+
     }
 
     @Override
@@ -145,7 +197,6 @@ public class NetworkMap extends Map {
     @Override
     public double[] getPlayerState() {
         return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition(), playerEntity.lastShot()};
-        //return new double[]{playerEntity.getXPosition(), playerEntity.getYPosition()};
     }
 
 }

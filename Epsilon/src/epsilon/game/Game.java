@@ -135,7 +135,7 @@ public class Game extends Canvas {
                 Input.get().handleMenu();
             }
         }
-        if (!menu && map != null) {
+        if ((!menu && map != null)) {
             lastUpdateTime = System.currentTimeMillis();
             map.update();
             if (map.isDead()) {
@@ -148,6 +148,9 @@ public class Game extends Canvas {
             }
         } else if (menu) {
             Menu.get().update();
+            if (map instanceof NetworkMap) {
+                ((NetworkMap)map).updateWhileMenu();
+            }
         }
     }
 

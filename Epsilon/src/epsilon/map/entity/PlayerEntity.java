@@ -143,7 +143,6 @@ public class PlayerEntity extends MoveableEntity {
             // checking if the player has falled down below the floor threshold.
             // If player posY is larger or equal to 598, the player dies.
             if (posY>=598) {
-                System.out.println("You are dead!");
                 isDead = true;
             }
             // Handle falling
