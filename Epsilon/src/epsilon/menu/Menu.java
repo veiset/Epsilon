@@ -78,4 +78,8 @@ public class Menu {
         currentPage = previousPage;
     }
 
+    public Font getFont() {
+        return font;
+    }
+
 }

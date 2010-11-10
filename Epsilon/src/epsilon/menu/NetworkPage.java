@@ -4,6 +4,7 @@ import epsilon.game.Game;
 import epsilon.game.Input;
 import epsilon.map.entity.NetworkMap;
 import epsilon.net.NetworkHandler;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -53,10 +54,16 @@ public class NetworkPage extends MenuPage {
                 conn = null;
             }
             if (conn != null && !currentString[1].equals("")) {
-                NetworkHandler.getInstance().connect(conn, currentString[1]);
-                Game.get().setMap(new NetworkMap(currentString[1]));
-                Menu.get().setMenu(OptionPage.get());
-                Game.get().menuDone();
+                try {
+                    NetworkHandler.getInstance().connect(conn, currentString[1]);
+                    Game.get().setMap(new NetworkMap(currentString[1]));
+                    Menu.get().setMenu(OptionPage.get());
+                    Game.get().menuDone();
+                } catch (IOException e) {
+                    errorMessage = "Could not connect to Server";
+                } catch (Exception e) {
+                    errorMessage = e.getMessage();
+                }
             } else if (currentString[1].equals("")) {
                 errorMessage = "Please enter a valid name";
             }

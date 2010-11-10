@@ -74,7 +74,7 @@ public abstract class MenuPage {
             y += 45 + fm.getHeight()/2;
 
             g.drawString(items[i], 400-(fm.stringWidth(items[i])/2), y);
-            
+
             y += fm.getHeight()/2;
             
             g.setFont(f);

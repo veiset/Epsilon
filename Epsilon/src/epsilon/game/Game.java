@@ -10,6 +10,7 @@ import java.awt.AlphaComposite;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.util.Timer;
@@ -156,7 +157,7 @@ public class Game extends Canvas {
      *
      * @param delta time in milliseconds since last update
      */
-    public void renderGraphics(long delta, int FPS) {
+    public void renderGraphics(long delta, int fps) {
 
         // Get hold of a graphics context for the accelerated
 	// surface and blank it out
@@ -179,6 +180,11 @@ public class Game extends Canvas {
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,(float)0.6));
             g.fillRect(0, 0, 800, 600);
             Menu.get().render(g);
+        }
+
+        if (fps != 0) {
+            Font f = getStandardFont();
+            
         }
 
 	// finally, we've completed drawing so clear up the graphics
@@ -241,6 +247,10 @@ public class Game extends Canvas {
      */
     public void restart() {
         map.reset();
+    }
+
+    public static Font getStandardFont() {
+        return Menu.get().getFont();
     }
 
 }
