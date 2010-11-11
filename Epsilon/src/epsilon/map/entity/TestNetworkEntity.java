@@ -36,7 +36,7 @@ public class TestNetworkEntity extends TestPlayerEntity {
             folder = "guy/blue/";
         } else if (color == 3) {
             s = "_pink";
-            folder = "guy/green/";
+            folder = "guy/pink/";
         } else if (color == 4) {
             s = "_green";
             folder = "guy/green/";
@@ -44,6 +44,8 @@ public class TestNetworkEntity extends TestPlayerEntity {
             s = "";
             folder = "";
         }
+
+        System.out.println("/pics/" + folder + "guy01" + s + ".png");
 
             rightSprite = new Sprite(new String[]{"/pics/" + folder + "guy01" + s + ".png", "/pics/" + folder + "guy02" + s + ".png", "/pics/" + folder + "guy03" + s + ".png", "/pics/" + folder + "guy04" + s + ".png", "/pics/" + folder + "guy05" + s + ".png"}, false, hitbox);
             standSpriteRight = new Sprite(new String[]{"/pics/" + folder + "guy01" + s + ".png"}, false, hitbox);
