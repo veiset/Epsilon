@@ -308,7 +308,7 @@ public class Input implements MouseListener, KeyListener {
     /**
      * Checks if the arrow button press is already handeled
      *
-     * @return
+     * @return true if the Menu arrow press is already handeled
      */
     public boolean getMenuArrowHandeled() {
         return menuDirectionHandeled;
@@ -317,7 +317,7 @@ public class Input implements MouseListener, KeyListener {
     /**
      * Indicates that the menu option has been pressed
      *
-     * @return
+     * @return true if the press on the menu key is already handeled
      */
     public boolean useMenu() {
         boolean b = menuChoice;
