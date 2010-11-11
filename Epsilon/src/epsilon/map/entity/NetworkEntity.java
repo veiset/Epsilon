@@ -6,6 +6,8 @@ import epsilon.map.Map;
 import epsilon.net.NetworkHandler;
 
 /**
+ * Entity used to keep track of network players. Contains information about
+ * position, color and name of the players. Should be refactored at some later time
  *
  * @author Marius
  */
@@ -14,15 +16,17 @@ public class NetworkEntity extends PlayerEntity {
     private boolean exist = true;
 
     /**
-     * Sets the name and position variables of the entity
+     * Initialises a new NetworkEntity
      *
      * @param posX the X-axis position of the entity
      * @param posY the Y-axis position of the entity
      * @param playerName the name of the entity
+     * @param map the Map this player is playing on
+     * @param color the Color this person should be shown with
      */
-    public NetworkEntity(double posX, double posY, String playerName, Map m, double color) {
+    public NetworkEntity(double posX, double posY, String playerName, Map map, double color) {
 
-        super(posX, posY, playerName, m, false);
+        super(posX, posY, playerName, map, false);
         
         String s, folder;
 
@@ -82,7 +86,7 @@ public class NetworkEntity extends PlayerEntity {
                 currentSprite.resetImage();
                 currentSprite = rightSprite;
                 rightSprite.resetImage();
-                ticker = 0;
+                spriteTicker = 0;
                 facingRight = true;
             }
         } else if (newPosX < posX) {
@@ -90,7 +94,7 @@ public class NetworkEntity extends PlayerEntity {
                 currentSprite.resetImage();
                 currentSprite = leftSprite;
                 leftSprite.resetImage();
-                ticker = 0;
+                spriteTicker = 0;
                 facingRight = false;
             }
         } else {
@@ -106,15 +110,15 @@ public class NetworkEntity extends PlayerEntity {
                     standSpriteLeft.resetImage();
                     facingRight = false;
                 }
-                ticker = 0;
+                spriteTicker = 0;
             }
         }
 
         // go to the next picture in the sprite if it is time
-        if (ticker < 5) {
-            ticker++;
+        if (spriteTicker < 5) {
+            spriteTicker++;
         } else {
-            ticker = 0;
+            spriteTicker = 0;
             currentSprite.nextImage();
         }
     }
@@ -124,6 +128,11 @@ public class NetworkEntity extends PlayerEntity {
         //
     }
 
+    /**
+     * Method for checking if the Network entity should still exist
+     *
+     * @return true if the person should still be here
+     */
     public boolean exists() {
         return exist;
     }

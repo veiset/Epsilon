@@ -148,8 +148,8 @@ public class Game extends Canvas {
             }
         } else if (menu) {
             Menu.get().update();
-            if (map instanceof NetworkMap) {
-                ((NetworkMap)map).updateWhileMenu();
+            if (map != null) {
+                map.updateWhileMenu();
             }
         }
     }

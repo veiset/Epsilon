@@ -3,13 +3,18 @@ package epsilon.menu;
 import epsilon.game.Game;
 
 /**
+ * Standardpage that shows when you die on a Network Map.
  *
  * @author Marius
  */
 public class NetworkDeathPage extends MenuPage {
 
+    /**
+     * Creates a new Network Death page. Sets the available options and an attempt at a humorous message.
+     * Failed miserably
+     */
     public NetworkDeathPage() {
-        super(new String[]{"Respawn", "Exit"}, "You are dead!!!!!");
+        super(new String[]{"Respawn", "Exit"}, "You are dead!!!!!/nYou should try nto doing that");
     }
 
     @Override

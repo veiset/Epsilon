@@ -89,10 +89,18 @@ public class Shot extends MoveableEntity {
         }
     }
 
+    /**
+     * The Entity that fired this shot
+     *
+     * @return the entity that fired this shot
+     */
     public Entity getShooter() {
         return shotBy;
     }
 
+    /**
+     * Makes sure that this shot is removed the next time the update method is run.
+     */
     public void remove() {
         distanceTravled = distanceMax+1;
     }

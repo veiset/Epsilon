@@ -9,25 +9,48 @@ import epsilon.map.ShotStore;
 import java.awt.Graphics;
 
 /**
+ * Entity describing the person playing on this computer
  *
  * @author Marius
  */
 public class PlayerEntity extends MoveableEntity {
 
-    // keeps track of when to change pictures in the sprite
-    protected int ticker;
+    /**
+     * Ticker used to counting when the picture of the sprite should be changed.
+     */
+    protected int spriteTicker;
+
+    /**
+     * The Sprite used when moving right
+     */
+    protected Sprite rightSprite;
+
+    /**
+     * The Sprite used when not moving, but was last moving to the right
+     */
+    protected Sprite standSpriteRight;
+
+    /**
+     * The Sprite used when moving left
+     */
+    protected Sprite leftSprite;
+
+    /**
+     * The Sprite used when not moving, but the entity was last moving to the left
+     */
+    protected Sprite standSpriteLeft;
+
+    /**
+     * Is true if the entity was last facing to the right
+     */
+    protected boolean facingRight = true;
+
     // used for checking if the entity can jump
     private boolean touchesGround;
     // the name of the player
     private String name;
     private double origPosX;
     private double origPosY;
-    // the different sprites this entity uses
-    protected Sprite rightSprite;
-    protected Sprite standSpriteRight;
-    protected Sprite leftSprite;
-    protected Sprite standSpriteLeft;
-    protected boolean facingRight = true;
     
     private boolean isDead = false;
 
@@ -42,10 +65,13 @@ public class PlayerEntity extends MoveableEntity {
      *
      * @param posX The starting X position of the entity
      * @param posY The starting Y position of the entity
+     * @param name The name of the player
+     * @param map The map used by this Entity
+     * @param setSprites is true if this Entity should use the standard Sprites
      */
-    public PlayerEntity(double posX, double posY, String name, Map m, boolean setSprites) {
-        super(posX, posY, m);
-        ticker = 0;
+    public PlayerEntity(double posX, double posY, String name, Map map, boolean setSprites) {
+        super(posX, posY, map);
+        spriteTicker = 0;
         touchesGround = false;
         origPosX = posX;
         origPosY = posY;
@@ -90,7 +116,7 @@ public class PlayerEntity extends MoveableEntity {
                     currentSprite.resetImage();
                     currentSprite = rightSprite;
                     rightSprite.resetImage();
-                    ticker = 0;
+                    spriteTicker = 0;
                     facingRight = true;
                 }
                 newPosX += 4;
@@ -100,7 +126,7 @@ public class PlayerEntity extends MoveableEntity {
                     currentSprite.resetImage();
                     currentSprite = leftSprite;
                     leftSprite.resetImage();
-                    ticker = 0;
+                    spriteTicker = 0;
                     facingRight = false;
                 }
                 newPosX -= 4;
@@ -117,7 +143,7 @@ public class PlayerEntity extends MoveableEntity {
                         standSpriteLeft.resetImage();
                         facingRight = false;
                     }
-                    ticker = 0;
+                    spriteTicker = 0;
                 }
             }
 
@@ -143,10 +169,10 @@ public class PlayerEntity extends MoveableEntity {
             }
 
             // go to the next picture in the sprite if it is time
-            if (ticker < 5) {
-                ticker++;
+            if (spriteTicker < 5) {
+                spriteTicker++;
             } else {
-                ticker = 0;
+                spriteTicker = 0;
                 currentSprite.nextImage();
             }
 
@@ -224,6 +250,9 @@ public class PlayerEntity extends MoveableEntity {
         return name;
     }
 
+    /**
+     * Resets the PlayerEntity to the original position, and resets momentum to 0
+     */
     public void resetPosition() {
         posX = origPosX;
         newPosX = origPosX;
@@ -237,14 +266,29 @@ public class PlayerEntity extends MoveableEntity {
         hp = 100;
     }
 
+    /**
+     * Checks if the player isDead
+     *
+     * @return true if the player is dead
+     */
     public boolean isDead() {
         return isDead;
     }
 
+    /**
+     * The tick when the Player last fired a shot
+     *
+     * @return an int specifying the last tick when this player fired a shot
+     */
     public int lastShot() {
         return lastShot;
     }
 
+    /**
+     * Fires a shot from this Player
+     *
+     * @param lastShot an int specifying when the last shot occured, if it is 0, it uses the current tick from this clients ticker
+     */
     protected void addShot(int lastShot) {
         if (facingRight) {
             shots.addShot(posX + 75, posY + 45, facingRight, this, mapReference);
@@ -259,10 +303,18 @@ public class PlayerEntity extends MoveableEntity {
         }
     }
 
+    /**
+     * Updates the shots, checks if they should have been removed
+     */
     protected void updateShots() {
         shots.update();
     }
 
+    /**
+     * Gets the current health of the player
+     *
+     * @return an int between 0 and 100 indicating the health in a %
+     */
     public int getHp() {
         return hp;
     }

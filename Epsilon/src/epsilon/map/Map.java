@@ -132,6 +132,13 @@ public abstract class Map {
     }
 
     /**
+     * Update method that is run while the menu is showing.
+     */
+    public void updateWhileMenu() {
+        
+    }
+
+    /**
      * Returns the position of the player currently playing the game
      *
      * @return a double array with a length of two, containing the x and y position

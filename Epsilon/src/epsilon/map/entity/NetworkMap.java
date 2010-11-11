@@ -75,7 +75,9 @@ public class NetworkMap extends Map {
         NetworkHandler.getInstance().sendPlayerAction();
     }
 
-    public void updateWhileMenu() {
+    @Override
+    public void updateWhileMenu()
+ {
 
         while(NetworkHandler.getInstance().hasNewPlayers()) {
             String s = NetworkHandler.getInstance().getNewPlayer();

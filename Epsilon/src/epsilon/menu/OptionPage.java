@@ -3,6 +3,7 @@ package epsilon.menu;
 import epsilon.game.Game;
 
 /**
+ * Standard option menu page. Allows resetting of player position and muting
  *
  * @author Marius
  */

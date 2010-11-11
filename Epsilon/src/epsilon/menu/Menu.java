@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
+ * Class based on the singleton pattern that returns the Menu used in this game.
  *
  * @author Marius
  */
@@ -42,14 +43,24 @@ public class Menu {
             e.printStackTrace();
         }
 
-         currentPage = OptionPage.get();
-        
+         currentPage = OptionPage.get();        
     }
 
+    /**
+     * Standard singleton method
+     *
+     * @return the only instance of this class
+     */
     public static Menu get() {
         return menu;
     }
 
+
+    /**
+     * Draws the menu onto the specified graphics object
+     *
+     * @param g the graphics object the menu should be drawn on
+     */
     public void render(Graphics2D g) {
         g.setColor(Color.GREEN);
         g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
@@ -58,15 +69,26 @@ public class Menu {
         currentPage.drawPage(g, font);
     }
 
+    /**
+     * Resets the menu to standard config
+     */
     public void reset() {
         currentPage = OptionPage.get();
         currentPage.reset();
     }
 
+    /**
+     * Method run by the update thread, makes it change position
+     */
     public void update() {
         currentPage.update();
     }
 
+    /**
+     * Changes the menuPage currently being shown
+     *
+     * @param p the MenuPage that the menu should change to
+     */
     public void setMenu(MenuPage p) {
         currentPage.reset();
         previousPage = currentPage;
@@ -74,10 +96,18 @@ public class Menu {
         p.reset();
     }
 
+    /**
+     * Changes the page to the previous one
+     */
     public void goToPrevious() {
         currentPage = previousPage;
     }
 
+    /**
+     * Returns the standard font object set in the Menu constructor
+     *
+     * @return the current standard font
+     */
     public Font getFont() {
         return font;
     }

@@ -9,7 +9,9 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- *
+ * Option page when playing Network maps. Should probably be abstracted into a
+ * menu page that can handle text input, but this can be used as an example of
+ * how to write that.
  *
  * @author Marius
  */
@@ -87,7 +89,7 @@ public class NetworkPage extends MenuPage {
 
         // check if input on any field should be handeled
         if (!typingString) {
-            // no inputing, use superclass update
+            // no input, use superclass update
             super.update();
         } else {
 

@@ -1,6 +1,5 @@
 package epsilon.map.entity;
 
-import epsilon.game.Input;
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
 import epsilon.map.Map;
@@ -14,7 +13,6 @@ public class TestMap extends Map {
 
     // enemies
     private Enemy enemy;
-    private int shotCooldown = 0;
 
     /**
      * Initialises all entities on the map, and all fields in the object

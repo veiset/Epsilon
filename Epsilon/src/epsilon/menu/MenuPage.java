@@ -7,6 +7,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 
 /**
+ * Abstract class describing
  *
  * @author Marius
  */
@@ -110,7 +111,10 @@ public abstract class MenuPage {
 
     /**
      * Method that specifies  what is to be done when the menuchoicebutton is
-     * pressed.
+     * pressed. The selected variable will store what menuitem is currently
+     * hovered above, and it should be checked against
+     *
+     * @see epsilon.menu.OptionPage
      */
     public abstract void useSelected();
 

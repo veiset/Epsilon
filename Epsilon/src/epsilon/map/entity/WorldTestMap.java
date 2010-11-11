@@ -1,21 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package epsilon.map.entity;
 
-import epsilon.game.Input;
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
 import epsilon.map.Map;
 
 /**
+ * Test nao that includes a large amount of world objects.
  *
  * @author Marius
  */
 public class WorldTestMap extends Map {
 
-    private int shotCooldown = 0;
 
     /**
      * Initialises all entities on the map, and all fields in the object
