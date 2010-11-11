@@ -1,7 +1,7 @@
 package epsilon.menu;
 
 import epsilon.game.Game;
-import epsilon.map.entity.TestMap;
+import epsilon.map.entity.SinglePlayerMap;
 import epsilon.map.entity.WorldTestMap;
 
 /**
@@ -25,7 +25,7 @@ public class StartupPage extends MenuPage {
     @Override
     public void useSelected() {
         if (selected == 0) {
-            Game.get().setMap(new TestMap(""));
+            Game.get().setMap(new SinglePlayerMap(""));
             Menu.get().setMenu(OptionPage.get());
             Game.get().menuDone();
         } else if (selected == 1) {

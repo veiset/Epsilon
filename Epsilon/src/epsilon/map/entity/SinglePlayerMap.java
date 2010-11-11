@@ -9,7 +9,7 @@ import epsilon.map.Map;
  *
  * @author Marius
  */
-public class TestMap extends Map {
+public class SinglePlayerMap extends Map {
 
     // enemies
     private Enemy enemy;
@@ -17,7 +17,7 @@ public class TestMap extends Map {
     /**
      * Initialises all entities on the map, and all fields in the object
      */
-    public TestMap(String s) {
+    public SinglePlayerMap(String s) {
 
         super("");
 
