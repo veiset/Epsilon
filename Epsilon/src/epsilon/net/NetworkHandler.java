@@ -145,7 +145,7 @@ public class NetworkHandler {
             }
             if (inputLine.equals("ERROR")) {
                 // Respons indicates that the player was already registered on the server
-                throw new Exception("Player name is already in use");
+                throw new Exception("Player name is already in use or the server is full. Please try again.");
             }
         }
         else {
