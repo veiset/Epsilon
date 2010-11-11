@@ -100,18 +100,19 @@ public class PacketParser implements Runnable {
                         String posX = strArray[i+1];
                         String posY = strArray[i+2];
                         String shotTicker = strArray[i+3];
-                        String color = strArray[i+4];
+                        String colorID = strArray[i+4];
 
                         // Check if name in packet message matches local player name
                         // We dont want info about the local player
                         // this is jusst a redundant check
                         if (!pname.equals(this.name)) {
 
-                            double[] actionArray = new double[3];
+                            double[] actionArray = new double[4];
                             try {
                                 actionArray[0] = Double.valueOf(posX);
                                 actionArray[1] = Double.valueOf(posY);
                                 actionArray[2] = Double.valueOf(shotTicker);
+                                actionArray[3] = Double.valueOf(colorID);
 
                             }
                             catch (NumberFormatException e) {
