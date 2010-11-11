@@ -9,6 +9,7 @@ import java.awt.Graphics;
  */
 public abstract class Enemy extends MoveableEntity {
 
+    protected int ticker = 0;
     /**
      * Creating an enemy, with starting positions.
      *
@@ -33,5 +34,7 @@ public abstract class Enemy extends MoveableEntity {
             hitbox[i].draw(g, posX, posY);
         }
     }
+
+    public abstract boolean isDead();
 
 }

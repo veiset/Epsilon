@@ -37,10 +37,23 @@ public class EnemyJumping extends Enemy {
         super(posX, posY, m);
         HitBox[] hitbox = new HitBox[1];
 
-        hitbox[0] = new HitBox(10, 10, 80, 75);
+        hitbox[0] = new HitBox(37, 28, 20, 63);
 
-        spriteFacingLeft = new Sprite(new String[]{"/pics/sheep_enemy.png"}, false, hitbox);
-        spriteFacingRight = new Sprite(new String[]{"/pics/sheep_enemy.png"}, true, hitbox);
+
+
+        spriteFacingLeft = new  Sprite(new String[]{"/pics/guy/red/guy01_red.png",
+                                                    "/pics/guy/red/guy02_red.png",
+                                                    "/pics/guy/red/guy03_red.png",
+                                                    "/pics/guy/red/guy04_red.png",
+                                                    "/pics/guy/red/guy05_red.png"},
+                                                    true, hitbox);
+
+        spriteFacingRight = new Sprite(new String[]{"/pics/guy/red/guy01_red.png",
+                                                    "/pics/guy/red/guy02_red.png",
+                                                    "/pics/guy/red/guy03_red.png",
+                                                    "/pics/guy/red/guy04_red.png",
+                                                    "/pics/guy/red/guy05_red.png"},
+                                                     false, hitbox);
         currentSprite = spriteFacingRight;
         startXpos = posX;
         facingRight = true;
@@ -97,6 +110,14 @@ public class EnemyJumping extends Enemy {
 
         // applying gravity!
         if (!isDead) {
+
+            if (ticker < 5) {
+                ticker++;
+            } else {
+                ticker = 0;
+                currentSprite.nextImage();
+            }
+
             if (!touchesGround) {
                 double temp = Physics.calculateGravity(posY, pposY, 16);
                 newPosY = posY - temp;
@@ -104,11 +125,21 @@ public class EnemyJumping extends Enemy {
                 newPosY -= (6 + speed);
                 touchesGround = false;
             }
-            // shots
+
+            if (!facingRight) {
+                currentSprite = spriteFacingLeft;
+            } else if (facingRight) {
+                currentSprite = spriteFacingRight;
+            }
 
             double[] playerPos = mapReference.getPlayerState();
             int playerPosX = (int) (playerPos[0] - posX);
 
+            if (playerPosX < 0) {
+                facingRight = false;
+            } else {
+                facingRight = true;
+            }
 
             if (shotCooldown > 0) {
                 shotCooldown--;
@@ -142,5 +173,10 @@ public class EnemyJumping extends Enemy {
             shots.addShot(posX + 15, posY + 45, facingRight, this, mapReference);
 
         }
+    }
+
+    @Override
+    public boolean isDead() {
+        return isDead;
     }
 }

@@ -274,4 +274,7 @@ public class Game extends Canvas {
         return Menu.get().getFont();
     }
 
+    public void muteSoundTrack(boolean mute) {
+        map.mute(mute);
+    }
 }

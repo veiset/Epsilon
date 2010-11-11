@@ -2,6 +2,7 @@ package epsilon.map;
 
 import epsilon.game.Collision;
 import epsilon.game.SoundPlayer;
+import epsilon.map.entity.Enemy;
 import epsilon.map.entity.Entity;
 import epsilon.map.entity.MoveableEntity;
 import epsilon.map.entity.Shot;
@@ -52,7 +53,7 @@ public abstract class Map {
      * @see epsilon.game.SoundPlayer
      */
     protected SoundPlayer soundtrack;
-
+    protected boolean mute = false;
     /**
      * the entity of the player played on this computer
      *
@@ -127,6 +128,16 @@ public abstract class Map {
 
         for (int i = 0; i < temp.length; i++) {
             temp[i].move();
+        }
+
+        for (int i = 0; i < temp.length;i++) {
+            if (temp[i] instanceof Enemy) {
+                Enemy e = (Enemy) temp[i];
+                if (e.isDead()) {
+                    renderableEntities.remove(temp[i]);
+                    moveableEntities.remove(temp[i]);
+                }
+            }
         }
 
     }
@@ -216,6 +227,10 @@ public abstract class Map {
      * @see epsilon.map.entity.Shot
      */
     public synchronized void addShot(Shot shot) {
+        if (!mute) {
+            // gunfire
+            new SoundPlayer("/sound/gunshot.mp3").play();
+        }
         renderableEntities.add(shot);
         moveableEntities.add(shot);
     }
@@ -238,6 +253,16 @@ public abstract class Map {
      */
     public int getPlayerHp() {
         return playerEntity.getHp();
+    }
+
+    public void mute(boolean mute) {
+        this.mute = mute;
+        if (mute) {
+            soundtrack.close();
+        }
+        else {
+            soundtrack.play();
+        }
     }
 
 }

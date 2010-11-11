@@ -30,7 +30,7 @@ public class Block extends JPanel {
      * @see epsilon.map.WorldStore
      */
     public void printJava(int offset) {
-        System.out.println("worldstore.add(new Floor("+(((row*50)-400)+offset) +","+col*40+"),this);");
+        System.out.println("worldstore.add(new Floor("+(((row*50)-400)+offset) +","+col*40+",this));");
     }
 
     @Override

@@ -23,8 +23,11 @@ public class OptionPage extends MenuPage {
     public void useSelected() {
         if (selected == 0) {
             if (items[0].equals("Mute")) {
+                Game.get().muteSoundTrack(true);
                 items[0] = "UnMute";
             } else {
+                Game.get().muteSoundTrack(false);
+
                 items[0] = "Mute";
             }
         } else if (selected == 1) {
@@ -42,5 +45,4 @@ public class OptionPage extends MenuPage {
     public static OptionPage get() {
         return page;
     }
-
 }

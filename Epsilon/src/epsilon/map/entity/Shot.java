@@ -42,9 +42,6 @@ public class Shot extends MoveableEntity {
 
         shotBy = shooter;
 
-        // gunfire
-        new SoundPlayer("/sound/gunshot.mp3").play();
-
     }
 
     @Override
