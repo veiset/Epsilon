@@ -198,7 +198,7 @@ public class Game extends Canvas {
 
         if (map != null) {
             g.setColor(Color.RED);
-            g.drawString("Health: " + map.getPlayerHp(), 5, fm.getHeight()+3);
+            g.drawString("Health: " + map.getPlayerHp() + "%", 5, fm.getHeight()+3);
         }
 
 	// finally, we've completed drawing so clear up the graphics
