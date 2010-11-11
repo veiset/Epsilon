@@ -73,7 +73,7 @@ public class SenderThread implements Runnable {
      * Add packets to ougoing packet queue
      */
     public void addToSendQueue() {
-        byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];
+       //byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];
 
         // Get local players last actions
         double[] actionArray = game.getPlayerState();
@@ -102,6 +102,9 @@ public class SenderThread implements Runnable {
         catch (NoSuchAlgorithmException e) {
             System.out.println("Could not find hashing algorithm in sender thread");
         }
+        
+        int bufSize = sendString.length() * 2;
+        byte[] buf = new byte[bufSize];
 
         // Convert final game state message to bytes
         buf = sendString.getBytes();
