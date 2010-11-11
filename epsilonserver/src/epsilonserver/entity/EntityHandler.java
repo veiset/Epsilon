@@ -22,6 +22,7 @@ public class EntityHandler {
     // Time before we kick the player
     private long tmeoutValue = 5000;
 
+    // List of color identificators
     private ArrayList<String> colorList;
 
     private Random random;
@@ -67,22 +68,10 @@ public class EntityHandler {
     private void setColors() {
         colorList.clear();
 
-        colorList.add("RED");
-        colorList.add("BLUE");
-        colorList.add("PINK");
-        colorList.add("GREEN");
-        colorList.add("BLACK");
-    }
-
-    /**
-     * Get color bound to a specific player
-     *
-     * @param name Name of player
-     * @return color Players color
-     */
-    public String getColorByName(String name) {
-        String color = entityList.get(name).getColor();
-        return color;
+        colorList.add("1"); // RED
+        colorList.add("2"); // BLUE
+        colorList.add("3"); // PINK
+        colorList.add("4"); // GREEN
     }
 
     /**

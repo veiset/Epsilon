@@ -58,10 +58,10 @@ public class ConnectionWorker implements Runnable {
                 boolean playerAdded = eHandler.createIfAbsent(input, ip);
 
                if (playerAdded) {
-                   String color = eHandler.getColorByName(input);
+                   //String colorID = eHandler.getColorByName(input);
                    // If player is added then we send a Ok message back to the client
                     out.println("OK");
-                    out.println(color);
+                    //out.println(colorID);
                }
                else {
                     // If name is already taken we send back a ERROR message

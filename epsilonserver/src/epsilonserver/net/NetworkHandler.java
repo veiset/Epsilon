@@ -26,7 +26,7 @@ public class NetworkHandler {
     // Constants
     public static final int SERVER_PORT = 6001;
     public static final int CLIENT_PORT = 6002;
-    public static final int BUFFER_SIZE = 256;
+    public static final int BUFFER_SIZE = 1000;
 
     private PacketParser parser = null;
     private ListenerThread listener = null;
