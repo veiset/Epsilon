@@ -1,15 +1,14 @@
 package epsilon.map.entity;
 
 import epsilon.game.Collision;
+import epsilon.game.Input;
 import epsilon.game.Physics;
 import epsilon.game.Sprite;
-import epsilon.game.Input;
 import epsilon.map.Map;
 import epsilon.map.ShotStore;
 import java.awt.Graphics;
 
 /**
- * The class used to describe a player played on this computer
  *
  * @author Marius
  */
@@ -17,26 +16,26 @@ public class PlayerEntity extends MoveableEntity {
 
     // keeps track of when to change pictures in the sprite
     protected int ticker;
-
     // used for checking if the entity can jump
     private boolean touchesGround;
-
     // the name of the player
     private String name;
-
     private double origPosX;
     private double origPosY;
-
     // the different sprites this entity uses
     protected Sprite rightSprite;
     protected Sprite standSpriteRight;
     protected Sprite leftSprite;
     protected Sprite standSpriteLeft;
     protected boolean facingRight = true;
+    
     private boolean isDead = false;
 
     private ShotStore shots;
-    private int shotCooldown;
+    private int shotTimer;
+    private int lastShot;
+
+    private int hp;
 
     /**
      * Constructor for the entity that initialises sprites
@@ -44,7 +43,7 @@ public class PlayerEntity extends MoveableEntity {
      * @param posX The starting X position of the entity
      * @param posY The starting Y position of the entity
      */
-    public PlayerEntity(double posX,double posY, String name, Map m) {
+    public PlayerEntity(double posX, double posY, String name, Map m, boolean setSprites) {
         super(posX, posY, m);
         ticker = 0;
         touchesGround = false;
@@ -52,45 +51,26 @@ public class PlayerEntity extends MoveableEntity {
         origPosY = posY;
 
         this.name = name;
+        
+        if (setSprites) {
+            // Create the different sprites used in this entity, and assign them hitboxes
+            HitBox[] hitbox = new HitBox[1];
 
-        // Create the different sprites used in this entity, and assign them hitboxes
-        HitBox[] hitbox = new HitBox[3];
+            hitbox[0] = new HitBox(37, 28, 20, 63);
 
-        hitbox[0] = new HitBox(37, 75, 20, 16);
-        hitbox[1] = new HitBox(45,46,5,29);
-        hitbox[2] = new HitBox(36,28,19,18);
 
-        rightSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"}, false, hitbox);
-        standSpriteRight = new Sprite(new String[]{"/pics/guy01.png"}, false, hitbox);
-        leftSprite = new Sprite(new String[]{"/pics/guy01.png","/pics/guy02.png","/pics/guy03.png","/pics/guy04.png","/pics/guy05.png"},true, hitbox);
-        standSpriteLeft = new Sprite(new String[]{"/pics/guy01.png"},true, hitbox);
+            rightSprite = new Sprite(new String[]{"/pics/guy01.png", "/pics/guy02.png", "/pics/guy03.png", "/pics/guy04.png", "/pics/guy05.png"}, false, hitbox);
+            standSpriteRight = new Sprite(new String[]{"/pics/guy01.png"}, false, hitbox);
+            leftSprite = new Sprite(new String[]{"/pics/guy01.png", "/pics/guy02.png", "/pics/guy03.png", "/pics/guy04.png", "/pics/guy05.png"}, true, hitbox);
+            standSpriteLeft = new Sprite(new String[]{"/pics/guy01.png"}, true, hitbox);
 
-        currentSprite = standSpriteRight;
+            currentSprite = standSpriteRight;
+        }
 
-        shots = new ShotStore(mapReferance);
-        shotCooldown = 30;
-    }
-
-    public PlayerEntity(double posX,double posY, String name, String[] pics, Map m) {
-        super(posX, posY, m);
-        ticker = 0;
-        touchesGround = false;
-
-        this.name = name;
-
-        // Create the different sprites used in this entity, and assign them hitboxes
-        HitBox[] hitbox = new HitBox[3];
-
-        hitbox[0] = new HitBox(37, 75, 17, 16);
-        hitbox[1] = new HitBox(45,46,5,29);
-        hitbox[2] = new HitBox(36,28,19,18);
-
-        rightSprite = new Sprite(pics, false, hitbox);
-        standSpriteRight = new Sprite(pics, false, hitbox);
-        leftSprite = new Sprite(pics,true, hitbox);
-        standSpriteLeft = new Sprite(pics,true, hitbox);
-
-        currentSprite = standSpriteRight;
+        shots = new ShotStore(mapReference);
+        lastShot = 0;
+        shotTimer = 0;
+        hp = 100;
     }
 
     @Override
@@ -100,9 +80,11 @@ public class PlayerEntity extends MoveableEntity {
         newPosX = posX;
         newPosY = posY;
 
+        shotTimer++;
+
         // checking if the player is dead
         if (!isDead) {
-            if(Input.get().right() && !Input.get().left()) {
+            if (Input.get().right() && !Input.get().left()) {
                 if (currentSprite != rightSprite) {
                     newPosX += (currentSprite.getOffset());
                     currentSprite.resetImage();
@@ -139,16 +121,22 @@ public class PlayerEntity extends MoveableEntity {
                 }
             }
 
+            // shots
+            if (Input.get().attack() && shotTimer - lastShot > 30) {
+                //sound.close();
+                addShot(0);
+            }
+            updateShots();
+
 
             // checking if the player has falled down below the floor threshold.
             // If player posY is larger or equal to 598, the player dies.
-            if (posY>=598) {
+            if (posY >= 598) {
                 isDead = true;
-            }
-            // Handle falling
-            else if (posY<600 && !touchesGround) {
+            } // Handle falling
+            else if (posY < 600 && !touchesGround) {
                 double temp = Physics.calculateGravity(posY, pposY, 16);
-                newPosY = posY-temp;
+                newPosY = posY - temp;
             } else if (Input.get().jump()) {
                 // if it touches the ground, jump!
                 newPosY -= 7;
@@ -163,17 +151,6 @@ public class PlayerEntity extends MoveableEntity {
             }
 
             touchesGround = false;
-
-            // shots
-            if (shotCooldown > 0) {
-                shotCooldown--;
-            }
-            if (Input.get().attack() && shotCooldown == 0) {
-                //sound.close();
-                shots.addShot(posX, posY, facingRight, this, mapReferance);
-                shotCooldown += 30;
-            }
-            shots.update();
         }
     }
 
@@ -182,12 +159,12 @@ public class PlayerEntity extends MoveableEntity {
     }
 
     @Override
-    public double getXRenderPosition () {
-        return posX - 400 + currentSprite.getWidth()/2;
+    public double getXRenderPosition() {
+        return posX - 400 + currentSprite.getWidth() / 2;
     }
 
     @Override
-    public double getYRenderPosition () {
+    public double getYRenderPosition() {
         //return posY - 300 + currentSprite.getHeight()/2;
         return 0;
     }
@@ -198,11 +175,11 @@ public class PlayerEntity extends MoveableEntity {
         double posX = this.posX - x;
         double posY = this.posY - y;
 
-        g.drawRect((int)posX, (int)posY, this.getWidth(), this.getHeight());
+        g.drawRect((int) posX, (int) posY, this.getWidth(), this.getHeight());
 
         HitBox[] hitbox = currentSprite.getHitBox();
 
-        for (int i=0;i<hitbox.length;i++) {
+        for (int i = 0; i < hitbox.length; i++) {
             hitbox[i].draw(g, posX, posY);
         }
     }
@@ -213,33 +190,28 @@ public class PlayerEntity extends MoveableEntity {
         if (c.collidedWith instanceof World || c.collidedWith instanceof NetworkEntity || c.collidedWith instanceof Enemy) {
 
             // overlap between the two entities in pixels
-            double dlx = c.deltaLeft;
-            double drx = c.deltaRight;
             double dty = c.deltaTop;
             double dby = c.deltaBottom;
 
             // movement if this entity collides on the left side of something
             if (c.crossedLeft && pposX < posX && dty > 8 && dby > 6) {
-                newPosX -= dlx;
-            }
-
-            // movement if this entity collides on the right side of something
-            if (c.crossedRight && pposX > posX && dty> 8 && dby > 6) {
-                newPosX += drx;
-            }
-
-            // movement if it collides on the bottom of this entity
-            if (c.crossedTop && posY > pposY && (drx > 8 && dlx > 8) ) {
+                newPosX = pposX;
+                c = c.collidingEntity.collision(this);
+            } else if (c.crossedRight && pposX > posX && dty > 8 && dby > 6) {
+                newPosX = pposX;
+                c = c.collidingEntity.collision(this);
+            } else if (c.crossedTop && posY > pposY) {
                 newPosY -= dty;
+                posY = newPosY;
                 touchesGround = true;
+            } else if (c.crossedBottom && posY < pposY) {
+                newPosY = pposY;
             }
-
-            // movement if it collides on the top of this entity
-            if (c.crossedBottom && posY < pposY && (drx > 8 && dlx > 8)) {
-                newPosY += dby;
+        } else if (c.collidedWith instanceof Shot && ((Shot) c.collidedWith).getShooter() != this) {
+            hp -= 20;
+            if (hp <= 0) {
+                isDead = true;
             }
-        } else if (c.collidedWith instanceof Shot) {
-            System.out.println(" You should be dead! ");
         }
     }
 
@@ -262,9 +234,36 @@ public class PlayerEntity extends MoveableEntity {
         pposY = origPosY;
 
         isDead = false;
+        hp = 100;
     }
 
     public boolean isDead() {
-        return true;
+        return isDead;
+    }
+
+    public int lastShot() {
+        return lastShot;
+    }
+
+    protected void addShot(int lastShot) {
+        if (facingRight) {
+            shots.addShot(posX + 75, posY + 45, facingRight, this, mapReference);
+        } else {
+            shots.addShot(posX + 15, posY + 45, facingRight, this, mapReference);
+
+        }
+        if (lastShot != 0) {
+            this.lastShot = lastShot;
+        } else {
+            this.lastShot = shotTimer;
+        }
+    }
+
+    protected void updateShots() {
+        shots.update();
+    }
+
+    public int getHp() {
+        return hp;
     }
 }

@@ -35,7 +35,7 @@ public class NetworkMap extends Map {
             double[] d = NetworkHandler.getInstance().getPlayerStateByName(s);
 
             if (d != null) {
-                TestNetworkEntity n = new TestNetworkEntity(d[0], d[1], s, this, d[3]);
+                NetworkEntity n = new NetworkEntity(d[0], d[1], s, this, d[3]);
                 renderableEntities.add(n);
                 moveableEntities.add(n);
                 entities.add(n);
@@ -52,7 +52,7 @@ public class NetworkMap extends Map {
 
             worldstore.checkCollision(temp[i]);
 
-            if (temp[i] instanceof TestNetworkEntity && !((TestNetworkEntity)temp[i]).exists()) {
+            if (temp[i] instanceof NetworkEntity && !((NetworkEntity)temp[i]).exists()) {
                 moveableEntities.remove(temp[i]);
                 renderableEntities.remove(temp[i]);
                 entities.remove(temp[i]);
@@ -82,7 +82,7 @@ public class NetworkMap extends Map {
             double[] d = NetworkHandler.getInstance().getPlayerStateByName(s);
 
             if (d != null) {
-                TestNetworkEntity n = new TestNetworkEntity(d[0], d[1], s, this, d[3]);
+                NetworkEntity n = new NetworkEntity(d[0], d[1], s, this, d[3]);
                 renderableEntities.add(n);
                 moveableEntities.add(n);
                 entities.add(n);
@@ -100,7 +100,7 @@ public class NetworkMap extends Map {
 
                 worldstore.checkCollision(temp[i]);
 
-                if (temp[i] instanceof TestNetworkEntity && !((TestNetworkEntity)temp[i]).exists()) {
+                if (temp[i] instanceof NetworkEntity && !((NetworkEntity)temp[i]).exists()) {
                     moveableEntities.remove(temp[i]);
                     renderableEntities.remove(temp[i]);
                     entities.remove(temp[i]);
@@ -140,7 +140,7 @@ public class NetworkMap extends Map {
 
         bg = new Background("/pics/bg3.png", 1.25);
 
-        playerEntity = new TestPlayerEntity(-70, 400, s, this, true);
+        playerEntity = new PlayerEntity(-70, 400, s, this, true);
 
         renderableEntities.add(playerEntity);
         moveableEntities.add(playerEntity);
@@ -156,41 +156,41 @@ public class NetworkMap extends Map {
 
         super.initialiseStatic();
 
-        worldstore.add(new Floor_1(-500, 525, this));
-        worldstore.add(new Floor_1(-500, 565, this));
-        worldstore.add(new Floor_1(-450, 565, this));
-        worldstore.add(new Floor_1(-400, 565, this));
-        worldstore.add(new Floor_1(-350, 565, this));
-        worldstore.add(new Floor_1(-300, 565, this));
-        worldstore.add(new Floor_1(-250, 565, this));
-        worldstore.add(new Floor_1(-200, 565, this));
-        worldstore.add(new Floor_1(-150, 565, this));
-        worldstore.add(new Floor_1(-100, 565, this));
-        worldstore.add(new Floor_1(-50, 565, this));
-        worldstore.add(new Floor_1(-50, 525, this));
+        worldstore.add(new Floor(-500, 525, this));
+        worldstore.add(new Floor(-500, 565, this));
+        worldstore.add(new Floor(-450, 565, this));
+        worldstore.add(new Floor(-400, 565, this));
+        worldstore.add(new Floor(-350, 565, this));
+        worldstore.add(new Floor(-300, 565, this));
+        worldstore.add(new Floor(-250, 565, this));
+        worldstore.add(new Floor(-200, 565, this));
+        worldstore.add(new Floor(-150, 565, this));
+        worldstore.add(new Floor(-100, 565, this));
+        worldstore.add(new Floor(-50, 565, this));
+        worldstore.add(new Floor(-50, 525, this));
 
-        worldstore.add(new Floor_1(1000, 565, this));
-        worldstore.add(new Floor_1(1050, 565, this));
-        worldstore.add(new Floor_1(1100, 565, this));
-        worldstore.add(new Floor_1(1150, 565, this));
-        worldstore.add(new Floor_1(1200, 565, this));
-        worldstore.add(new Floor_1(1250, 565, this));
-        worldstore.add(new Floor_1(1300, 565, this));
-        worldstore.add(new Floor_1(1350, 565, this));
-        worldstore.add(new Floor_1(1400, 565, this));
-        worldstore.add(new Floor_1(1450, 565, this));
+        worldstore.add(new Floor(1000, 565, this));
+        worldstore.add(new Floor(1050, 565, this));
+        worldstore.add(new Floor(1100, 565, this));
+        worldstore.add(new Floor(1150, 565, this));
+        worldstore.add(new Floor(1200, 565, this));
+        worldstore.add(new Floor(1250, 565, this));
+        worldstore.add(new Floor(1300, 565, this));
+        worldstore.add(new Floor(1350, 565, this));
+        worldstore.add(new Floor(1400, 565, this));
+        worldstore.add(new Floor(1450, 565, this));
 
-        worldstore.add(new Floor_1(80, 505, this));
+        worldstore.add(new Floor(80, 505, this));
 
-        worldstore.add(new Floor_1(250, 415, this));
-        worldstore.add(new Floor_1(300, 415, this));
+        worldstore.add(new Floor(250, 415, this));
+        worldstore.add(new Floor(300, 415, this));
 
-        worldstore.add(new Floor_1(500, 385, this));
-        worldstore.add(new Floor_1(550, 385, this));
+        worldstore.add(new Floor(500, 385, this));
+        worldstore.add(new Floor(550, 385, this));
 
 
-        worldstore.add(new Floor_1(350, 455, this));
-        worldstore.add(new Floor_1(500, 495, this));
+        worldstore.add(new Floor(350, 455, this));
+        worldstore.add(new Floor(500, 495, this));
 
     }
 

@@ -13,37 +13,58 @@ import java.awt.Graphics;
  */
 public abstract class Entity {
 
+    /**
+     * Current X position from the beginning of the map
+     */
     protected double posX;
+
+    /**
+     * Current Y position from the beginning of the map
+     */
     protected double posY;
 
-    // previous position of the entity. Used for movement and smoothing out rendering
+    /**
+     * Previous X position of the entity. Used for movement and smoothing out rendering
+     */
     protected double pposX;
+
+    /**
+     * Previous Y position of the entity. Used for movement and smoothing out rendering
+     */
     protected double pposY;
 
-    // the sprite that is currently rendered
+    /**
+     * Currently rendered Sprite
+     */
     protected Sprite currentSprite;
 
-    protected Map mapReferance;
+    /**
+     * Reference to the map that created the Entity
+     */
+    protected Map mapReference;
 
     /*
      * Constructur for the Entity class
      *
      * @param posX The initial x position of the entity
      * @param posY The initial y position of the entity
+     * @param map The map that created this Entity
      */
-    public Entity (double posX,double posY, Map m) {
+    public Entity (double posX,double posY, Map map) {
         this.posX = posX;
         this.posY = posY;
         this.pposX = posX;
         this.pposY = posY;
-        mapReferance = m;
+        mapReference = map;
     }
 
     /*
      * Rendering the object
      *
      * @param g The graphic object the entity is to be drawn on
-     * @param delta an int specifying the number of milliseconds since last gameupdate
+     * @param delta An int specifying the number of milliseconds since last gameupdate
+     * @param x The X coordinate of the render position. Usually specified from the current player
+     * @param y The Y coordinate of the render position. Usually fixed
      */
     public void render(Graphics g, int delta, double x, double y) {
         double coeff = (double)delta/16;
@@ -53,9 +74,7 @@ public abstract class Entity {
         double pposX = this.pposX - x;
         double pposY = this.pposY - y;
 
-        /**
-         * Smoothing out frame drawings
-         */
+        //Smoothing out frame drawings
         currentSprite.draw(g, (int)Math.round(posX+(posX-pposX)*coeff), (int)Math.round(posY+(posY-pposY)*coeff));
     }
 
@@ -105,23 +124,31 @@ public abstract class Entity {
     }
 
     /**
-     * Returns the width of the Sprite
+     * Returns the width of the current Sprite object
      *
-     * @return width in pixels
+     * @return width of the current Sprite in pixels
+     * @see epsilon.game.Sprite
      */
      public int getWidth() {
          return currentSprite.getWidth();
      }
 
      /**
-      * Returns the height of the Sprite
+      * Returns the height of the current Sprite object
       *
-      * @return height in pixels
+      * @return height of the current Sprite in pixels
+      * @see epsilon.game.Sprite
       */
      public int getHeight() {
          return currentSprite.getHeight();
      }
 
+     /**
+      * Provides access to the complete list of hitboxes
+      *
+      * @return An array of variable length containin the hitboxes fo the current sprite object
+      * @see epsilon.game.Sprite
+      */
      public HitBox[] getHitbox() {
          return currentSprite.getHitBox();
      }
@@ -195,6 +222,11 @@ public abstract class Entity {
         c.collidedWith = this;
         c.collidingEntity = toCheckAgainst;
 
+
+        /*
+         * loop through all the hitboxes of each entity and check for collision
+         * only ending up with a single collision object with the biggest overlap
+         */
         for(HitBox h:this.getHitbox()) {
             for(HitBox k:toCheckAgainst.getHitbox()) {
                 temp = h.collidesWith(k, ox, oy, opx, opy, x, y, px, py);

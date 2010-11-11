@@ -39,13 +39,18 @@ public class HitBox {
      * Checks if two hitboxes collides. It needs the position of it's own
      * entity and the position of the entity of the other hitbox
      * Includes the previous position so that it can check for collisions
-     * thoughout the movement
+     * throughout the movement
      *
      * @param box the hitbox that should be checked for collision
      * @param ownPosX the X-Axis position of this hitbox's entity
      * @param ownPosY the Y-Axis position of this hitbox's entity
+     * @param ownPPosX the previous X-Axis position of this hitbox's entity
+     * @param ownPPosY the previous Y-Axis position of this hitbox's entity
      * @param otherPosX the X-Axis position of the other hitbox's entity
      * @param otherPosY the Y-Axis position of the other hitbox's entity
+     * @param otherPPosX the previous X-Axis position of the other hitbox's entity
+     * @param otherPPosY the previous Y-Axis position of the other hitbox's entity
+     * 
      * @return a collision object with information about a collision
      */
     public Collision collidesWith(HitBox box, double ownPosX, double ownPosY, 

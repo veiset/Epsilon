@@ -5,7 +5,7 @@ import epsilon.game.SoundPlayer;
 import epsilon.map.entity.Entity;
 import epsilon.map.entity.MoveableEntity;
 import epsilon.map.entity.Shot;
-import epsilon.map.entity.TestPlayerEntity;
+import epsilon.map.entity.PlayerEntity;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -58,7 +58,7 @@ public abstract class Map {
      *
      * @see epsilon.map.entity.PlayerEntity
      */
-    protected TestPlayerEntity playerEntity;
+    protected PlayerEntity playerEntity;
 
     /**
      * the background object that is displayed on the map

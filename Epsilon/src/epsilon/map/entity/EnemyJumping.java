@@ -45,13 +45,13 @@ public class EnemyJumping extends Enemy {
         startXpos = posX;
         facingRight = true;
 
-        shots = new ShotStore(mapReferance);
+        shots = new ShotStore(mapReference);
 
     }
 
     @Override
     public void collided(Collision c) {
-        if (c.collidedWith instanceof World || c.collidedWith instanceof NetworkEntity || c.collidedWith instanceof TestPlayerEntity) {
+        if (c.collidedWith instanceof World || c.collidedWith instanceof NetworkEntity || c.collidedWith instanceof PlayerEntity) {
 
             // overlap between the two entities in pixels
             double dlx = c.deltaLeft;
@@ -106,7 +106,7 @@ public class EnemyJumping extends Enemy {
             }
             // shots
 
-            double[] playerPos = mapReferance.getPlayerState();
+            double[] playerPos = mapReference.getPlayerState();
             int playerPosX = (int) (playerPos[0] - posX);
 
 
@@ -137,9 +137,9 @@ public class EnemyJumping extends Enemy {
 
     private void addshot() {
         if (facingRight) {
-            shots.addShot(posX + 75, posY + 45, facingRight, this, mapReferance);
+            shots.addShot(posX + 75, posY + 45, facingRight, this, mapReference);
         } else {
-            shots.addShot(posX + 15, posY + 45, facingRight, this, mapReferance);
+            shots.addShot(posX + 15, posY + 45, facingRight, this, mapReference);
 
         }
     }
