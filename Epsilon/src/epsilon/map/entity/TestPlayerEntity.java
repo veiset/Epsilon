@@ -43,7 +43,7 @@ public class TestPlayerEntity extends MoveableEntity {
      * @param posX The starting X position of the entity
      * @param posY The starting Y position of the entity
      */
-    public TestPlayerEntity(double posX, double posY, String name, Map m) {
+    public TestPlayerEntity(double posX, double posY, String name, Map m, boolean setSprites) {
         super(posX, posY, m);
         ticker = 0;
         touchesGround = false;
@@ -51,18 +51,21 @@ public class TestPlayerEntity extends MoveableEntity {
         origPosY = posY;
 
         this.name = name;
+        
+        if (setSprites) {
+            // Create the different sprites used in this entity, and assign them hitboxes
+            HitBox[] hitbox = new HitBox[1];
 
-        // Create the different sprites used in this entity, and assign them hitboxes
-        HitBox[] hitbox = new HitBox[1];
+            hitbox[0] = new HitBox(37, 28, 20, 63);
 
-        hitbox[0] = new HitBox(37, 28, 20, 63);
 
-        rightSprite = new Sprite(new String[]{"/pics/guy01.png", "/pics/guy02.png", "/pics/guy03.png", "/pics/guy04.png", "/pics/guy05.png"}, false, hitbox);
-        standSpriteRight = new Sprite(new String[]{"/pics/guy01.png"}, false, hitbox);
-        leftSprite = new Sprite(new String[]{"/pics/guy01.png", "/pics/guy02.png", "/pics/guy03.png", "/pics/guy04.png", "/pics/guy05.png"}, true, hitbox);
-        standSpriteLeft = new Sprite(new String[]{"/pics/guy01.png"}, true, hitbox);
+            rightSprite = new Sprite(new String[]{"/pics/guy01.png", "/pics/guy02.png", "/pics/guy03.png", "/pics/guy04.png", "/pics/guy05.png"}, false, hitbox);
+            standSpriteRight = new Sprite(new String[]{"/pics/guy01.png"}, false, hitbox);
+            leftSprite = new Sprite(new String[]{"/pics/guy01.png", "/pics/guy02.png", "/pics/guy03.png", "/pics/guy04.png", "/pics/guy05.png"}, true, hitbox);
+            standSpriteLeft = new Sprite(new String[]{"/pics/guy01.png"}, true, hitbox);
 
-        currentSprite = standSpriteRight;
+            currentSprite = standSpriteRight;
+        }
 
         shots = new ShotStore(mapReferance);
         lastShot = 0;

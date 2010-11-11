@@ -276,7 +276,7 @@ public class WorldTestMap extends Map {
         
         bg = new Background("/pics/bg3.png", 1.25);
 
-        TestPlayerEntity test = new TestPlayerEntity(-70, 400, "", this);
+        TestPlayerEntity test = new TestPlayerEntity(-70, 400, "", this, true);
         playerEntity = test;
 
         populateWorld();

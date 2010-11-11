@@ -35,7 +35,7 @@ public class NetworkMap extends Map {
             double[] d = NetworkHandler.getInstance().getPlayerStateByName(s);
 
             if (d != null) {
-                TestNetworkEntity n = new TestNetworkEntity(d[0], d[1], s, this);
+                TestNetworkEntity n = new TestNetworkEntity(d[0], d[1], s, this, d[3]);
                 renderableEntities.add(n);
                 moveableEntities.add(n);
                 entities.add(n);
@@ -82,7 +82,7 @@ public class NetworkMap extends Map {
             double[] d = NetworkHandler.getInstance().getPlayerStateByName(s);
 
             if (d != null) {
-                TestNetworkEntity n = new TestNetworkEntity(d[0], d[1], s, this);
+                TestNetworkEntity n = new TestNetworkEntity(d[0], d[1], s, this, d[3]);
                 renderableEntities.add(n);
                 moveableEntities.add(n);
                 entities.add(n);
@@ -140,7 +140,7 @@ public class NetworkMap extends Map {
 
         bg = new Background("/pics/bg3.png", 1.25);
 
-        playerEntity = new TestPlayerEntity(-70, 400, s, this);
+        playerEntity = new TestPlayerEntity(-70, 400, s, this, true);
 
         renderableEntities.add(playerEntity);
         moveableEntities.add(playerEntity);
