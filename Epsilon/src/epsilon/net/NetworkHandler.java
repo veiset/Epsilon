@@ -48,6 +48,7 @@ public class NetworkHandler {
 
     private DatagramSocket socket;
 
+    // Connection flag
     private boolean connectionEstablished = false;
 
     /**
@@ -104,8 +105,6 @@ public class NetworkHandler {
             // Output to socket
             PrintWriter output = new PrintWriter(connectionSocket.getOutputStream(), true);
 
-            System.out.println("Connection established");
-
             // Send client name to server
             output.println(name);
 
@@ -115,11 +114,6 @@ public class NetworkHandler {
             if (inputLine.equals("OK")) {
                 // Respons indicates that the player was added to the server and
                 // the network subsystem can start normally
-                System.out.println("Got OK from server");
-
-                //String color = input.readLine();
-
-                //System.out.println(color);
 
                 // Get local IP to bind socket to
                 InetAddress bindIP = getFirstNonLoopbackAddress(true, false);
@@ -149,7 +143,7 @@ public class NetworkHandler {
             }
         }
         else {
-            System.out.println("Could not connect to server");
+            connectionEstablished = false;
         }
 
     }

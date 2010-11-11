@@ -46,10 +46,12 @@ public class ListenerThread implements Runnable {
                 incomingPacketQueue.put(incomingPacket);
             }
             catch (IOException e) {
-                System.out.println("Problem accessing socket in listener thread");
+                // Could not access socket
+                // Do nothing
             }
             catch (InterruptedException ie) {
-                System.out.println("Could not add packet to incoming packet queue");
+                // Queue interrupted
+                // Do nothing
             }
         }
         socket.close();

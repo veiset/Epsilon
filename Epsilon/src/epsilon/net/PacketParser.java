@@ -6,7 +6,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -82,7 +81,8 @@ public class PacketParser implements Runnable {
                     calculatedHash = hexString.toString();
                 }
                 catch (NoSuchAlgorithmException e) {
-                    System.out.println("Could not find hashing algorithm in parser");
+                    // Hash algorithm not found
+                    // Do nothing
                 }
 
                 // Check if hash is correct
@@ -114,7 +114,8 @@ public class PacketParser implements Runnable {
 
                             }
                             catch (NumberFormatException e) {
-                                System.out.println("Cant convert x or y coordinates to double"); 
+                                // Could not convert to double
+                                // Do nothing
                             }
 
                             // Check if this is a new player
@@ -143,7 +144,8 @@ public class PacketParser implements Runnable {
                 }
             }
             catch (InterruptedException ie) {
-                System.out.println("Interrupt from incoming packet queue");
+                // Could not read from queue
+                // Do nothing
             }
         }
     }

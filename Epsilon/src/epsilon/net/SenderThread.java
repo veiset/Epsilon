@@ -59,10 +59,12 @@ public class SenderThread implements Runnable {
                 socket.send(packet);
             }
             catch (IOException ioe) {
-                System.out.println("Problem accessing socket in sender thread");
+                // Could not access socket
+                // Do nothing
             }
             catch (InterruptedException ie) {
-                System.out.println("Could not get packet from outgoing packet queue");
+                // Queue interrupted
+                // Do nothing
             }
 
         }
@@ -73,7 +75,6 @@ public class SenderThread implements Runnable {
      * Add packets to ougoing packet queue
      */
     public void addToSendQueue() {
-       //byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];
 
         // Get local players last actions
         double[] actionArray = game.getPlayerState();
@@ -100,9 +101,11 @@ public class SenderThread implements Runnable {
 
         }
         catch (NoSuchAlgorithmException e) {
-            System.out.println("Could not find hashing algorithm in sender thread");
+            // No hashing algorithm found
+            // Do nothing
         }
-        
+
+        // Set data buffer size to lengt of string in bytes
         int bufSize = sendString.length() * 2;
         byte[] buf = new byte[bufSize];
 
@@ -118,7 +121,8 @@ public class SenderThread implements Runnable {
             outgoingPacketQueue.put(outgoingPacket);
         }
         catch (InterruptedException e) {
-            System.out.println("Could not add packet to outgoing packet queue");
+            // Queue interrupted
+            // Do nothing
         }
         
     }
