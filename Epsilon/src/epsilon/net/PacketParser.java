@@ -57,8 +57,6 @@ public class PacketParser implements Runnable {
                 // Get message from packet
                 String packetString = new String(packet.getData(), 0, packet.getLength());
 
-                System.out.println(packetString);
-
                 // Split message into words
                 String[] strArray = packetString.split(" ");
 
