@@ -32,6 +32,7 @@ public class NetworkEntity {
      * @param playerName Player name
      * @param ip Players IP address
      * @param updateTime Time of creation
+     * @param colorID Color of player
      */
     public NetworkEntity(String playerName, InetAddress ip, long updateTime, String colorID) {
         name = playerName;

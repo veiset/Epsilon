@@ -77,7 +77,6 @@ public class SenderThread implements Runnable {
      * For hashing the SHA algorithm is currently used.
      */
     public synchronized void addToSendQueue() {
-        //byte[] buf = new byte[NetworkHandler.BUFFER_SIZE];
 
         // get array of player names
         String[] nameArray = eHandler.getNameArray();
@@ -112,6 +111,7 @@ public class SenderThread implements Runnable {
                 ServerGUI.getInstance().setErrorMessage("Could not find hashing algorithm in sender thread");
             }
 
+            // Set data buffer size to lengt of string in bytes
             int bufSize = sendString.length() * 2;
             byte[] buf = new byte[bufSize];
 

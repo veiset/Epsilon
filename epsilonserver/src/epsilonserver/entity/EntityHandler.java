@@ -25,6 +25,7 @@ public class EntityHandler {
     // List of color identificators
     private ArrayList<String> colorList;
 
+    // Random number generator
     private Random random;
 
     /**
@@ -70,7 +71,7 @@ public class EntityHandler {
 
         colorList.add("1"); // RED
         colorList.add("2"); // BLUE
-        colorList.add("3"); // PINK
+        colorList.add("3"); // ORANGE
         colorList.add("4"); // GREEN
     }
 

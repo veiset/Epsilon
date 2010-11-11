@@ -52,7 +52,7 @@ public class ListenerThread implements Runnable {
             }
             catch (IOException e) {
                 // This exception is thrown when the socket is closed
-                //ServerGUI.getInstance().setErrorMessage("Problem accessing socket in listener thread");
+                // Do nothing
             }
             catch (InterruptedException ie) {
                 ServerGUI.getInstance().setErrorMessage("Could not add incoming packet to packet queue");

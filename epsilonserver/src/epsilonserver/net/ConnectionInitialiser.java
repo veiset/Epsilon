@@ -47,7 +47,7 @@ public class ConnectionInitialiser implements Runnable {
             }
             catch (IOException ex) {
                 // This exception is thrown when the socket is closed
-                //ServerGUI.getInstance().setErrorMessage("Problem receiving incoming connections");
+                // Do nothing
             }
 
             // Create a new worker thread to communicate with client
