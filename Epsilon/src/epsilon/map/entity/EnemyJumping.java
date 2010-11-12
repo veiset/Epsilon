@@ -97,7 +97,6 @@ public class EnemyJumping extends Enemy {
             health -= 1;
             if (health == 0) {
                 isDead = true;
-                System.out.println("Enemy down!");
             } else {
                 speed += 1;
             }
