@@ -158,41 +158,52 @@ public class NetworkMap extends Map {
 
         super.initialiseStatic();
 
-        worldstore.add(new Floor(-500, 525, this));
-        worldstore.add(new Floor(-500, 565, this));
-        worldstore.add(new Floor(-450, 565, this));
-        worldstore.add(new Floor(-400, 565, this));
-        worldstore.add(new Floor(-350, 565, this));
-        worldstore.add(new Floor(-300, 565, this));
-        worldstore.add(new Floor(-250, 565, this));
-        worldstore.add(new Floor(-200, 565, this));
-        worldstore.add(new Floor(-150, 565, this));
-        worldstore.add(new Floor(-100, 565, this));
-        worldstore.add(new Floor(-50, 565, this));
-        worldstore.add(new Floor(-50, 525, this));
-
-        worldstore.add(new Floor(1000, 565, this));
-        worldstore.add(new Floor(1050, 565, this));
-        worldstore.add(new Floor(1100, 565, this));
-        worldstore.add(new Floor(1150, 565, this));
-        worldstore.add(new Floor(1200, 565, this));
-        worldstore.add(new Floor(1250, 565, this));
-        worldstore.add(new Floor(1300, 565, this));
-        worldstore.add(new Floor(1350, 565, this));
-        worldstore.add(new Floor(1400, 565, this));
-        worldstore.add(new Floor(1450, 565, this));
-
-        worldstore.add(new Floor(80, 505, this));
-
-        worldstore.add(new Floor(250, 415, this));
-        worldstore.add(new Floor(300, 415, this));
-
-        worldstore.add(new Floor(500, 385, this));
-        worldstore.add(new Floor(550, 385, this));
-
-
-        worldstore.add(new Floor(350, 455, this));
-        worldstore.add(new Floor(500, 495, this));
+        worldstore.add(new Floor(-400,560,this));
+        worldstore.add(new Floor(-350,560,this));
+        worldstore.add(new Floor(-300,560,this));
+        worldstore.add(new Floor(-250,560,this));
+        worldstore.add(new Floor(-200,560,this));
+        worldstore.add(new Floor(-150,560,this));
+        worldstore.add(new Floor(-100,560,this));
+        worldstore.add(new Floor(650,560,this));
+        worldstore.add(new Floor(700,560,this));
+        worldstore.add(new Floor(750,560,this));
+        worldstore.add(new Floor(800,560,this));
+        worldstore.add(new Floor(850,560,this));
+        worldstore.add(new Floor(900,560,this));
+        worldstore.add(new Floor(950,560,this));
+        worldstore.add(new Floor(50,480,this));
+        worldstore.add(new Floor(100,480,this));
+        worldstore.add(new Floor(550,480,this));
+        worldstore.add(new Floor(500,480,this));
+        worldstore.add(new Floor(450,480,this));
+        worldstore.add(new Floor(250,400,this));
+        worldstore.add(new Floor(300,400,this));
+        worldstore.add(new Floor(350,400,this));
+        worldstore.add(new Floor(-100,360,this));
+        worldstore.add(new Floor(-150,360,this));
+        worldstore.add(new Floor(-200,360,this));
+        worldstore.add(new Floor(700,360,this));
+        worldstore.add(new Floor(750,360,this));
+        worldstore.add(new Floor(-400,280,this));
+        worldstore.add(new Floor(-300,280,this));
+        worldstore.add(new Floor(-350,280,this));
+        worldstore.add(new Floor(900,280,this));
+        worldstore.add(new Floor(950,280,this));
+        worldstore.add(new Floor(50,240,this));
+        worldstore.add(new Floor(100,240,this));
+        worldstore.add(new Floor(150,240,this));
+        worldstore.add(new Floor(500,240,this));
+        worldstore.add(new Floor(450,240,this));
+        worldstore.add(new Floor(300,160,this));
+        worldstore.add(new Floor(-50,560,this));
+        worldstore.add(new Floor(1000,560,this));
+        worldstore.add(new Floor(150,480,this));
+        worldstore.add(new Floor(800,360,this));
+        worldstore.add(new Floor(1000,280,this));
+        worldstore.add(new Floor(550,240,this));
+        worldstore.add(new Floor(350,160,this));
+        worldstore.add(new Floor(250,160,this));
 
     }
 
