@@ -28,6 +28,8 @@ public class NetworkEntity {
 
     /**
      * Constructor
+     * When a player is created he is given a default starting position
+     * outside the screen.
      *
      * @param playerName Player name
      * @param ip Players IP address
@@ -97,9 +99,9 @@ public class NetworkEntity {
     }
 
     /**
-     * Get a string containing the player name, positions and shot information
+     * Get a string containing the players game state
      *
-     * @return playerState String with name, position and shot information
+     * @return playerState String with player games state
      */
     public synchronized String getPlayerState() {
         String playerState = name + " " + actionArray[0] 

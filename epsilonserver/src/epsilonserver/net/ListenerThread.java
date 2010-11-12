@@ -55,7 +55,9 @@ public class ListenerThread implements Runnable {
                 // Do nothing
             }
             catch (InterruptedException ie) {
-                ServerGUI.getInstance().setErrorMessage("Could not add incoming packet to packet queue");
+                // Queue is interrupted while waiting
+                // Do nothing
+                //System.out.println("stuff 4");
             }
         }
         

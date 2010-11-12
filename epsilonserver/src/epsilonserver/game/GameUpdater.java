@@ -35,6 +35,9 @@ public class GameUpdater extends TimerTask {
         }
     }
 
+    /**
+     * Stop gameupdater thread
+     */
     public void stopGameUpdater() {
         running = true;
     }

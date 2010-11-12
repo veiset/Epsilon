@@ -76,7 +76,7 @@ public class EntityHandler {
     }
 
     /**
-     * Get a string containing name and position of every
+     * Get a string containing game state of every
      * registered player except the the one that has a given name.
      * 
      * @param name Player name
@@ -181,7 +181,7 @@ public class EntityHandler {
 
             NetworkEntity n = new NetworkEntity(name, ip, updateTime, color);
             entityList.put(name, n);
-            ServerGUI.getInstance().setSystemMessage("Player " + name + " has connected and is " + color);
+            ServerGUI.getInstance().setSystemMessage("Player " + name + " has connected");
             playerAdded = true;
         }
         else {
@@ -222,7 +222,7 @@ public class EntityHandler {
     }
 
     /**
-     * Remove all network entities.
+     * Remove all network entities and reset color array.
      */
     public void clearPlayers() {
         entityList.clear();

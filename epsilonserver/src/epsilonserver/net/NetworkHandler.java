@@ -23,9 +23,19 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class NetworkHandler {
 
-    // Constants
+    /**
+     * Server port
+     */
     public static final int SERVER_PORT = 6001;
+
+    /**
+     * Client port
+     */
     public static final int CLIENT_PORT = 6002;
+
+    /**
+     * Size of packet buffer
+     */
     public static final int BUFFER_SIZE = 1000;
 
     private PacketParser parser = null;
@@ -55,7 +65,6 @@ public class NetworkHandler {
         incomingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
         outgoingPacketQueue = new LinkedBlockingQueue<DatagramPacket>();
         eHandler = EntityHandler.getInstance();
-
     }
 
     /**

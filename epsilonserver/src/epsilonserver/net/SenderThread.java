@@ -57,10 +57,12 @@ public class SenderThread implements Runnable {
                 socket.send(packet);
             }
             catch (InterruptedException e) {
-                ServerGUI.getInstance().setErrorMessage("Problem accessing socket in sider thread");
+                // Queue interrupted while waiting
+                // Do nothing
+                //System.out.println("stuff 2");
             }
             catch (IOException e) {
-                ServerGUI.getInstance().setErrorMessage("Could not get packet from outgoing packet queue");
+                ServerGUI.getInstance().setErrorMessage("Problem accessing socket in sender thread");
             }
 
         }
@@ -130,7 +132,9 @@ public class SenderThread implements Runnable {
                 outgoingPacketQueue.put(outgoingPacket);
             }
             catch (InterruptedException e) {
-                ServerGUI.getInstance().setErrorMessage("Could not add packet to ougoing packet queue");
+                // Queue interrupted while waiting
+                // Do nothing
+                //System.out.println("stuff 1");
             }
             
         }

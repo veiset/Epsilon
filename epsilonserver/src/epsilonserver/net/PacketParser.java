@@ -91,7 +91,9 @@ public class PacketParser implements Runnable {
                 }
             }
             catch (InterruptedException ie) {
-                ServerGUI.getInstance().setErrorMessage("Could not get packet from incoming packet queue");
+                // Queue interrupted while waiting
+                // Do nothing
+                //System.out.println("stuff 3");
             }
         }
     }
