@@ -34,6 +34,7 @@ public class RenderThread extends Thread {
      */
     public RenderThread(Game g) {
 
+        setName("Render");
         game = g;
         lastLoopTime = System.currentTimeMillis();
         rendering = true;

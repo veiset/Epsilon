@@ -136,9 +136,9 @@ public class NetworkHandler {
                 sender = new SenderThread(socket, serverAddress, name, outgoingPacketQueue);
 
                 // Start network threads
-                new Thread(listener).start();
-                new Thread(parser).start();
-                new Thread(sender).start();
+                new Thread(listener, "Listener").start();
+                new Thread(parser, "Parser").start();
+                new Thread(sender, "Sender").start();
 
                 connectionEstablished = true;
 
