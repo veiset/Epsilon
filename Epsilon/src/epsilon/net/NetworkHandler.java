@@ -25,9 +25,19 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class NetworkHandler {
 
-    // Constants
+    /**
+     * Server port
+     */
     public static final int SERVER_PORT = 6001;
+
+    /**
+     * Client port
+     */
     public static final int CLIENT_PORT = 6002;
+
+    /**
+     * Size of packet buffer
+     */
     public static final int BUFFER_SIZE = 1000;
 
     private PacketParser parser;
@@ -74,7 +84,7 @@ public class NetworkHandler {
     /**
      * Get instance of NetworkHandler.
      *
-     * @return INSTANCE
+     * @return INSTANCE Instance of NetworkHandler
      */
     public static NetworkHandler getInstance() {
         return NetworkHandlerHolder.INSTANCE;
@@ -214,7 +224,6 @@ public class NetworkHandler {
     public synchronized void addNewPlayer(String playerName) {
        newPlayers.add(playerName);
     }
-
 
     /**
      * iterate through all addresses on host and return first non-loopback address.

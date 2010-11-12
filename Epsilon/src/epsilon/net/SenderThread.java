@@ -45,7 +45,7 @@ public class SenderThread implements Runnable {
         this.outgoingPacketQueue = outgoingPacketQueue;
     }
 
-    /**
+    /**s
      * Thread that gets a packet from the outgoing packet queue and sends it.
      */
     public void run() {
