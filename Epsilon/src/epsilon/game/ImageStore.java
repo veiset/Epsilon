@@ -8,7 +8,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
 
@@ -23,7 +23,7 @@ public class ImageStore {
     /** The single instance of this class */
     private static ImageStore single = new ImageStore();
 
-    /** Hashmaps saving the images */
+    /* Hashmap saving the images */
     private HashMap<String,Image> images;
     private HashMap<String,Image> flippedImages;
 
@@ -111,14 +111,16 @@ public class ImageStore {
 
         try {
                 // gets the url of the file
-                URL url = this.getClass().getResource(ref);
+                //URL url = this.getClass().getResource(ref);
+                InputStream is = this.getClass().getResourceAsStream(ref);
 
-                if (url == null) {
+                if (is == null) {
                         fail("Can't find ref: "+ref);
                 }
 
                 // use ImageIO to read the image in
-                sourceImage = ImageIO.read(url);
+                sourceImage = ImageIO.read(is);
+
 
         } catch (IOException e) {
                 fail("Failed to load: "+ref);

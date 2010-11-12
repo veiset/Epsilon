@@ -267,6 +267,22 @@ public class PlayerEntity extends MoveableEntity {
     }
 
     /**
+     * Resets the PlayerEntity to the specified position, and resets momentum to 0
+     */
+    public void resetPosition(double xPos, double yPos) {
+        posX = xPos;
+        newPosX = xPos;
+        pposX = xPos;
+
+        posY = yPos;
+        newPosY = yPos;
+        pposY = yPos;
+
+        isDead = false;
+        hp = 100;
+    }
+
+    /**
      * Checks if the player isDead
      *
      * @return true if the player is dead
@@ -318,4 +334,5 @@ public class PlayerEntity extends MoveableEntity {
     public int getHp() {
         return hp;
     }
+
 }

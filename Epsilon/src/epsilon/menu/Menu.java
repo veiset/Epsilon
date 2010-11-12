@@ -7,6 +7,7 @@ import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -24,18 +25,11 @@ public class Menu {
     private MenuPage previousPage;
 
     private Menu() {
-        
-        URL url = this.getClass().getResource("/fonts/agentred.ttf");
 
-        File f;
-        try {
-          f = new File(url.toURI());
-        } catch(URISyntaxException e) {
-          f = new File(url.getPath());
-        }
+        InputStream is = Menu.class.getResourceAsStream("/fonts/agentred.ttf");
 
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, f);
+            font = Font.createFont(Font.TRUETYPE_FONT, is);
             font = font.deriveFont(24f);
         } catch (FontFormatException e) {
             e.printStackTrace();

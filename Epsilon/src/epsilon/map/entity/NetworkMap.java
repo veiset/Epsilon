@@ -8,13 +8,17 @@ import epsilon.menu.DeathPage;
 import epsilon.menu.Menu;
 import epsilon.net.NetworkHandler;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
- *
+ * Network Map, designed by Mr. mm
  *
  * @author Marius
  */
 public class NetworkMap extends Map {
+
+    private double[][] spawnPoints;
+    private Random randomizer;
 
     /**
      * Initialises all entities on the map, and all fields in the object
@@ -142,7 +146,8 @@ public class NetworkMap extends Map {
 
         bg = new Background("/pics/bg3.png", 1.25);
 
-        playerEntity = new PlayerEntity(-70, 400, s, this, true);
+        double[] d = spawnPoints[randomizer.nextInt(spawnPoints.length)];
+        playerEntity = new PlayerEntity(d[0], d[1], s, this, true);
 
         renderableEntities.add(playerEntity);
         moveableEntities.add(playerEntity);
@@ -157,6 +162,9 @@ public class NetworkMap extends Map {
     protected void initialiseStatic() {
 
         super.initialiseStatic();
+
+        spawnPoints = new double[][]{new double[]{-370,440}, new double[]{950,440},new double[]{-370,180}, new double[]{950,180}, new double[]{290,60}};
+        randomizer = new Random();
 
         worldstore.add(new Floor(-400,560,this));
         worldstore.add(new Floor(-350,560,this));
@@ -214,6 +222,12 @@ public class NetworkMap extends Map {
         } else {
             return new double[]{playerEntity.getXPosition(), -200000, playerEntity.lastShot()};
         }
+    }
+
+    @Override
+    public void resetPlayerPosition() {
+        double[] d = spawnPoints[randomizer.nextInt(spawnPoints.length)];
+        playerEntity.resetPosition(d[0], d[1]);
     }
 
 }

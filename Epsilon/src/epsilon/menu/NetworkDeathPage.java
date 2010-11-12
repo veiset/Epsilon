@@ -14,7 +14,7 @@ public class NetworkDeathPage extends MenuPage {
      * Failed miserably
      */
     public NetworkDeathPage() {
-        super(new String[]{"Respawn", "Exit"}, "You are dead!!!!!/nYou should try nto doing that");
+        super(new String[]{"Respawn", "Exit"}, "Press respawn to continue");
     }
 
     @Override
