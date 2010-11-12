@@ -93,7 +93,7 @@ public class PacketParser implements Runnable {
             catch (InterruptedException ie) {
                 // Queue interrupted while waiting
                 // Do nothing
-                //System.out.println("stuff 3");
+                System.out.println("stuff 3");
             }
         }
     }

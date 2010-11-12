@@ -21,7 +21,7 @@ public class ListenerThread implements Runnable {
     private boolean isRunning;
 
     /**
-     * Constrctor
+     * Constructor
      *
      * @param socket Datagram socket
      * @param packetQueue Incoming packet queue
@@ -57,7 +57,6 @@ public class ListenerThread implements Runnable {
             catch (InterruptedException ie) {
                 // Queue is interrupted while waiting
                 // Do nothing
-                //System.out.println("stuff 4");
             }
         }
         

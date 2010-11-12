@@ -118,10 +118,10 @@ public class NetworkHandler {
         sender = new SenderThread(socket, outgoingPacketQueue, eHandler);
 
         // start network threads
-        new Thread(connectionInit).start();
-        new Thread(listener).start();
-        new Thread(parser).start();
-        new Thread(sender).start();
+        new Thread(connectionInit, "ConnectionThread").start();
+        new Thread(listener, "ListenerThread").start();
+        new Thread(parser, "ParserThread").start();
+        new Thread(sender, "SenderThread").start();
     }
 
     /**
@@ -134,6 +134,9 @@ public class NetworkHandler {
         listener.stopListener();
         parser.stopParser();
         sender.stopSender();
+
+        incomingPacketQueue.clear();
+        outgoingPacketQueue.clear();
 
         // Close sockets
         try {

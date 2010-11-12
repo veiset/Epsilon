@@ -59,10 +59,10 @@ public class SenderThread implements Runnable {
             catch (InterruptedException e) {
                 // Queue interrupted while waiting
                 // Do nothing
-                //System.out.println("stuff 2");
             }
             catch (IOException e) {
-                ServerGUI.getInstance().setErrorMessage("Problem accessing socket in sender thread");
+                // Cant access socket
+                // Do nothing
             }
 
         }
@@ -134,7 +134,6 @@ public class SenderThread implements Runnable {
             catch (InterruptedException e) {
                 // Queue interrupted while waiting
                 // Do nothing
-                //System.out.println("stuff 1");
             }
             
         }
