@@ -15,7 +15,7 @@ import javazoom.jl.player.Player;
 public class SoundPlayer {
 
     private Player player;
-    private URL url;
+    private String filename;
 
     /**
      * Creating a object that plays the MP3-file, the method SoundPlayer.play()
@@ -24,7 +24,7 @@ public class SoundPlayer {
      * @param filename file relative to classpath
      */
     public SoundPlayer(String filename) {
-        url = this.getClass().getResource(filename);
+        this.filename = filename;
 
     }
 
@@ -40,8 +40,8 @@ public class SoundPlayer {
     // play the MP3 file to the sound card
     public void play() {
         try {
-            // Using classpath and casting url.getContent() to BufferedInputStream
-            BufferedInputStream bis = (BufferedInputStream) url.getContent();
+            // getting the inputstream and buffering it
+            BufferedInputStream bis = new BufferedInputStream(this.getClass().getResourceAsStream(filename));
             player = new Player(bis);
         } catch (Exception e) {
             System.out.println("Problem playing file ");
