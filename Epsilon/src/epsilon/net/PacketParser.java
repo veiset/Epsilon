@@ -32,7 +32,7 @@ public class PacketParser implements Runnable {
      * Constructor
      *
      * @param incomingPacketQueue Queue for incoming packets
-     * @param playerStateList List og players and states
+     * @param playerStateList List of players and states
      * @param netHandler Reference to NetworkHandler
      * @param name Local player name
      */
