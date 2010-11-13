@@ -2,7 +2,6 @@ package epsilon.game;
 
 
 import java.io.BufferedInputStream;
-import java.net.URL;
 
 import javazoom.jl.player.Player;
 

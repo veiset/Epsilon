@@ -1,7 +1,6 @@
 package epsilon.map.entity;
 
 import epsilon.game.Collision;
-import epsilon.game.SoundPlayer;
 import epsilon.game.Sprite;
 import epsilon.map.Map;
 import java.awt.Graphics;
@@ -16,7 +15,7 @@ public class Shot extends MoveableEntity {
     private boolean headingRight = false;
     private double distanceTravled = 0;
     private double distanceMax = 600;
-    private int speed = 9;
+    private int speed = 12;
     private Entity shotBy;
 
     /**
@@ -81,7 +80,7 @@ public class Shot extends MoveableEntity {
     @Override
     public void collided(Collision c) {
         // if collieded the dinstance is done, and the shot is removed
-        if (!shotBy.equals(c.collidedWith)) {
+        if (!shotBy.equals(c.collidedWith) && !(c.collidedWith instanceof Shot )) {
             distanceTravled = distanceMax+1;
         }
     }
