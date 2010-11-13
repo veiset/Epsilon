@@ -39,10 +39,10 @@ public class Game extends Canvas {
     private long lastUpdateTime;
 
     //Timertask used to update the game
-    private GameUpdater u;
+    private GameUpdater updater;
 
     //utility timer used to update the game
-    private Timer t;
+    private Timer timer;
 
     //renderer Thread
     private RenderThread renderer;
@@ -110,9 +110,9 @@ public class Game extends Canvas {
         menu = true;
 
         // Schedule the GameUpdater Task
-        u = new GameUpdater(this);
-        t = new Timer();
-        t.schedule(u, 0, 16);
+        updater = new GameUpdater(this);
+        timer = new Timer();
+        timer.schedule(updater, 0, 16);
 
         // Start the renderer thread, needs to be last in the start method
         renderer = new RenderThread(this);
@@ -157,7 +157,7 @@ public class Game extends Canvas {
     /**
      * Renders the screen. Uses the time since the last rendering to
      * aproximate how far a character has moved, even when the
-     * game hasn't been updated
+     * game hasn'timer been updated
      *
      * @param delta time in milliseconds since last update
      * @param fps the current fps, used for rendering the fps to the HUD
@@ -259,7 +259,7 @@ public class Game extends Canvas {
     }
 
     /**
-     * Restarts the map from scratch. Doesn't work well on multiplayer maps
+     * Restarts the map from scratch. Doesn'timer work well on multiplayer maps
      */
     public void restart() {
         map.reset();
