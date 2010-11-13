@@ -285,7 +285,9 @@ public class WorldTestMap extends Map {
         // Test MP3 playing
         String filename = "/sound/zabutom.lets.shooting.mp3";
         soundtrack = new SoundPlayer(filename);
-        soundtrack.play();
+        if (!mute) {
+            soundtrack.play();
+        }
     }
 
     @Override
