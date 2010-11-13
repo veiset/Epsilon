@@ -18,10 +18,10 @@ public class Game {
     private long lastUpdateTime;
 
     //Timertask used to update the game
-    private GameUpdater u;
+    private GameUpdater updater;
 
     //utility timer used to update the game
-    private Timer t;
+    private Timer timer;
 
     private EntityHandler eHandler;
     private NetworkHandler netHandler;
@@ -56,9 +56,9 @@ public class Game {
         netHandler.startServer();
 
         // Schedule the GameUpdater Task
-        u = new GameUpdater(this);
-        t = new Timer();
-        t.schedule(u, 0, 16);
+        updater = new GameUpdater(this);
+        timer = new Timer();
+        timer.schedule(updater, 0, 16);
 
     }
 
@@ -68,7 +68,7 @@ public class Game {
     public void stop() {
         netHandler.stopServer();
         eHandler.clearPlayers();
-        u.stopGameUpdater();
+        updater.stopGameUpdater();
     }
 
     /**

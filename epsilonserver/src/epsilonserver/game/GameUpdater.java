@@ -9,7 +9,7 @@ import java.util.TimerTask;
  */
 public class GameUpdater extends TimerTask {
 
-    private Game g;
+    private Game game;
     private boolean running;
 
     /**
@@ -18,7 +18,7 @@ public class GameUpdater extends TimerTask {
      * @param game the game instance that this tast is supposed to be updating
      */
     public GameUpdater(Game game) {
-        g = game;
+        this.game = game;
         running = false;
     }
 
@@ -30,7 +30,7 @@ public class GameUpdater extends TimerTask {
     public void run() {
         if (!running) {
             running = true;
-            g.updateGame();
+            game.updateGame();
             running = false;
         }
     }

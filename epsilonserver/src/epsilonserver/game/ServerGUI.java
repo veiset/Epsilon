@@ -1,6 +1,5 @@
 package epsilonserver.game;
 
-import epsilonserver.net.NetworkHandler;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -36,7 +35,7 @@ public class ServerGUI extends JFrame {
     private ServerGUI sgui = this;
     private JTextArea logBox = new JTextArea();
     private boolean isStarted = false;
-    private Game g;
+    private Game game;
 
     /**
      * Private Constructor
