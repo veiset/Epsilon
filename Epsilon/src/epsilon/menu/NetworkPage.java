@@ -2,7 +2,7 @@ package epsilon.menu;
 
 import epsilon.game.Game;
 import epsilon.game.Input;
-import epsilon.map.entity.NetworkMap;
+import epsilon.map.NetworkMap;
 import epsilon.net.NetworkHandler;
 import java.io.IOException;
 import java.net.InetAddress;

@@ -3,7 +3,7 @@ package epsilon.game;
 import epsilon.menu.Menu;
 import epsilon.menu.StartupPage;
 import epsilon.map.Map;
-import epsilon.map.entity.NetworkMap;
+import epsilon.map.NetworkMap;
 import epsilon.menu.DeathPage;
 import epsilon.menu.NetworkDeathPage;
 import java.awt.AlphaComposite;

@@ -1,8 +1,8 @@
 package epsilon.menu;
 
 import epsilon.game.Game;
-import epsilon.map.entity.SinglePlayerMap;
-import epsilon.map.entity.WorldTestMap;
+import epsilon.map.SinglePlayerMap;
+import epsilon.map.WorldTestMap;
 
 /**
  * The first menupage that is shown when the game is started. Lets you choose 

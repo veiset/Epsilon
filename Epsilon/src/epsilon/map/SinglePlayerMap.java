@@ -1,8 +1,13 @@
-package epsilon.map.entity;
+package epsilon.map;
 
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
 import epsilon.map.Map;
+import epsilon.map.entity.Enemy;
+import epsilon.map.entity.EnemyJumping;
+import epsilon.map.entity.EnemyPatrol;
+import epsilon.map.entity.Floor;
+import epsilon.map.entity.PlayerEntity;
 
 /**
  * Map made for testing purposes, now used as a single player map

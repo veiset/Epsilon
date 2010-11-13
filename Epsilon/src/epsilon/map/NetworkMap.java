@@ -1,9 +1,14 @@
-package epsilon.map.entity;
+package epsilon.map;
 
 import epsilon.game.Collision;
 import epsilon.game.SoundPlayer;
 import epsilon.map.Background;
 import epsilon.map.Map;
+import epsilon.map.entity.Entity;
+import epsilon.map.entity.Floor;
+import epsilon.map.entity.MoveableEntity;
+import epsilon.map.entity.NetworkEntity;
+import epsilon.map.entity.PlayerEntity;
 import epsilon.menu.DeathPage;
 import epsilon.menu.Menu;
 import epsilon.net.NetworkHandler;
