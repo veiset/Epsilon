@@ -79,7 +79,7 @@ public class NetworkHandler {
     /**
      * Get instance of NetworkHandler.
      *
-     * @return INSTANCE Instance of NetworkHandler
+     * @return Instance of NetworkHandler
      */
     public static NetworkHandler getInstance() {
         return NetworkHandlerHolder.INSTANCE;
@@ -171,7 +171,7 @@ public class NetworkHandler {
      *
      * @param preferIpv4 Search for IPv4 address
      * @param preferIPv6 Search for IPv6 address
-     * @return addr First non-loopback IP address found
+     * @return First non-loopback IP address found
      * @throws SocketException No IP address found
      */
     private static InetAddress getFirstNonLoopbackAddress(boolean preferIpv4, boolean preferIPv6) throws SocketException {

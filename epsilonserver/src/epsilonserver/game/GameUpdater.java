@@ -3,7 +3,7 @@ package epsilonserver.game;
 import java.util.TimerTask;
 
 /**
- * Task that updates the game state about 60 times pr. second, every 16th ms
+ * Task that updates the game state about 60 times pr. second, every 16th ms.
  *
  * @author Marius
  */
@@ -15,7 +15,7 @@ public class GameUpdater extends TimerTask {
     /**
      * Constructor
      *
-     * @param game the game instance that this tast is supposed to be updating
+     * @param game The game instance that this task is supposed to be updating
      */
     public GameUpdater(Game game) {
         this.game = game;
@@ -36,7 +36,7 @@ public class GameUpdater extends TimerTask {
     }
 
     /**
-     * Stop gameupdater thread
+     * Stop gameupdater thread.
      */
     public void stopGameUpdater() {
         running = true;

@@ -40,14 +40,14 @@ public class Game {
    /**
      * Returns the single object of the game class
      *
-     * @return game The single instance of this class
+     * @return The single instance of this class
      */
     public static Game get() {
         return game;
     }
 
     /**
-     * Startup method. Starts the gameupdating
+     * Startup method. Starts the gameupdating.
      */
     public void start() {
 
@@ -73,7 +73,7 @@ public class Game {
 
     /**
      * Method used to update the game, mainly used by the updater task.
-     * Sets a new lastUpdateTime, checks for timedout players and updates
+     * Sets a new lastUpdateTime, checks for timed out players and updates
      * registered players.
      */
     public void updateGame() {

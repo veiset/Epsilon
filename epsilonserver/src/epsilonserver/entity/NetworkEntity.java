@@ -31,9 +31,9 @@ public class NetworkEntity {
      * When a player is created he is given a default starting position
      * outside the screen.
      *
-     * @param playerName Player name
-     * @param ip Players IP address
-     * @param updateTime Time of creation
+     * @param playerName Name of player
+     * @param ip IP address belonging to player
+     * @param updateTime Time the player is created
      * @param colorID Color of player
      */
     public NetworkEntity(String playerName, InetAddress ip, long updateTime, String colorID) {
@@ -51,9 +51,9 @@ public class NetworkEntity {
     }
 
     /**
-     * Get player name
+     * Get player name.
      *
-     * @return name Player name
+     * @return Name of player
      */
     public synchronized String getPlayerName() {
         return name;
@@ -62,7 +62,7 @@ public class NetworkEntity {
     /**
      * Get the players last update time in milliseconds.
      *
-     * @return lastUpdateTime Last time player was updated in milliseconds
+     * @return Last time player was updated in milliseconds
      */
     public synchronized long getLastUpdateTime() {
         return lastUpdateTime;
@@ -71,7 +71,7 @@ public class NetworkEntity {
     /**
      * Get players IP address.
      *
-     * @return ip Players IP address
+     * @return IP address belonging to player
      */
     public synchronized InetAddress getAddress() {
         return ip;
@@ -81,7 +81,7 @@ public class NetworkEntity {
      * Get string that says what color the player was using
      * for the player model
      *
-     * @return color Players model color
+     * @return Color of player model
      */
     public String getColor() {
         return colorID;
@@ -91,7 +91,7 @@ public class NetworkEntity {
      * Set new player coordinates and set new update time.
      *
      * @param actionArray Players recent actions
-     * @param updateTime  Time of update in milliseconds
+     * @param updateTime Time of update in milliseconds
      */
     public synchronized void setPlayerAction(String[] actionArray, long updateTime) {
         this.actionArray = actionArray;
@@ -99,9 +99,9 @@ public class NetworkEntity {
     }
 
     /**
-     * Get a string containing the players game state
+     * Get a string containing the players game state.
      *
-     * @return playerState String with player games state
+     * @return String with player games state
      */
     public synchronized String getPlayerState() {
         String playerState = name + " " + actionArray[0] 

@@ -58,7 +58,7 @@ public class ServerGUI extends JFrame {
     /**
      * Get instance of ServerGUI.
      *
-     * @return INSTANCE Instance of ServerGUI
+     * @return Instance of ServerGUI
      */
     public static ServerGUI getInstance() {
         return ServerGUIHolder.INSTANCE;
@@ -88,6 +88,8 @@ public class ServerGUI extends JFrame {
 
     /**
      * Create a server configuration panel.
+     *
+     * @return Panel containing log area, start and a stop button.
      */
     private JComponent makeConfigPanel() {
         JPanel configPanel = new JPanel(new BorderLayout());

@@ -57,7 +57,7 @@ public class EntityHandler {
     /**
      * Get instance of EntityHandler
      *
-     * @return INSTANCE Instance of EntityHandler
+     * @return Instance of EntityHandler
      */
     public static EntityHandler getInstance() {
         return EntityHandlerHolder.INSTANCE;
@@ -65,13 +65,14 @@ public class EntityHandler {
 
     /**
      * Add colors to the player color list
+     * Colors added are red, blue, pink and green.
      */
     private void setColors() {
         colorList.clear();
 
         colorList.add("1"); // RED
         colorList.add("2"); // BLUE
-        colorList.add("3"); // ORANGE
+        colorList.add("3"); // PINK
         colorList.add("4"); // GREEN
     }
 
@@ -79,8 +80,8 @@ public class EntityHandler {
      * Get a string containing game state of every
      * registered player except the the one that has a given name.
      * 
-     * @param name Player name
-     * @return gameStateString Player state information
+     * @param name Name of player we don't want information about
+     * @return Player state information
      */
     public String getGameStateString(String name) {
         String gameStateString = "";
@@ -99,9 +100,9 @@ public class EntityHandler {
     }
 
     /**
-     * Get a array containing ip addresses of all registered players.
+     * Get a array containing IP addresses of all registered players.
      *
-     * @return adrArray Array of IP addresses
+     * @return Array of IP addresses
      */
     public InetAddress[] getAddressArray() {
         InetAddress[] adrArray = new InetAddress[entityList.size()];
@@ -122,8 +123,8 @@ public class EntityHandler {
     /**
      * Get the address of a player with a specified name.
      *
-     * @param name Player name
-     * @return address Players IP address
+     * @param name Name of player we want the IP address of
+     * @return IP address belonging to given player
      */
     public InetAddress getAddressByName(String name) {
         InetAddress address = entityList.get(name).getAddress();
@@ -133,7 +134,7 @@ public class EntityHandler {
     /**
      * Get a array containing names of registered players.
      *
-     * @return nameArray Array of player names
+     * @return Array of player names
      */
     public synchronized String[] getNameArray() {
         String[] nameArray = new String[entityList.size()];
@@ -145,7 +146,7 @@ public class EntityHandler {
      * Set a new game state on a player
      *
      * @param name Name of player
-     * @param actionArray Player action
+     * @param actionArray Array of player actions
      */
     public void setPlayerState(String name, String[] actionArray) {
         long updateTime = System.currentTimeMillis();
@@ -158,11 +159,11 @@ public class EntityHandler {
     }
 
     /**
-     * Create a new player if not already created.
+     * Create a new player if the player does not already exist.
      *
      * @param name Name of player
-     * @param ip Players IP address
-     * @return playerAdded If player was added or not
+     * @param ip IP address belonging to player
+     * @return True if player was added, false if player already exists
      */
     public synchronized boolean createIfAbsent(String name, InetAddress ip) {
         long updateTime = System.currentTimeMillis();
@@ -192,7 +193,7 @@ public class EntityHandler {
     }
 
     /**
-     * Checks timeout value of registered players. if the timeout value
+     * Checks timeout value of registered players. If the timeout value
      * exceeds the max timeout value, then the player is removed from the
      * entity list.
      *
