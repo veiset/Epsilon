@@ -84,7 +84,7 @@ public class NetworkHandler {
     /**
      * Get instance of NetworkHandler.
      *
-     * @return INSTANCE Instance of NetworkHandler
+     * @return Instance of NetworkHandler
      */
     public static NetworkHandler getInstance() {
         return NetworkHandlerHolder.INSTANCE;
@@ -149,7 +149,7 @@ public class NetworkHandler {
             }
             if (inputLine.equals("ERROR")) {
                 // Respons indicates that the player was already registered on the server
-                throw new Exception("Player name is already in use or the server is full. Please try again.");
+                throw new Exception("Player name is already in use or the server is full");
             }
         }
         else {
@@ -182,7 +182,7 @@ public class NetworkHandler {
      * Get a network players game state by name.
      *
      * @param playerName Name of player
-     * @return playerPos Player game state
+     * @return Game state of player
      */
     public double[] getPlayerStateByName(String playerName) {
         double[] playerState = playerStateList.get(playerName);
@@ -192,7 +192,7 @@ public class NetworkHandler {
     /**
      * Check if there are new players.
      *
-     * @return hasNewPlayers True if there are new players, false otherwise
+     * @return True if there are new players, false otherwise.
      */
     public boolean hasNewPlayers() {
         boolean newPlayerState = false;
@@ -207,7 +207,7 @@ public class NetworkHandler {
     /**
      * Get name of the last player added to the new player list.
      * 
-     * @return newPlayer Last player in the new player list
+     * @return Last player in the new player list
      */
     public synchronized String getNewPlayer() {
         int arraySize = newPlayers.size();
@@ -219,7 +219,7 @@ public class NetworkHandler {
     /**
      * Add a players name to the new players list
      *
-     * @param name Player name
+     * @param name Name of player
      */
     public synchronized void addNewPlayer(String playerName) {
        newPlayers.add(playerName);
@@ -231,7 +231,7 @@ public class NetworkHandler {
      *
      * @param preferIpv4 Search for IPv4 address
      * @param preferIPv6 Search for IPv6 address
-     * @return addr First non-loopback IP address found
+     * @return First non-loopback IP address found
      * @throws SocketException No IP address found
      */
     private static InetAddress getFirstNonLoopbackAddress(boolean preferIpv4, boolean preferIPv6) throws SocketException {
