@@ -26,14 +26,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class NetworkHandler {
 
     /**
-     * Server port
+     * Server port.
      */
-    public static final int SERVER_PORT = 6001;
+    public static final int SERVER_PORT = 44321;
 
     /**
-     * Client port
+     * Client port.
      */
-    public static final int CLIENT_PORT = 6002;
+    public static final int CLIENT_PORT = 44322;
 
     /**
      * Size of packet buffer

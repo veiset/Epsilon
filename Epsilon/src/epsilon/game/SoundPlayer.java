@@ -5,6 +5,8 @@ import java.io.BufferedInputStream;
 
 import javazoom.jl.player.Player;
 
+
+
 /**
  * Sound-player for playing MP3 files. Using a thread for each sound that is
  * played. Each object of SoundPlayer contains one MP3-file path.
