@@ -55,7 +55,7 @@ public class NetworkEntity {
      *
      * @return Name of player
      */
-    public synchronized String getPlayerName() {
+    public String getPlayerName() {
         return name;
     }
 
@@ -64,7 +64,7 @@ public class NetworkEntity {
      *
      * @return Last time player was updated in milliseconds
      */
-    public synchronized long getLastUpdateTime() {
+    public long getLastUpdateTime() {
         return lastUpdateTime;
     }
 
@@ -73,7 +73,7 @@ public class NetworkEntity {
      *
      * @return IP address belonging to player
      */
-    public synchronized InetAddress getAddress() {
+    public InetAddress getAddress() {
         return ip;
     }
 
@@ -93,7 +93,7 @@ public class NetworkEntity {
      * @param actionArray Players recent actions
      * @param updateTime Time of update in milliseconds
      */
-    public synchronized void setPlayerAction(String[] actionArray, long updateTime) {
+    public void setPlayerAction(String[] actionArray, long updateTime) {
         this.actionArray = actionArray;
         lastUpdateTime = updateTime;
     }
@@ -103,7 +103,7 @@ public class NetworkEntity {
      *
      * @return String with player games state
      */
-    public synchronized String getPlayerState() {
+    public String getPlayerState() {
         String playerState = name + " " + actionArray[0] 
                 + " " + actionArray[1] + " " + actionArray[2] + " " + colorID + " ";
         return playerState;

@@ -78,7 +78,7 @@ public class SenderThread implements Runnable {
      * is correct when received.
      * For hashing the SHA algorithm is currently used.
      */
-    public synchronized void addToSendQueue() {
+    public void addToSendQueue() {
 
         // get array of player names
         String[] nameArray = eHandler.getNameArray();

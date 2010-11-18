@@ -136,7 +136,7 @@ public class EntityHandler {
      *
      * @return Array of player names
      */
-    public synchronized String[] getNameArray() {
+    public String[] getNameArray() {
         String[] nameArray = new String[entityList.size()];
         nameArray = (String[]) entityList.keySet().toArray(nameArray);
         return nameArray;
@@ -165,7 +165,7 @@ public class EntityHandler {
      * @param ip IP address belonging to player
      * @return True if player was added, false if player already exists
      */
-    public synchronized boolean createIfAbsent(String name, InetAddress ip) {
+    public boolean createIfAbsent(String name, InetAddress ip) {
         long updateTime = System.currentTimeMillis();
 
         boolean playerAdded;
@@ -181,7 +181,8 @@ public class EntityHandler {
             colorList.remove(colorIdx);
 
             NetworkEntity n = new NetworkEntity(name, ip, updateTime, color);
-            entityList.put(name, n);
+            // put a new player in list if its not already there
+            entityList.putIfAbsent(name, n);
             ServerGUI.getInstance().setSystemMessage("Player " + name + " has connected");
             playerAdded = true;
         }
