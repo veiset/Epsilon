@@ -49,14 +49,13 @@ public class NetworkEntity extends PlayerEntity {
             folder = "";
         }
 
-        System.out.println("/pics/" + folder + "guy01" + s + ".png");
 
-            rightSprite = new Sprite(new String[]{"/pics/" + folder + "guy01" + s + ".png", "/pics/" + folder + "guy02" + s + ".png", "/pics/" + folder + "guy03" + s + ".png", "/pics/" + folder + "guy04" + s + ".png", "/pics/" + folder + "guy05" + s + ".png"}, false, hitbox);
-            standSpriteRight = new Sprite(new String[]{"/pics/" + folder + "guy01" + s + ".png"}, false, hitbox);
-            leftSprite = new Sprite(new String[]{"/pics/" + folder + "guy01" + s + ".png", "/pics/" + folder + "guy02" + s + ".png", "/pics/" + folder + "guy03" + s + ".png", "/pics/" + folder + "guy04" + s + ".png", "/pics/" + folder + "guy05" + s + ".png"}, true, hitbox);
-            standSpriteLeft = new Sprite(new String[]{"/pics/" + folder + "guy01" + s + ".png"}, true, hitbox);
+        rightSprite = new Sprite(new String[]{"/pics/" + folder + "guy01" + s + ".png", "/pics/" + folder + "guy02" + s + ".png", "/pics/" + folder + "guy03" + s + ".png", "/pics/" + folder + "guy04" + s + ".png", "/pics/" + folder + "guy05" + s + ".png"}, false, hitbox);
+        standSpriteRight = new Sprite(new String[]{"/pics/" + folder + "guy01" + s + ".png"}, false, hitbox);
+        leftSprite = new Sprite(new String[]{"/pics/" + folder + "guy01" + s + ".png", "/pics/" + folder + "guy02" + s + ".png", "/pics/" + folder + "guy03" + s + ".png", "/pics/" + folder + "guy04" + s + ".png", "/pics/" + folder + "guy05" + s + ".png"}, true, hitbox);
+        standSpriteLeft = new Sprite(new String[]{"/pics/" + folder + "guy01" + s + ".png"}, true, hitbox);
 
-            currentSprite = standSpriteRight;
+        currentSprite = standSpriteRight;
 
     }
 
