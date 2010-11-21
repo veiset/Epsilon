@@ -7,9 +7,9 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 
 /**
- * Abstract class describing
+ * Abstract class containing the basic functionality for a menu page
  *
- * @author Marius
+ * @author md
  */
 public abstract class MenuPage {
 

@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * The methods initialiseStatic and initialiseNonStatic should be overriden
  * and start with a call to super, so that all the fields are initialised
  *
- * @author Marius
+ * @author md
  */
 public abstract class Map {
 

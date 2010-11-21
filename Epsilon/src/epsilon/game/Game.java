@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  * The game class, coordinates the flow of information
  * between the different threads.
  *
- * @author Marius
+ * @author md
  */
 public class Game extends Canvas {
 

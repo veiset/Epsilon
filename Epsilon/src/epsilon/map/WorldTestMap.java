@@ -1,15 +1,13 @@
 package epsilon.map;
 
 import epsilon.game.SoundPlayer;
-import epsilon.map.Background;
-import epsilon.map.Map;
 import epsilon.map.entity.Floor;
 import epsilon.map.entity.PlayerEntity;
 
 /**
  * Test nao that includes a large amount of world objects.
  *
- * @author Marius
+ * @author md
  */
 public class WorldTestMap extends Map {
 

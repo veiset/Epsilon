@@ -11,7 +11,7 @@ import java.util.HashMap;
  * All world objects are static and do not move.
  * Utilises a hashmap.
  *
- * @author Marius
+ * @author md
  */
 public class WorldStore {
 

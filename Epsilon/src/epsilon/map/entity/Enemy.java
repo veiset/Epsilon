@@ -4,6 +4,7 @@ import epsilon.map.Map;
 import java.awt.Graphics;
 
 /**
+ * Abstract class containing basic functionality for enemies.
  *
  * @author vz
  */

@@ -3,7 +3,7 @@ package epsilon.game;
 /**
  * Rendering thread for the game with codename Epsilon
  *
- * @author Marius
+ * @author md
  */
 public class RenderThread extends Thread {
 

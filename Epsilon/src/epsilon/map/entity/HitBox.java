@@ -7,7 +7,7 @@ import java.awt.Graphics;
  * Class describing a hitbox of an entity It uses offset and size to create
  * smaller boxes within a sprite to allow collision detection on parts of a sprite instead of whole sprites
  *
- * @author Marius
+ * @author md
  */
 public class HitBox {
 

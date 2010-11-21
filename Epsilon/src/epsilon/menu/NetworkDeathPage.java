@@ -5,7 +5,7 @@ import epsilon.game.Game;
 /**
  * Standardpage that shows when you die on a Network Map.
  *
- * @author Marius
+ * @author md
  */
 public class NetworkDeathPage extends MenuPage {
 

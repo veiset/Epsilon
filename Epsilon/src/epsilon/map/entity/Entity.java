@@ -9,7 +9,7 @@ import java.awt.Graphics;
  *
  * Abstract class that provides a template for all entities in the map
  *
- * @author Marius
+ * @author md
  */
 public abstract class Entity {
 

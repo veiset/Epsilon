@@ -5,7 +5,7 @@ import epsilon.game.Game;
 /**
  * Standard option menu page. Allows resetting of player position and muting
  *
- * @author Marius
+ * @author md
  */
 public class OptionPage extends MenuPage {
 

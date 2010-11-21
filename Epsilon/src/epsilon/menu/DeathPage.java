@@ -4,7 +4,7 @@ import epsilon.game.Game;
 
 /**
  *
- * @author Marius
+ * @author md
  */
 public class DeathPage extends MenuPage {
 

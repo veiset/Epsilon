@@ -8,7 +8,7 @@ import epsilon.map.entity.Entity;
  * The delta contains how big the overlap is in each direction as seen from the
  * colliding entity.
  *
- * @author Marius
+ * @author md
  */
 public class Collision {
 

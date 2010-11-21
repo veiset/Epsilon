@@ -2,8 +2,6 @@ package epsilon.map;
 
 import epsilon.game.Collision;
 import epsilon.game.SoundPlayer;
-import epsilon.map.Background;
-import epsilon.map.Map;
 import epsilon.map.entity.Entity;
 import epsilon.map.entity.Floor;
 import epsilon.map.entity.MoveableEntity;
@@ -18,7 +16,7 @@ import java.util.Random;
 /**
  * Network Map, designed by Mr. mm
  *
- * @author Marius
+ * @author md
  */
 public class NetworkMap extends Map {
 

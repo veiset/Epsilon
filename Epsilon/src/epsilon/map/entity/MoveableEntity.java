@@ -6,7 +6,7 @@ import epsilon.map.Map;
 /**
  * Abstract class containing the basic methods needed to make a moveable entity
  *
- * @author Marius
+ * @author md
  */
 public abstract class MoveableEntity extends Entity {
 

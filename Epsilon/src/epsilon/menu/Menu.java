@@ -11,7 +11,7 @@ import java.io.InputStream;
 /**
  * Class based on the singleton pattern that returns the Menu used in this game.
  *
- * @author Marius
+ * @author md
  */
 public class Menu {
 

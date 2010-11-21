@@ -13,7 +13,7 @@ import java.util.concurrent.BlockingQueue;
  * SenderThread creates a thread for sending packets to the server.
  * Also includes functionality for creating datagram packets.
  *
- * @author Magnus Mikalsen
+ * @author mm
  */
 public class SenderThread implements Runnable {
 

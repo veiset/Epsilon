@@ -8,7 +8,7 @@ import epsilon.map.WorldTestMap;
  * The first menupage that is shown when the game is started. Lets you choose 
  * between game modes and maps.
  *
- * @author Marius
+ * @author md
  */
 public class StartupPage extends MenuPage {
 

@@ -7,7 +7,7 @@ import java.awt.Image;
 /**
  * Class used to store images and manage animation.
  *
- * @author Marius
+ * @author md
  */
 public class Sprite {
 

@@ -3,7 +3,7 @@ package epsilon.game;
 /**
  * Physics class for the game epsilon
  *
- * @author Marius
+ * @author md
  */
 public class Physics {
 

@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
  * Storing class for images. Implemented as a singleton.
  * Makes sure that images are only loaded into memory once.
  *
- * @author Marius
+ * @author md
  */
 public class ImageStore {
 

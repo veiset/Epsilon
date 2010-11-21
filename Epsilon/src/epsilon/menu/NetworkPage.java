@@ -13,7 +13,7 @@ import java.net.UnknownHostException;
  * menu page that can handle text input, but this can be used as an example of
  * how to write that.
  *
- * @author Marius
+ * @author md
  */
 public class NetworkPage extends MenuPage {
 

@@ -9,7 +9,7 @@ import epsilon.net.NetworkHandler;
  * Entity used to keep track of network players. Contains information about
  * position, color and name of the players. Should be refactored at some later time
  *
- * @author Marius
+ * @author md
  */
 public class NetworkEntity extends PlayerEntity {
 

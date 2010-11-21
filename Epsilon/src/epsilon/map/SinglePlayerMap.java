@@ -12,7 +12,7 @@ import epsilon.map.entity.PlayerEntity;
 /**
  * Map made for testing purposes, now used as a single player map
  *
- * @author Marius
+ * @author Md
  */
 public class SinglePlayerMap extends Map {
 

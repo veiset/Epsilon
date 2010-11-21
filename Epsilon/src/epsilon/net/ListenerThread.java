@@ -9,7 +9,7 @@ import java.util.concurrent.BlockingQueue;
  * ListenerThread creates a thread that listens for incoming packets.
  * When a packet is received it is added to a packet queue.
  *
- * @author Magnus Mikalsen
+ * @author mm
  */
 public class ListenerThread implements Runnable {
 

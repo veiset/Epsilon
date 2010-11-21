@@ -11,7 +11,7 @@ import java.awt.Graphics;
 /**
  * Entity describing the person playing on this computer
  *
- * @author Marius
+ * @author md
  */
 public class PlayerEntity extends MoveableEntity {
 

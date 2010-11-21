@@ -5,7 +5,7 @@ import java.util.TimerTask;
 /**
  * Task that updates the game state about 60 times pr. second, every 16th ms
  *
- * @author Marius
+ * @author md
  */
 public class GameUpdater extends TimerTask {
 
