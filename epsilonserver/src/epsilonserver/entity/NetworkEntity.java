@@ -7,7 +7,7 @@ import java.net.InetAddress;
  * 
  * Modified by Magnus Mikalsen
  *
- * @author Marius
+ * @author mm
  */
 public class NetworkEntity {
 

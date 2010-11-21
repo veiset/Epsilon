@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Singleton for handling network players. Every network player is
  * registered here in a concurrent hashmap.
  * 
- * @author Magnus Mikalsen
+ * @author mm
  */
 public class EntityHandler {
 

@@ -19,7 +19,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * Singleton for managing and interfacing with the network subsystem.
  *
- * @author Magnus Mikalsen
+ * @author mm
  */
 public class NetworkHandler {
 

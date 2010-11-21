@@ -6,7 +6,7 @@ import epsilonserver.game.ServerGUI;
 /**
  * Starting class for the Epsilon server
  *
- * @author Magnus Mikalsen
+ * @author mm
  */
 public class Main {
 

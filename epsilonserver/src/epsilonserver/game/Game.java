@@ -8,9 +8,9 @@ import java.util.Timer;
  * The game class, coordinates the flow of information
  * between the different threads.
  *
- * Modified by Magnus Mikalsen
+ * Modified by mm
  *
- * @author Marius
+ * @author md
  */
 public class Game {
 

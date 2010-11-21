@@ -28,7 +28,7 @@ import javax.swing.text.DefaultCaret;
  * Servers GUI contains a top menu, start and stop button
  * and a log window.
  *
- * @author Magnus Mikalsen
+ * @author mm
  */
 public class ServerGUI extends JFrame {
 

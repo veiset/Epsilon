@@ -10,7 +10,7 @@ import java.net.Socket;
  * Thread for listning after new TCP connection. If a new connection is established
  * then a new ConnectionWorker thread is started.
  *
- * @author Magnus Mikalsen
+ * @author mm
  */
 public class ConnectionInitialiser implements Runnable {
 

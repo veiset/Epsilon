@@ -14,7 +14,7 @@ import java.net.Socket;
  * If the name is already taken a error message is sent back to the client.
  * This thread will terminate after creating the new player.
  *
- * @author Magnus Mikalsen
+ * @author mm
  */
 public class ConnectionWorker implements Runnable {
 
