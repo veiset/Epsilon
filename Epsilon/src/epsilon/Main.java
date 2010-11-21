@@ -6,7 +6,7 @@ import epsilon.game.Game;
 /**
  * Starting class for the Epsilon game, sets any environment variables
  *
- * @author Marius
+ * @author md
  */
 public class Main {
 

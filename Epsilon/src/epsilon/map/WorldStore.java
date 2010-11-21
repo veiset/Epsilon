@@ -1,7 +1,6 @@
 package epsilon.map;
 
 import epsilon.game.Collision;
-import epsilon.map.entity.Entity;
 import epsilon.map.entity.MoveableEntity;
 import epsilon.map.entity.World;
 import java.awt.Graphics;
